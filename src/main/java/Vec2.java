@@ -6,6 +6,10 @@ public class Vec2 {
         this.y = y;
     }
 
+    public void test() {
+        System.out.println("c'est un test pour commit ");
+    }
+
     public void set(int newX, int newY) {
         this.x = newX;
         this.y = newY;
