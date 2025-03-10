@@ -6,8 +6,6 @@ public class Vec2 {
         this.y = y;
     }
 
-
-
     public void set(int newX, int newY) {
         this.x = newX;
         this.y = newY;
