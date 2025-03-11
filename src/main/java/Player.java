@@ -2,6 +2,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.nio.file.*;
 
 public class Player extends Entity {
     private GamePanel gp;
@@ -53,7 +54,15 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         } else {
-            direction = direction.equals("up") ? "imoBack" : "imoFace";
+
+            switch (direction) {
+                case "up":
+                    direction = "imoBack";
+                    break;
+                case "down":
+                    direction = "imoFace";
+            }
+
             velocity.set(0, 0);
         }
     }
@@ -94,13 +103,13 @@ public class Player extends Entity {
             case "imoBack":
                 image = this.imoBack;
         }
-
         g2.drawImage(image, position.x, position.y, gp.tileSize, gp.tileSize, null);
     }
 
     public void getPlayerImage() {
         try {
-            String basePath = "/Users/slayt/Documents/L2MathInfo/Apparitor2DGame/src/main/perso/";
+            String basePath = Paths.get("src/main/perso").toAbsolutePath().toString()+"/";
+            System.out.println(basePath);
             this.up1 = ImageIO.read(new java.io.File(basePath + "pixil-frame-4.png"));
             this.up2 = ImageIO.read(new java.io.File(basePath + "pixil-frame-6.png"));
             this.imoFace = ImageIO.read(new java.io.File(basePath + "pixil-frame-0.png"));
