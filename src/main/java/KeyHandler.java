@@ -17,7 +17,7 @@ public class KeyHandler implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == 87) {
+        if (code == 90) {
             this.upPressed = true;
         }
         if (code == 83) {
@@ -26,7 +26,7 @@ public class KeyHandler implements KeyListener {
         if (code == 68) {
             this.rightPressed = true;
         }
-        if (code == 65) {
+        if (code == 81) {
             this.leftPressed = true;
         }
 
@@ -34,7 +34,7 @@ public class KeyHandler implements KeyListener {
 
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == 87) {
+        if (code == 90) {
             this.upPressed = false;
         }
         if (code == 83) {
@@ -43,7 +43,7 @@ public class KeyHandler implements KeyListener {
         if (code == 68) {
             this.rightPressed = false;
         }
-        if (code == 65) {
+        if (code == 81) {
             this.leftPressed = false;
         }
 
