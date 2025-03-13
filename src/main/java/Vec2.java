@@ -1,12 +1,12 @@
 public class Vec2 {
-    public int x, y;
+    public double x, y;
 
-    public Vec2(int x, int y) {
+    public Vec2(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public void set(int newX, int newY) {
+    public void set(double newX, double newY) {
         this.x = newX;
         this.y = newY;
     }
@@ -30,24 +30,32 @@ public class Vec2 {
     }
 
     public void rotate(double angleRad) {
-        int x1 = this.x;
-        int y1 = this.y;
+        double x1 = this.x;
+        double y1 = this.y;
 
-        x = (int)(Math.cos(angleRad*x1) - Math.sin(angleRad*y1));
-        y = (int)(Math.sin(angleRad*x1) + Math.cos(angleRad*y1));
+        x = (double)(Math.cos(angleRad*x1) - Math.sin(angleRad*y1));
+        y = (double)(Math.sin(angleRad*x1) + Math.cos(angleRad*y1));
     }
 
     public void normalize(){
         double magnitude = getMagnitude();
-
+        if(magnitude == 0) return;
         this.x /= magnitude;
         this.y /= magnitude;
     }
 
     public void shiftByAngleAndMagnitude(double angleRad, double distance) {
         this.rotate(angleRad);
-        x = (int)(x + distance * Math.cos(angleRad));
-        y = (int)(y + distance * Math.sin(angleRad));
+        x = (double)(x + distance * Math.cos(angleRad));
+        y = (double)(y + distance * Math.sin(angleRad));
+    }
+
+    public int getXInt(){
+        return (int)x;
+    }
+
+    public int getYInt(){
+        return (int)y;
     }
 
     @Override
