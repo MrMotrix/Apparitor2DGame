@@ -25,7 +25,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         this.position.set(100, 100);
         this.speed = 6;
-        this.direction = "up";
+        this.direction = "imoFace";
     }
 
     public void update() {
