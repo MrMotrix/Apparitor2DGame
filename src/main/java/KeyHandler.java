@@ -11,8 +11,6 @@ public class KeyHandler implements KeyListener {
 
     public KeyHandler() {
     }
-
-    public void tetst() {}
    
     public void keyTyped(KeyEvent e) {
     }
