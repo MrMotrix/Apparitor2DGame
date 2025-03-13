@@ -33,8 +33,8 @@ public class Vec2 {
         double x1 = this.x;
         double y1 = this.y;
 
-        x = (double)(Math.cos(angleRad*x1) - Math.sin(angleRad*y1));
-        y = (double)(Math.sin(angleRad*x1) + Math.cos(angleRad*y1));
+        x = (Math.cos(angleRad*x1) - Math.sin(angleRad*y1));
+        y = (Math.sin(angleRad*x1) + Math.cos(angleRad*y1));
     }
 
     public void normalize(){
@@ -46,8 +46,8 @@ public class Vec2 {
 
     public void shiftByAngleAndMagnitude(double angleRad, double distance) {
         this.rotate(angleRad);
-        x = (double)(x + distance * Math.cos(angleRad));
-        y = (double)(y + distance * Math.sin(angleRad));
+        x = (x + distance * Math.cos(angleRad));
+        y = (y + distance * Math.sin(angleRad));
     }
 
     public int getXInt(){
