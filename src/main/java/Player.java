@@ -103,7 +103,7 @@ public class Player extends Entity {
             case "imoBack":
                 image = this.imoBack;
         }
-        g2.drawImage(image, position.x, position.y, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, position.getXInt(), position.getYInt(), gp.tileSize, gp.tileSize, null);
     }
 
     public void getPlayerImage() {
