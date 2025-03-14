@@ -1,38 +1,61 @@
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SpriteLibrary {
 
-    public Map<String, Map<String, BufferedImage>> sprites;
+    private static SpriteLibrary instance;  // The only instance
+    private final Map<String, Map<String, BufferedImage>> sprites;
 
-    SpriteLibrary() {
-        sprites = new HashMap<String, Map<String,BufferedImage>>();
-        sprites.put("world",new HashMap<String,BufferedImage>());
-        sprites.put("characters",new HashMap<String,BufferedImage>());
-        sprites.put("ui",new HashMap<String,BufferedImage>());
-        sprites.put("effects",new HashMap<String,BufferedImage>());
+    private SpriteLibrary(String basePath) {  // Private constructor
+        this.sprites = new HashMap<>();
+        sprites.put("world", new HashMap<>());
+        sprites.put("characters", new HashMap<>());
+        sprites.put("ui", new HashMap<>());
+        sprites.put("effects", new HashMap<>());
 
-        //ICI CHARGER LES SPRITES A PARTIR DE FICHIERS JSON AVEC LA METHODE STATIC "getSprites" DE SpriteJSONExtractor.
-    }
-
-    public void addSprites(String key, Map<String,BufferedImage>parsedSprites){
-        if(parsedSprites.containsKey(key)){
-            sprites.get(key).putAll(parsedSprites);
-        }else{
-            System.out.println("Key " + key + " not found");
+        try {
+            addSprites(
+                    "characters",
+                    SpriteJSONExtractor.getSprites(
+                            basePath + "player-front-frame.json",
+                            basePath + "player-front-frame-sheet.png"
+                    )
+            );
+        } catch (IOException e) {
+            System.err.println("Error loading sprites: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public BufferedImage getSprite(String key, String name){
-        if(sprites.containsKey(key)){
-            if(sprites.get(key).containsKey(name)){
-                return sprites.get(key).get(name);
-            }else{
-                System.out.println("name " + name + " not found");
+    //Static method to get the Singleton instance
+    public static SpriteLibrary getInstance(String basePath) {
+        if (instance == null) {
+            instance = new SpriteLibrary(basePath);
+        }
+        return instance;
+    }
+
+    public boolean addSprites(String key, Map<String, BufferedImage> parsedSprites) {
+        if (sprites.containsKey(key)) {
+            sprites.get(key).putAll(parsedSprites);
+            return true;
+        } else {
+            System.err.println("Key '" + key + "' not found.");
+            return false;
+        }
+    }
+
+    public BufferedImage getSprite(String category, String name) {
+        if (sprites.containsKey(category)) {
+            if (sprites.get(category).containsKey(name)) {
+                return sprites.get(category).get(name);
+            } else {
+                System.err.println("Sprite '" + name + "' not found in '" + category + "'.");
             }
-        }else{
-            System.out.println("Key " + key + " not found");
+        } else {
+            System.err.println("Category '" + category + "' does not exist.");
         }
         return null;
     }
