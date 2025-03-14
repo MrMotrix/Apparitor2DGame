@@ -1,124 +1,76 @@
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import java.nio.file.*;
+import javax.net.ssl.KeyManager;
+import java.awt.*;
+import java.io.Serializable;
+import java.nio.file.Paths;
+import java.util.List;
 
-public class Player extends Entity {
-    private GamePanel gp;
-    private KeyHandler keyH;
-    private BufferedImage up1, up2;
-    private BufferedImage down1, down2;
-    private BufferedImage imoFace, imoBack;
-    private Vec2 velocity;
+public class Player extends Character{
+    private KeyHandler keyHandler;
 
-
-    public Player(GamePanel gp, KeyHandler keyH) {
-        super();
-        this.gp = gp;
-        this.keyH = keyH;
-        this.velocity = new Vec2(0, 0);
-        this.setDefaultValues();
-        this.getPlayerImage();
+    Player(GamePanel gamePanel, KeyHandler keyHandler) {
+        super(new Vec2(100,100),gamePanel,"idle-up",6,false);
+        this.keyHandler = keyHandler;
+        super.direction = Direction.UP;
+        loadSprites();
+        System.out.println(sprites.keySet());
     }
 
-    public void setDefaultValues() {
-        this.position.set(100, 100);
-        this.speed = 6;
-        this.direction = "imoFace";
-    }
-
+    @Override
     public void update() {
-        if(keyH.upPressed || keyH.downPressed || keyH.rightPressed || keyH.leftPressed) {
-            if (this.keyH.upPressed) {
-                setDirection("up");
+        if(keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed) {
+            if (this.keyHandler.upPressed) {
+                super.setDirection(Direction.UP);
+                super.setCurrentSpriteKey("up");
                 velocity.set(0, -1);
             }
-            else if (this.keyH.downPressed) {
-                setDirection("down");
+            else if (this.keyHandler.downPressed) {
+                super.setDirection(Direction.DOWN);
+                super.setCurrentSpriteKey("down");
+
                 velocity.set(0, 1);
             }
-            else if (this.keyH.leftPressed) {
-                setDirection("left");
+            else if (this.keyHandler.leftPressed) {
+                super.setDirection(Direction.LEFT);
+                super.setCurrentSpriteKey("left");
                 velocity.set(-1, 0);
             }
-            else if (this.keyH.rightPressed) {
-                setDirection("right");
+            else if (this.keyHandler.rightPressed) {
+                super.setDirection(Direction.RIGHT);
+                super.setCurrentSpriteKey("right");
                 velocity.set(1, 0);
             }
-            move();
-            
-            spriteCounter++;
-            if (spriteCounter > 14) {
-                spriteNum = (spriteNum == 1) ? 2 : 1;
-                spriteCounter = 0;
-            }
         } else {
-
-            switch (direction) {
-                case "up":
-                    direction = "imoBack";
+            switch (direction){
+                case UP:
+                    super.setCurrentSpriteKey("idle-up");
                     break;
-                case "down":
-                    direction = "imoFace";
+                case DOWN:
+                    super.setCurrentSpriteKey("idle-down");
+                    break;
             }
-
+            super.setDirection(Direction.IDLE);
             velocity.set(0, 0);
         }
+        super.update();
     }
 
-    private void move() {
-        velocity.scale(speed);
-        position.add(velocity);
-    }
-
+    @Override
     public void draw(Graphics2D g2) {
-        BufferedImage image = null;
-        switch (direction) {
-            case "up":
-                if (this.spriteNum == 1) {
-                    image = up1;
-                }
-                if (this.spriteNum == 2) {
-                    image = up2;
-                }
-                break;
-            case "down":
-                if (this.spriteNum == 1) {
-                    image = down1;
-                }
-                if (this.spriteNum == 2) {
-                    image = down2;
-                }
-                break;
-            case "right":
-                image = this.imoFace;
-                break;
-            case "left":
-                image = this.imoFace;
-                break;
-            case "imoFace":
-                image = this.imoFace;
-                break;
-            case "imoBack":
-                image = this.imoBack;
-        }
-        g2.drawImage(image, position.getXInt(), position.getYInt(), gp.tileSize, gp.tileSize, null);
+        super.draw(g2);
     }
 
-    public void getPlayerImage() {
-        try {
-            String basePath = Paths.get("src/main/perso").toAbsolutePath().toString()+"/";
-            System.out.println(basePath);
-            this.up1 = ImageIO.read(new java.io.File(basePath + "pixil-frame-4.png"));
-            this.up2 = ImageIO.read(new java.io.File(basePath + "pixil-frame-6.png"));
-            this.imoFace = ImageIO.read(new java.io.File(basePath + "pixil-frame-0.png"));
-            this.down1 = ImageIO.read(new java.io.File(basePath + "pixil-frame-1.png"));
-            this.down2 = ImageIO.read(new java.io.File(basePath + "pixil-frame-2.png"));
-            this.imoBack = ImageIO.read(new java.io.File(basePath + "pixil-frame-3.png"));
-        } catch (IOException e) {
-            System.err.println("Erreur lors du chargement des images : " + e.getMessage());
-            e.printStackTrace();
-        }
+    private void loadSprites(){
+        String basePath = Paths.get("src/main/perso").toAbsolutePath().toString()+"/";
+        Sprite frontSprite = new Sprite(
+                List.of(
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-2")
+                ),
+                14
+        );
+        addSprite("up", frontSprite);
+        addSprite("idle-up", new Sprite(List.of(
+                SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-0")),14));
     }
 }

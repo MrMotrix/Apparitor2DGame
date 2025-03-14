@@ -1,0 +1,11 @@
+{
+  "player-front-frame-0": {
+   "sprite": { "x": 0, "y": 0, "w": 32, "h": 32 }
+  },
+  "player-front-frame-1": {
+   "sprite": { "x": 32, "y": 0, "w": 32, "h": 32 }
+  },
+  "player-front-frame-2": {
+   "sprite": { "x": 64, "y": 0, "w": 32, "h": 32 }
+  }
+}
