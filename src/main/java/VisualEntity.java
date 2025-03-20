@@ -1,41 +1,40 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class VisualEntity extends Entity implements Drawable{
+public class VisualEntity extends Entity implements Drawable {
 
-    public Map<String,Sprite> sprites;
+    public Map<String, Sprite> sprites;
     public String currentSpriteKey = null;
     private GamePanel gamePanel;
 
-    VisualEntity(Vec2 position,GamePanel gamePanel) {
+    VisualEntity(Vec2 position, GamePanel gamePanel) {
         super(position);
-        this.sprites = new HashMap<String,Sprite>();
+        this.sprites = new HashMap<String, Sprite>();
         this.gamePanel = gamePanel;
     }
 
-    VisualEntity(Vec2 position,GamePanel gamePanel,String currentSpriteKey) {
+    VisualEntity(Vec2 position, GamePanel gamePanel, String currentSpriteKey) {
         super(position);
-        this.sprites = new HashMap<String,Sprite>();
+        this.sprites = new HashMap<String, Sprite>();
         this.gamePanel = gamePanel;
         this.currentSpriteKey = currentSpriteKey;
     }
-    VisualEntity(Vec2 position,Map<String,Sprite> sprites,GamePanel gamePanel) {
+    VisualEntity(Vec2 position, Map<String, Sprite> sprites, GamePanel gamePanel) {
         super(position);
         this.sprites = sprites;
         this.gamePanel = gamePanel;
     }
 
-    VisualEntity(Vec2 position,Map<String,Sprite> sprites,String currentSpriteKey,GamePanel gamePanel) {
+    VisualEntity(Vec2 position, Map<String, Sprite> sprites, String currentSpriteKey, GamePanel gamePanel) {
         super(position);
         this.sprites = sprites;
         setCurrentSpriteKey(currentSpriteKey);
         this.gamePanel = gamePanel;
     }
 
-    public void addSprite(String key,Sprite sprite) {
+    public void addSprite(String key, Sprite sprite) {
         sprites.put(key,sprite);
     }
 

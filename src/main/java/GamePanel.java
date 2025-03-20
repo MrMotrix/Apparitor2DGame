@@ -12,7 +12,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int max_screenCol = 19;
     final int max_screenRow = 16;
     final int screen_width = 1216;
-    final int screen_height = 1024;
+    final int screen_height = 920;
     private Thread gameThread;
     private KeyHandler keyH;
     private Player player;

@@ -12,7 +12,7 @@ public class Character extends VisualEntity {
         this.isStatic = isStatic;
     }
 
-    public Character(Vec2 position,GamePanel gamePanel,String currentSpriteKey, int speed, boolean isStatic) {
+    public Character(Vec2 position, GamePanel gamePanel, String currentSpriteKey, int speed, boolean isStatic) {
         super(position, gamePanel,currentSpriteKey);
         this.speed = speed;
         this.velocity = new Vec2(0, 0);

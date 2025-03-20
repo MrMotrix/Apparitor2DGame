@@ -1,10 +1,8 @@
-import javax.net.ssl.KeyManager;
 import java.awt.*;
-import java.io.Serializable;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class Player extends Character{
+public class Player extends Character {
     private KeyHandler keyHandler;
 
     Player(GamePanel gamePanel, KeyHandler keyHandler) {
