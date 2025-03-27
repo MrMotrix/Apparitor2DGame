@@ -1,6 +1,5 @@
 package main;
 
-import javax.swing.text.DefaultEditorKit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

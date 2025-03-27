@@ -1,7 +1,9 @@
 package entity;
-import main.Vec2;
+
 import main.GamePanel;
-import main.Vec2;
+import math.Vec2;
+import temp.Direction;
+import temp.Hitbox;
 
 public class Character extends VisualEntity {
 
@@ -10,15 +12,15 @@ public class Character extends VisualEntity {
     public int speed;
     public Direction direction;
 
-    public Character(Vec2 position, GamePanel gamePanel, int speed, boolean isStatic) {
-        super(position, gamePanel);
+    public Character(Vec2 worldPosition,Vec2 screenPosition, GamePanel gamePanel, int speed, boolean isStatic) {
+        super(worldPosition,screenPosition, gamePanel);
         this.speed = speed;
         this.velocity = new Vec2(0, 0);
         this.isStatic = isStatic;
     }
 
-    public Character(Vec2 position, GamePanel gamePanel, String currentSpriteKey, int speed, boolean isStatic) {
-        super(position, gamePanel,currentSpriteKey);
+    public Character(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox, GamePanel gamePanel, String currentSpriteKey, int speed, boolean isStatic) {
+        super(worldPosition,screenPosition ,hitbox,gamePanel,currentSpriteKey);
         this.speed = speed;
         this.velocity = new Vec2(0, 0);
         this.isStatic = isStatic;
@@ -35,7 +37,7 @@ public class Character extends VisualEntity {
     public void move() {
         velocity.normalize();
         velocity.scale(speed);
-        position.add(velocity);
+        worldPosition.add(velocity);
     }
 
     @Override

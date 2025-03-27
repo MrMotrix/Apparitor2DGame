@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/sprite/SpriteLibrary.java
 package sprite;
+========
+package tools;
+>>>>>>>> d8508ef (Big changes, Now Map, camera movement and wallCollision added):src/main/java/tools/SpriteLibrary.java
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -21,10 +25,25 @@ public class SpriteLibrary {
             addSprites(
                     "characters",
                     SpriteJSONExtractor.getSprites(
-                            basePath + "player-front-frame.json",
-                            basePath + "player-front-frame-sheet.png"
+                            basePath + "perso/player-front-frame.json",
+                            basePath + "perso/player-front-frame-sheet.png"
                     )
             );
+            addSprites(
+                    "characters",
+                    SpriteJSONExtractor.getSprites(
+                            basePath + "perso/player-back-frame.json",
+                            basePath + "perso/player-back-frame-sheet.png"
+                    )
+            );
+            addSprites(
+                    "world",
+                    SpriteJSONExtractor.getSprites(
+                            basePath+ "tiles/tiles.json",
+                            basePath+ "tiles/tiles-sheet.png"
+                    )
+            );
+
         } catch (IOException e) {
             System.err.println("Error loading sprites: " + e.getMessage());
             e.printStackTrace();
