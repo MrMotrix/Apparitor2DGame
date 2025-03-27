@@ -182,14 +182,14 @@ public class Player extends Character{
 
         addSprite("idle-left", new Sprite(
                         List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-0")),
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-5")),
                         10
                 )
         );
 
         addSprite("idle-right", new Sprite(
                         List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-0")),
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-5")),
                         10
                 )
         );
