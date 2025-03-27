@@ -21,22 +21,22 @@ public class SpriteLibrary {
             addSprites(
                     "characters",
                     SpriteJSONExtractor.getSprites(
-                            basePath + "perso/player-front-frame.json",
-                            basePath + "perso/player-front-frame-sheet.png"
+                            basePath + "perso/player-moov.json",
+                            basePath + "perso/PlayerMoov-sheet.png"
                     )
             );
             addSprites(
                     "characters",
                     SpriteJSONExtractor.getSprites(
-                            basePath + "perso/player-back-frame.json",
-                            basePath + "perso/player-back-frame-sheet.png"
+                            basePath + "perso/player-moov.json",
+                            basePath + "perso/PlayerMoov-sheet.png"
                     )
             );
             addSprites(
                     "world",
                     SpriteJSONExtractor.getSprites(
-                            basePath+ "tiles/tiles.json",
-                            basePath+ "tiles/tiles-sheet.png"
+                            basePath+ "tiles/ground.json",
+                            basePath+ "tiles/ground.png"
                     )
             );
 

@@ -25,8 +25,15 @@ public class TileManager {
 
     public void getTileImage() {
         tiles[0] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","0"),true);
-        tiles[1] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","1"),true);
+        tiles[1] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","1"));
         tiles[2] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","2"));
+        tiles[3] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","3"));
+        tiles[4] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","4"));
+        tiles[5] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","5"));
+        tiles[6] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","6"));
+        tiles[7] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","7"));
+        tiles[8] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","8"));
+        tiles[9] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","9"));
     }
 
     public void loadMap(String mapName) {
@@ -41,6 +48,7 @@ public class TileManager {
 
             while(col < gp.maxWorldCol && row < gp.maxWorldRow) {
                 String line = br.readLine();
+
 
                 while(col < gp.maxWorldCol){
                     String numbers[] = line.split(" ");

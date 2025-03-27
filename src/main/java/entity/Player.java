@@ -72,6 +72,8 @@ public class Player extends Character{
         switch (direction) {
             case Direction.UP -> super.setCurrentSpriteKey("idle-up");
             case Direction.DOWN -> super.setCurrentSpriteKey("idle-down");
+            case Direction.LEFT -> super.setCurrentSpriteKey("idle-left");
+            case Direction.RIGHT -> super.setCurrentSpriteKey("idle-right");
             default -> super.setCurrentSpriteKey("idle");
         }
         super.setDirection(Direction.IDLE);
@@ -113,55 +115,79 @@ public class Player extends Character{
         String basePath = Paths.get("src/main/resources").toAbsolutePath().toString()+"/";
         Sprite frontSprite = new Sprite(
                 List.of(
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-2")
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-3"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-4"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-5")
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-3"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-4"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-5")
                 ),
                 14
         );
 
         Sprite backSprite = new Sprite(
                 List.of(
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-0"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-2")
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-0"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-2")
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-3"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-4"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-5")
                 ),
-                14
+                10
+        );
+        Sprite leftSprite = new Sprite(
+                List.of(
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-3"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-4"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-5")
+                ),
+                10
+        );
+        Sprite rightSprite = new Sprite(
+                List.of(
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-3"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-4"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-5")
+                ),
+                10
         );
 
         addSprite("down", frontSprite);
         addSprite("up", backSprite);
+        addSprite("left",leftSprite);
+        addSprite("right",rightSprite);
         addSprite("idle-up", new Sprite(
                 List.of(
-                    SpriteLibrary.getInstance(basePath).getSprite("characters","player-back-frame-0")),
-                14
+                    SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0")),
+                10
                 )
         );
 
         addSprite("idle-down", new Sprite(
                         List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-0")),
-                        14
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-0")),
+                        10
                 )
         );
 
-        addSprite("left", new Sprite(
+        addSprite("idle-left", new Sprite(
                         List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-back-frame-0")),
-                        14
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-0")),
+                        10
                 )
         );
 
-        addSprite("right", new Sprite(
+        addSprite("idle-right", new Sprite(
                         List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-0")),
-                        14
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-0")),
+                        10
                 )
         );
     }
