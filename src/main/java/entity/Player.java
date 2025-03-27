@@ -87,17 +87,12 @@ public class Player extends Character{
             return;
         }
 
-        if (keyHandler.upPressed) setMovementInfo(Direction.UP, "up", 0, -1);
-        else if (keyHandler.downPressed) setMovementInfo(Direction.DOWN, "down", 0, 1);
-        else if (keyHandler.leftPressed) setMovementInfo(Direction.LEFT, "left", -1, 0);
-        else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
-        else handleIdleState();
-        /*if(handleDiagonalMovement()){}
+        if(handleDiagonalMovement()){}
         else if (keyHandler.upPressed) setMovementInfo(Direction.UP, "up", 0, -1);
         else if (keyHandler.downPressed) setMovementInfo(Direction.DOWN, "down", 0, 1);
         else if (keyHandler.leftPressed) setMovementInfo(Direction.LEFT, "left", -1, 0);
         else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
-        else handleIdleState();*/
+        else handleIdleState();
         this.hitbox.setState(HitboxState.DISABLED);
         gamePanel.cChecker.checkTile(this);
         if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
