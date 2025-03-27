@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/main/java/main/Vec2.java
-package main;
-========
 package math;
->>>>>>>> d8508ef (Big changes, Now Map, camera movement and wallCollision added):src/main/java/math/Vec2.java
 
 public class Vec2 {
     public double x, y;

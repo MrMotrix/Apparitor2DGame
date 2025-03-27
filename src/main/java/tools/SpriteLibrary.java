@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/main/java/sprite/SpriteLibrary.java
-package sprite;
-========
 package tools;
->>>>>>>> d8508ef (Big changes, Now Map, camera movement and wallCollision added):src/main/java/tools/SpriteLibrary.java
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

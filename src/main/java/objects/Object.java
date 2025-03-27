@@ -1,5 +1,5 @@
 package objects;
-import main.Vec2;
+import math.Vec2;
 import entity.Entity;
 
 

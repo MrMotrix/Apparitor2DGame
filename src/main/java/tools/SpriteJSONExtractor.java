@@ -1,9 +1,5 @@
-<<<<<<<< HEAD:src/main/java/sprite/SpriteJSONExtractor.java
-package sprite;
-========
 package tools;
 
->>>>>>>> d8508ef (Big changes, Now Map, camera movement and wallCollision added):src/main/java/tools/SpriteJSONExtractor.java
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

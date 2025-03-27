@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/main/java/entity/Hitbox.java
-package entity;
-========
 package temp;
->>>>>>>> d8508ef (Big changes, Now Map, camera movement and wallCollision added):src/main/java/temp/Hitbox.java
 
 import java.awt.Rectangle;
 
