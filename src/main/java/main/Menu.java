@@ -25,6 +25,7 @@ public class Menu {
             if (i == selectedOption) {
                 g2.setColor(Color.WHITE);
             }
+
             else {
                 g2.setColor(Color.WHITE);
             }
