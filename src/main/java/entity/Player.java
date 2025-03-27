@@ -70,14 +70,17 @@ public class Player extends Character {
         String basePath = Paths.get("src/main/perso").toAbsolutePath().toString()+"/";
         Sprite frontSprite = new Sprite(
                 List.of(
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-0"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-2")
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-3"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-4"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-5")
                 ),
-                14
+                12
         );
         addSprite("up", frontSprite);
         addSprite("idle-up", new Sprite(List.of(
-                SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-0")),14));
+                SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0")),14));
     }
 }

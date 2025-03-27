@@ -21,8 +21,8 @@ public class SpriteLibrary {
             addSprites(
                     "characters",
                     SpriteJSONExtractor.getSprites(
-                            basePath + "player-front-frame.json",
-                            basePath + "player-front-frame-sheet.png"
+                            basePath + "player-moov.json",
+                            basePath + "PlayerMoov-sheet.png"
                     )
             );
         } catch (IOException e) {
