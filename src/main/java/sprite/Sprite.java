@@ -1,3 +1,5 @@
+package sprite;
+
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ public class Sprite {
     private int frameDelay; // Time between two frame
     private int frameTimer;
 
-    // Constructor for static Sprite
+    // Constructor for static sprite.Sprite
     public Sprite(BufferedImage image) {
         this.frames = new ArrayList<>();
         this.frames.add(image);
@@ -17,7 +19,7 @@ public class Sprite {
         this.currentFrame = 0;
     }
 
-    // Constructor for animated Sprite
+    // Constructor for animated sprite.Sprite
     public Sprite(List<BufferedImage> frames, int frameDelay) {
         this.frames = frames;
         this.animated = frames.size() > 1;
@@ -37,7 +39,7 @@ public class Sprite {
         }
     }
 
-    // Get actual Sprite
+    // Get actual sprite.Sprite
     public BufferedImage getSprite() {
         return frames.get(currentFrame);
     }

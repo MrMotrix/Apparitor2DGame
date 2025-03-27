@@ -1,3 +1,6 @@
+package main;
+import sprite.SpriteLibrary;
+
 import javax.swing.JFrame;
 import java.nio.file.Paths;
 

@@ -1,3 +1,5 @@
+package entity;
+
 import java.awt.Rectangle;
 
 public class Hitbox {

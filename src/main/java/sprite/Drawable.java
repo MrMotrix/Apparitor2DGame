@@ -1,3 +1,5 @@
+package sprite;
+
 import java.awt.*;
 
 public interface Drawable {

@@ -1,3 +1,5 @@
+package main;
+
 public class Vec2 {
     public double x, y;
 

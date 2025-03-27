@@ -1,3 +1,5 @@
+package sprite;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -52,7 +54,7 @@ public class SpriteLibrary {
             if (sprites.get(category).containsKey(name)) {
                 return sprites.get(category).get(name);
             } else {
-                System.err.println("Sprite '" + name + "' not found in '" + category + "'.");
+                System.err.println("sprite.Sprite '" + name + "' not found in '" + category + "'.");
             }
         } else {
             System.err.println("Category '" + category + "' does not exist.");

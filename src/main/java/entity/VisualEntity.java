@@ -1,4 +1,9 @@
+package entity;
 import java.awt.*;
+import main.Vec2;
+import main.GamePanel;
+import sprite.Sprite;
+import sprite.Drawable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +65,7 @@ public class VisualEntity extends Entity implements Drawable {
             sprites.get(currentSpriteKey).update();
         }
     }
+
 
     @Override
     public void draw(Graphics2D g2) {

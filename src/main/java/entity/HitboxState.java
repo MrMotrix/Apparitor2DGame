@@ -1,3 +1,5 @@
+package entity;
+
 public enum HitboxState {
     ACTIVE,    // Standard collision
     DISABLED,  // No collision

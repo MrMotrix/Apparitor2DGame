@@ -1,11 +1,20 @@
+package entity;
+
+import entity.Character;
+
 import java.awt.*;
 import java.nio.file.Paths;
 import java.util.List;
+import main.KeyHandler;
+import main.GamePanel;
+import main.Vec2;
+import sprite.Sprite;
+import sprite.SpriteLibrary;
 
 public class Player extends Character {
-    private KeyHandler keyHandler;
+    public KeyHandler keyHandler;
 
-    Player(GamePanel gamePanel, KeyHandler keyHandler) {
+    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         super(new Vec2(100,100),gamePanel,"idle-up",6,false);
         this.keyHandler = keyHandler;
         super.direction = Direction.UP;

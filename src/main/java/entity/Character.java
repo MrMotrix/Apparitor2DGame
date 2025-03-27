@@ -1,3 +1,8 @@
+package entity;
+import main.Vec2;
+import main.GamePanel;
+import main.Vec2;
+
 public class Character extends VisualEntity {
 
     public boolean isStatic; // false = can move, true = fix
@@ -5,7 +10,7 @@ public class Character extends VisualEntity {
     public int speed;
     public Direction direction;
 
-    public Character(Vec2 position,GamePanel gamePanel, int speed, boolean isStatic) {
+    public Character(Vec2 position, GamePanel gamePanel, int speed, boolean isStatic) {
         super(position, gamePanel);
         this.speed = speed;
         this.velocity = new Vec2(0, 0);
