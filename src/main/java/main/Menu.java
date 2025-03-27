@@ -24,7 +24,8 @@ public class Menu {
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g2.setColor(Color.WHITE);
-            } else {
+            }
+            else {
                 g2.setColor(Color.WHITE);
             }
             g2.drawString(options[i], gamePanel.screenWidth /2-60, gamePanel.screenHeight / 2 + i * 40);
