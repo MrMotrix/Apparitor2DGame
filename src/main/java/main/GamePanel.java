@@ -1,35 +1,43 @@
 package main;
 
-import entity.Player;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-
+import entity.Player;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
-    private BufferedImage sprite;
     final int originalTileSize = 32;
     final int scale = 2;
     public final int tileSize = originalTileSize*scale;
-    final int max_screenCol = 19;
-    final int max_screenRow = 16;
-    final int screen_width = 1216;
-    final int screen_height = 920;
-    private Thread gameThread;
-    private KeyHandler keyH;
-    private Player player;
+    public final int max_screenCol = 16;
+    public final int max_screenRow = 12;
+    public final int screenWidth = tileSize * max_screenCol;
+    public final int screenHeight = tileSize * max_screenRow;
+
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
     private final int FPS = 60;
+
+    private Thread gameThread;
+    public KeyHandler keyH;
+    public TileManager tileManager;
+    public CollisionChecker cChecker;
+    public Player player;
 
     public GamePanel() {
         this.keyH = new KeyHandler();
         this.player = new Player(this, this.keyH);
         this.setFocusable(true);
-        this.setPreferredSize(new Dimension(screen_width, screen_height));
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
         this.addKeyListener(this.keyH);
+        this.tileManager = new TileManager(this);
+        this.cChecker = new CollisionChecker(this);
     }
 
     public void startGameThread() {
@@ -64,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        tileManager.draw(g2);
         player.draw(g2);
         g2.dispose();
     }

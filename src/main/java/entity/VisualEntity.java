@@ -1,10 +1,12 @@
 package entity;
-import java.awt.*;
-import main.Vec2;
+
 import main.GamePanel;
 import sprite.Sprite;
-import sprite.Drawable;
+import temp.Drawable;
+import math.Vec2;
+import temp.Hitbox;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,31 +14,38 @@ public class VisualEntity extends Entity implements Drawable {
 
     public Map<String, Sprite> sprites;
     public String currentSpriteKey = null;
-    private GamePanel gamePanel;
+    public Vec2 screenPosition;
+    //public Map<String,List<temp.Hitbox>> hitboxes;
+    public GamePanel gamePanel;
 
-    VisualEntity(Vec2 position, GamePanel gamePanel) {
-        super(position);
+    VisualEntity(Vec2 worldPosition,Vec2 screenPosition, GamePanel gamePanel) {
+        super(worldPosition);
         this.sprites = new HashMap<String, Sprite>();
         this.gamePanel = gamePanel;
+        this.screenPosition = screenPosition;
     }
 
-    VisualEntity(Vec2 position, GamePanel gamePanel, String currentSpriteKey) {
-        super(position);
+    VisualEntity(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox, GamePanel gamePanel, String currentSpriteKey) {
+        super(worldPosition);
         this.sprites = new HashMap<String, Sprite>();
         this.gamePanel = gamePanel;
         this.currentSpriteKey = currentSpriteKey;
+        this.screenPosition = screenPosition;
+        this.hitbox = hitbox;
     }
-    VisualEntity(Vec2 position, Map<String, Sprite> sprites, GamePanel gamePanel) {
-        super(position);
+    VisualEntity(Vec2 worldPosition,Vec2 screenPosition, Map<String, Sprite> sprites, GamePanel gamePanel) {
+        super(worldPosition);
         this.sprites = sprites;
         this.gamePanel = gamePanel;
+        this.screenPosition = screenPosition;
     }
 
-    VisualEntity(Vec2 position, Map<String, Sprite> sprites, String currentSpriteKey, GamePanel gamePanel) {
-        super(position);
+    VisualEntity(Vec2 worldPosition,Vec2 screenPosition, Map<String, Sprite> sprites, String currentSpriteKey, GamePanel gamePanel) {
+        super(worldPosition);
         this.sprites = sprites;
         setCurrentSpriteKey(currentSpriteKey);
         this.gamePanel = gamePanel;
+        this.screenPosition = screenPosition;
     }
 
     public void addSprite(String key, Sprite sprite) {
@@ -51,7 +60,7 @@ public class VisualEntity extends Entity implements Drawable {
         if(sprites.containsKey(key)) {
             this.currentSpriteKey = key;
         }else{
-            System.out.println("No such a key, cannot set the current sprite key");
+            System.out.println("No such key("+key+"), cannot set the current sprite key");
         }
     }
 
@@ -66,14 +75,13 @@ public class VisualEntity extends Entity implements Drawable {
         }
     }
 
-
     @Override
     public void draw(Graphics2D g2) {
         if(currentSpriteKey != null) {
             g2.drawImage(
                     sprites.get(currentSpriteKey).getSprite(),
-                    (int)super.position.x,
-                    (int)super.position.y,
+                    screenPosition.getXInt(),
+                    screenPosition.getYInt(),
                     gamePanel.tileSize,
                     gamePanel.tileSize,
                     null

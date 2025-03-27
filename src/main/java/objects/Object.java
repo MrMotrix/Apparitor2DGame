@@ -1,5 +1,5 @@
 package objects;
-import main.Vec2;
+import math.Vec2;
 import entity.Entity;
 import main.GamePanel;
 
@@ -16,7 +16,6 @@ public class Object extends Entity {
     public void update(){
 
     }
-
     public void collect() {
         if (collectable) {
             System.out.println("Collected");

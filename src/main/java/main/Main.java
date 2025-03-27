@@ -1,14 +1,13 @@
 package main;
-import sprite.SpriteLibrary;
 
 import javax.swing.JFrame;
 import java.nio.file.Paths;
-
+import tools.SpriteLibrary;
 public class Main {
 
 
     public static void main(String[] args) {
-        String basePath = Paths.get("src/main/perso").toAbsolutePath().toString()+"/";
+        String basePath = Paths.get("src/main/resources").toAbsolutePath().toString()+"/";
         SpriteLibrary spriteLibrary = SpriteLibrary.getInstance(basePath);
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

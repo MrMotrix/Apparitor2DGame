@@ -1,63 +1,106 @@
 package entity;
 
-import entity.Character;
+import main.GamePanel;
+import main.KeyHandler;
+import math.Vec2;
+import tools.SpriteLibrary;
+import temp.*;
+import sprite.Sprite;
 
 import java.awt.*;
+import java.awt.event.HierarchyBoundsAdapter;
 import java.nio.file.Paths;
 import java.util.List;
-import main.KeyHandler;
-import main.GamePanel;
-import main.Vec2;
-import sprite.Sprite;
-import sprite.SpriteLibrary;
 
-public class Player extends Character {
-    public KeyHandler keyHandler;
+public class Player extends Character{
+    private KeyHandler keyHandler;
+    //public final int screenX;
+    //public final int screenY;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
-        super(new Vec2(100,100),gamePanel,"idle-up",6,false);
+
+        super(
+                new Vec2(100,100),
+                new Vec2(gamePanel.screenWidth/2 - (gamePanel.tileSize/2),gamePanel.screenHeight/2 - (gamePanel.tileSize/2)),
+                new Hitbox(
+                        8,
+                        16,
+                        32,
+                        32,
+                        HitboxState.DISABLED,
+                        HitboxType.SOLID
+                ),
+                gamePanel,
+                "idle-down",
+                6,
+                false
+        );
+
         this.keyHandler = keyHandler;
-        super.direction = Direction.UP;
+        super.direction = Direction.DOWN;
         loadSprites();
         System.out.println(sprites.keySet());
     }
 
+    private boolean handleDiagonalMovement() {
+        if (keyHandler.upPressed && keyHandler.leftPressed) {
+            setMovementInfo(Direction.UP, "up", -1, -1);
+            return true;
+        }
+        if (keyHandler.upPressed && keyHandler.rightPressed) {
+            setMovementInfo(Direction.UP, "up", 1, -1);
+            return true;
+        }
+        if (keyHandler.downPressed && keyHandler.leftPressed) {
+            setMovementInfo(Direction.DOWN, "down", -1, 1);
+            return true;
+        }
+        if (keyHandler.downPressed && keyHandler.rightPressed) {
+            setMovementInfo(Direction.DOWN, "down", 1, 1);
+            return true;
+        }
+        return false;
+    }
+
+    private void setMovementInfo(Direction direction, String spriteKey, int vx, int vy) {
+        super.setDirection(direction);
+        super.setCurrentSpriteKey(spriteKey);
+        velocity.set(vx, vy);
+    }
+
+    private void handleIdleState() {
+        switch (direction) {
+            case Direction.UP -> super.setCurrentSpriteKey("idle-up");
+            case Direction.DOWN -> super.setCurrentSpriteKey("idle-down");
+            default -> super.setCurrentSpriteKey("idle");
+        }
+        super.setDirection(Direction.IDLE);
+        velocity.set(0, 0);
+    }
+
     @Override
     public void update() {
-        if(keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed) {
-            if (this.keyHandler.upPressed) {
-                super.setDirection(Direction.UP);
-                super.setCurrentSpriteKey("up");
-                velocity.set(0, -1);
-            }
-            else if (this.keyHandler.downPressed) {
-                super.setDirection(Direction.DOWN);
-                super.setCurrentSpriteKey("down");
 
-                velocity.set(0, 1);
-            }
-            else if (this.keyHandler.leftPressed) {
-                super.setDirection(Direction.LEFT);
-                super.setCurrentSpriteKey("left");
-                velocity.set(-1, 0);
-            }
-            else if (this.keyHandler.rightPressed) {
-                super.setDirection(Direction.RIGHT);
-                super.setCurrentSpriteKey("right");
-                velocity.set(1, 0);
-            }
-        } else {
-            switch (direction){
-                case UP:
-                    super.setCurrentSpriteKey("idle-up");
-                    break;
-                case DOWN:
-                    super.setCurrentSpriteKey("idle-down");
-                    break;
-            }
-            super.setDirection(Direction.IDLE);
-            velocity.set(0, 0);
+        if ((keyHandler.upPressed && keyHandler.downPressed) ||
+                (keyHandler.leftPressed && keyHandler.rightPressed)){
+            handleIdleState();
+            return;
         }
+
+        if (keyHandler.upPressed) setMovementInfo(Direction.UP, "up", 0, -1);
+        else if (keyHandler.downPressed) setMovementInfo(Direction.DOWN, "down", 0, 1);
+        else if (keyHandler.leftPressed) setMovementInfo(Direction.LEFT, "left", -1, 0);
+        else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
+        else handleIdleState();
+        /*if(handleDiagonalMovement()){}
+        else if (keyHandler.upPressed) setMovementInfo(Direction.UP, "up", 0, -1);
+        else if (keyHandler.downPressed) setMovementInfo(Direction.DOWN, "down", 0, 1);
+        else if (keyHandler.leftPressed) setMovementInfo(Direction.LEFT, "left", -1, 0);
+        else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
+        else handleIdleState();*/
+        this.hitbox.setState(HitboxState.DISABLED);
+        gamePanel.cChecker.checkTile(this);
+        if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
         super.update();
     }
 
@@ -67,20 +110,59 @@ public class Player extends Character {
     }
 
     private void loadSprites(){
-        String basePath = Paths.get("src/main/perso").toAbsolutePath().toString()+"/";
+        String basePath = Paths.get("src/main/resources").toAbsolutePath().toString()+"/";
         Sprite frontSprite = new Sprite(
                 List.of(
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-2")
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-3"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-4"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-5")
                 ),
-                12
+                14
         );
-        addSprite("up", frontSprite);
-        addSprite("idle-up", new Sprite(List.of(
-                SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0")),14));
+
+        Sprite backSprite = new Sprite(
+                List.of(
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-2")
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-2")
+                ),
+                14
+        );
+
+        addSprite("down", frontSprite);
+        addSprite("up", backSprite);
+        addSprite("idle-up", new Sprite(
+                List.of(
+                    SpriteLibrary.getInstance(basePath).getSprite("characters","player-back-frame-0")),
+                14
+                )
+        );
+
+        addSprite("idle-down", new Sprite(
+                        List.of(
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-0")),
+                        14
+                )
+        );
+
+        addSprite("left", new Sprite(
+                        List.of(
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-back-frame-0")),
+                        14
+                )
+        );
+
+        addSprite("right", new Sprite(
+                        List.of(
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-front-frame-0")),
+                        14
+                )
+        );
     }
 }

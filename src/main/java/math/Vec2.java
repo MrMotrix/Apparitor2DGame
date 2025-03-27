@@ -1,4 +1,4 @@
-package main;
+package math;
 
 public class Vec2 {
     public double x, y;

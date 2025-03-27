@@ -1,5 +1,4 @@
-package sprite;
-
+package temp;
 import java.awt.*;
 
 public interface Drawable {
