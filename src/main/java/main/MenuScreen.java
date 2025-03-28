@@ -3,10 +3,9 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Point;
 
-public class Menu extends Screen {
-    public Menu(GamePanel gamePanel) {
+public class MenuScreen extends Screen {
+    public MenuScreen(GamePanel gamePanel) {
         super(gamePanel);
     }
 
