@@ -96,6 +96,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         if(gameState == playState) {
             player.update();
+            for(int i = 0; i < obj.length; i++) {
+                if(obj[i] != null)
+                    obj[i].update();
+            }
         }
         else if(gameState == pauseState) {
            menu.checkClick(mouseH.getLastClick());
@@ -105,22 +109,21 @@ public class GamePanel extends JPanel implements Runnable {
             titleScreen.checkClick(mouseH.getLastClick());
             mouseH.resetLastClick();
         }
-        for(int i = 0; i < obj.length; i++) {
-            if(obj[i] != null)
-                obj[i].update();
-        }
-
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+
         tileManager.draw(g2);
+
         for(int i = 0; i < obj.length; i++) {
             if(obj[i] != null)
                 obj[i].draw(g2);
         }
+
         player.draw(g2);
+
         if (gameState == pauseState) {
             menu.draw(g2);
         }
