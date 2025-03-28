@@ -80,7 +80,13 @@ public class TileManager {
             int screenX = worldX - gp.player.worldPosition.getXInt() + gp.player.screenPosition.getXInt();
             int screenY = worldY - gp.player.worldPosition.getYInt() + gp.player.screenPosition.getYInt();
 
-            g2.drawImage(tiles[tileNum].image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+            if(worldX + gp.tileSize > gp.player.worldPosition.getXInt() - gp.player.screenPosition.getXInt() &&
+                    worldX - gp.tileSize < gp.player.worldPosition.getXInt() + gp.player.screenPosition.getXInt() &&
+                    worldY + gp.tileSize > gp.player.worldPosition.getYInt() - gp.player.screenPosition.getYInt() &&
+                    worldY - gp.tileSize < gp.player.worldPosition.getYInt() + gp.player.screenPosition.getYInt()) {
+
+                g2.drawImage(tiles[tileNum].image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+            }
             worldCol++;
 
             if(worldCol == gp.maxWorldCol){
