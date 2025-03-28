@@ -14,8 +14,7 @@ public class KeyHandler implements KeyListener {
         this.gp = gp;
     }
 
-    public KeyHandler(){
-
+    public KeyHandler() {
     }
    
     public void keyTyped(KeyEvent e) {
@@ -23,7 +22,6 @@ public class KeyHandler implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-
         if (code == 90) {
             this.upPressed = true;
         }

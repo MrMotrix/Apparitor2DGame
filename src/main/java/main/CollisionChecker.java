@@ -62,4 +62,68 @@ public class CollisionChecker {
                 break;
         }
     }
+
+    public int checkObejct(Character c, boolean player) {
+        int index =999;
+
+        for(int i =0; i< gp.obj.length;i++){
+
+            if(gp.obj[i] == null) continue;
+
+            c.hitbox.getBounds().x +=  c.worldPosition.getXInt();
+            c.hitbox.getBounds().y += c.worldPosition.getYInt();
+
+            gp.obj[i].hitbox.getBounds().x += gp.obj[i].worldPosition.getXInt();
+            gp.obj[i].hitbox.getBounds().y += gp.obj[i].worldPosition.getYInt();
+
+            switch(c.direction){
+                case UP:
+                    c.hitbox.getBounds().y -= c.speed;
+                    if(c.hitbox.checkCollision(gp.obj[i].hitbox)) {
+                        if (gp.obj[i].hitbox.getState() == HitboxState.ACTIVE)
+                            c.hitbox.setState(HitboxState.ACTIVE);
+                        if (player == true)
+                            index = i;
+                        System.out.println("object collision up");
+                    }
+                    break;
+                case DOWN:
+                    c.hitbox.getBounds().y += c.speed;
+                    if(c.hitbox.checkCollision(gp.obj[i].hitbox)) {
+                        if (gp.obj[i].hitbox.getState() == HitboxState.ACTIVE)
+                            c.hitbox.setState(HitboxState.ACTIVE);
+                        if (player == true)
+                            index = i;
+                        System.out.println("object collision down");
+                    }
+                    break;
+                case LEFT:
+                    c.hitbox.getBounds().x -= c.speed;
+                    if(c.hitbox.checkCollision(gp.obj[i].hitbox)) {
+                        if (gp.obj[i].hitbox.getState() == HitboxState.ACTIVE)
+                            c.hitbox.setState(HitboxState.ACTIVE);
+                        if (player == true)
+                            index = i;
+                        System.out.println("object collision left");
+                    }
+                    break;
+                case RIGHT:
+                    c.hitbox.getBounds().x += c.speed;
+                    if(c.hitbox.checkCollision(gp.obj[i].hitbox)){
+                        if(gp.obj[i].hitbox.getState() == HitboxState.ACTIVE)
+                            c.hitbox.setState(HitboxState.ACTIVE);
+                        if(player == true)
+                            index = i;
+                        System.out.println("object collision right");
+                    }
+                    break;
+            }
+
+            c.hitbox.resetToDefaultBounds();
+            gp.obj[i].hitbox.resetToDefaultBounds();
+        }
+
+        return index;
+    }
+
 }
