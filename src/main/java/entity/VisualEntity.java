@@ -60,7 +60,7 @@ public class VisualEntity extends Entity implements Drawable {
         if(sprites.containsKey(key)) {
             this.currentSpriteKey = key;
         }else{
-            //System.out.println("No such key("+key+"), cannot set the current sprite key");
+            System.out.println("No such key("+key+"), cannot set the current sprite key");
         }
     }
 
