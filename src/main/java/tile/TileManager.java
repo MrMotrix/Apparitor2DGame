@@ -39,8 +39,6 @@ public class TileManager {
     public void loadMap(String mapName) {
         try{
             InputStream is = getClass().getClassLoader().getResourceAsStream("maps/map.txt");
-            System.out.println(basePath+"maps/"+mapName+".txt");
-            System.out.println(is.toString());
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;

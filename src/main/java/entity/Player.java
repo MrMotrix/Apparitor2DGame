@@ -40,7 +40,6 @@ public class Player extends Character{
         this.keyHandler = keyHandler;
         super.direction = Direction.DOWN;
         loadSprites();
-        System.out.println(sprites.keySet());
     }
 
     private boolean handleDiagonalMovement() {
@@ -75,7 +74,7 @@ public class Player extends Character{
             case Direction.DOWN -> super.setCurrentSpriteKey("idle-down");
             case Direction.LEFT -> super.setCurrentSpriteKey("idle-left");
             case Direction.RIGHT -> super.setCurrentSpriteKey("idle-right");
-            default -> super.setCurrentSpriteKey("idle");
+            //default -> super.setCurrentSpriteKey("idle");
         }
         super.setDirection(Direction.IDLE);
         velocity.set(0, 0);
