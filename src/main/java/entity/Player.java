@@ -126,7 +126,7 @@ public class Player extends Character{
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-4"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-5")
                 ),
-                14
+                10
         );
 
         Sprite backSprite = new Sprite(

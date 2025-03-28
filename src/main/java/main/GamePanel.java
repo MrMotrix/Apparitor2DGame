@@ -29,8 +29,13 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker;
     public Player player;
 
-    public boolean pauseState = false; //le pause state gere aussi l'affichage du menu
+
     public Menu menu;
+    public MouseHandler mouseH;
+
+    //game state
+    public boolean pauseState = false; //le pause state gere aussi l'affichage du menu
+    public boolean titleState = true;
 
 
 
@@ -44,6 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.tileManager = new TileManager(this);
         this.cChecker = new CollisionChecker(this);
         this.menu = new Menu(this);
+        this.mouseH = new MouseHandler(this);
+        this.addMouseListener(mouseH);
     }
 
     public void startGameThread() {
@@ -77,7 +84,8 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
         }
         else if(pauseState){
-            //nothing
+           menu.checkClick(mouseH.getLastClick());
+           mouseH.resetLastClick();
         }
 
 
