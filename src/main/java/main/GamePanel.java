@@ -33,9 +33,13 @@ public class GamePanel extends JPanel implements Runnable {
     public Menu menu;
     public MouseHandler mouseH;
 
+    public TitleScreen titleScreen;
+
     //game state
-    public boolean pauseState = false; //le pause state gere aussi l'affichage du menu
-    public boolean titleState = true;
+    public int gameState = 2;
+    public int pauseState = 0; //le pause state gere aussi l'affichage du menu
+    public int playState = 1;
+    public int titleState = 2;
 
 
 
@@ -51,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.menu = new Menu(this);
         this.mouseH = new MouseHandler(this);
         this.addMouseListener(mouseH);
+        this.titleScreen = new TitleScreen(this);
     }
 
     public void startGameThread() {
@@ -80,12 +85,16 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
-        if(pauseState == false){
+        if(gameState == playState) {
             player.update();
         }
-        else if(pauseState){
+        else if(gameState == pauseState) {
            menu.checkClick(mouseH.getLastClick());
            mouseH.resetLastClick();
+        }
+        else if(gameState == titleState) {
+            titleScreen.checkClick(mouseH.getLastClick());
+            mouseH.resetLastClick();
         }
 
 
@@ -96,8 +105,11 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
         tileManager.draw(g2);
         player.draw(g2);
-        if (pauseState) {
+        if (gameState == pauseState) {
             menu.draw(g2);
+        }
+        else if(gameState == titleState) {
+            titleScreen.draw(g2);
         }
 
         g2.dispose();

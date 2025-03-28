@@ -15,9 +15,7 @@ public class MouseHandler extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (gamePanel.pauseState) { //s'active que si le jeu est en pause
-            lastClick = new Point(e.getX(), e.getY());
-        }
+        lastClick = new Point(e.getX(), e.getY());
     }
     public Point getLastClick() {
         return lastClick;

@@ -42,11 +42,11 @@ public class KeyHandler implements KeyListener {
 
 
         if (code == 27) { //27 = échape
-            if(!gp.pauseState){
-                gp.pauseState = true;
+            if(gp.gameState == gp.playState){
+                gp.gameState = gp.pauseState;
             }
-            else if(gp.pauseState){
-                gp.pauseState = false;
+            else if(gp.gameState == gp.pauseState){
+                gp.gameState = gp.playState;
             }
         }
 
