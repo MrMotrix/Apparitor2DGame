@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public GamePanel() {
-        this.keyH = new KeyHandler();
+        this.keyH = new KeyHandler(this);
         this.player = new Player(this, this.keyH);
         this.setFocusable(true);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
