@@ -29,8 +29,13 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker;
     public Player player;
 
+    public boolean pauseState = false; //le pause state gere aussi l'affichage du menu
+    public Menu menu;
+
+
+
     public GamePanel() {
-        this.keyH = new KeyHandler();
+        this.keyH = new KeyHandler(this);
         this.player = new Player(this, this.keyH);
         this.setFocusable(true);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -38,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(this.keyH);
         this.tileManager = new TileManager(this);
         this.cChecker = new CollisionChecker(this);
+        this.menu = new Menu(this);
     }
 
     public void startGameThread() {
@@ -66,7 +72,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
+
+        if(pauseState == false){
+            player.update();
+        }
+        else if(pauseState){
+            //nothing
+        }
+
+
     }
 
     public void paintComponent(Graphics g) {
@@ -74,6 +88,10 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
         tileManager.draw(g2);
         player.draw(g2);
+        if (pauseState) {
+            menu.draw(g2);
+        }
+
         g2.dispose();
     }
 }

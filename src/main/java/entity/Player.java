@@ -12,6 +12,7 @@ import java.awt.event.HierarchyBoundsAdapter;
 import java.nio.file.Paths;
 import java.util.List;
 
+
 public class Player extends Character{
     private KeyHandler keyHandler;
     //public final int screenX;
@@ -84,7 +85,7 @@ public class Player extends Character{
     public void update() {
 
         if ((keyHandler.upPressed && keyHandler.downPressed) ||
-                (keyHandler.leftPressed && keyHandler.rightPressed)){
+                (keyHandler.leftPressed && keyHandler.rightPressed)) {
             handleIdleState();
             return;
         }

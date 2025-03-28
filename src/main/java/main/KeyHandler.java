@@ -8,8 +8,13 @@ public class KeyHandler implements KeyListener {
     public boolean downPressed;
     public boolean leftPressed;
     public boolean rightPressed;
+    public GamePanel gp;
+    public KeyHandler(GamePanel gp) {
+        this.gp = gp;
+    }
 
-    public KeyHandler() {
+    public KeyHandler(){
+
     }
    
     public void keyTyped(KeyEvent e) {
@@ -17,6 +22,7 @@ public class KeyHandler implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+
         if (code == 90) {
             this.upPressed = true;
         }
@@ -29,6 +35,17 @@ public class KeyHandler implements KeyListener {
         if (code == 81) {
             this.leftPressed = true;
         }
+
+
+        if (code == 27) { //27 = échape
+            if(!gp.pauseState){
+                gp.pauseState = true;
+            }
+            else if(gp.pauseState){
+                gp.pauseState = false;
+            }
+        }
+
 
     }
 
