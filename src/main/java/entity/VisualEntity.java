@@ -25,7 +25,7 @@ public class VisualEntity extends Entity implements Drawable {
         this.screenPosition = screenPosition;
     }
 
-    VisualEntity(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox, GamePanel gamePanel, String currentSpriteKey) {
+    public VisualEntity(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox, GamePanel gamePanel, String currentSpriteKey) {
         super(worldPosition);
         this.sprites = new HashMap<String, Sprite>();
         this.gamePanel = gamePanel;

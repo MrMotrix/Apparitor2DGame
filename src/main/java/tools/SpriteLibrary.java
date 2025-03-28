@@ -40,6 +40,14 @@ public class SpriteLibrary {
                     )
             );
 
+            addSprites(
+                    "world",
+                    SpriteJSONExtractor.getSprites(
+                            basePath+"objects/key.json",
+                            basePath+"objects/key.png"
+                    )
+            );
+
         } catch (IOException e) {
             System.err.println("Error loading sprites: " + e.getMessage());
             e.printStackTrace();

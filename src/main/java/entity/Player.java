@@ -12,11 +12,11 @@ import java.awt.event.HierarchyBoundsAdapter;
 import java.nio.file.Paths;
 import java.util.List;
 
-
 public class Player extends Character{
     private KeyHandler keyHandler;
     //public final int screenX;
     //public final int screenY;
+    public int nbKey = 0;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
@@ -81,11 +81,19 @@ public class Player extends Character{
         velocity.set(0, 0);
     }
 
+    public void pickUpObject(int index){
+        if(index != 999) {
+            gamePanel.obj[index].onPickUp();
+            gamePanel.obj[index] = null;
+            System.out.println(nbKey);
+        }
+    }
+
     @Override
     public void update() {
 
         if ((keyHandler.upPressed && keyHandler.downPressed) ||
-                (keyHandler.leftPressed && keyHandler.rightPressed)) {
+                (keyHandler.leftPressed && keyHandler.rightPressed)){
             handleIdleState();
             return;
         }
@@ -106,6 +114,8 @@ public class Player extends Character{
         else handleIdleState();*/
         this.hitbox.setState(HitboxState.DISABLED);
         gamePanel.cChecker.checkTile(this);
+        int objIndex = gamePanel.cChecker.checkObejct(this,true);
+        pickUpObject(objIndex);
         if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
         super.update();
     }
