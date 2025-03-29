@@ -27,7 +27,7 @@ public class TileManager {
         tiles[0] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","0"),true);
         tiles[1] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","1"));
         tiles[2] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","2"));
-        tiles[3] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","3"));
+        tiles[3] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","3"),true);
         tiles[4] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","4"));
         tiles[5] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","5"));
         tiles[6] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","6"));
