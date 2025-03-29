@@ -15,6 +15,7 @@ public class VisualEntity extends Entity implements Drawable {
     public Map<String, Sprite> sprites;
     public String currentSpriteKey = null;
     public Vec2 screenPosition;
+    public boolean drawHitbox;
     //public Map<String,List<temp.Hitbox>> hitboxes;
     public GamePanel gamePanel;
 
@@ -25,13 +26,14 @@ public class VisualEntity extends Entity implements Drawable {
         this.screenPosition = screenPosition;
     }
 
-    public VisualEntity(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox, GamePanel gamePanel, String currentSpriteKey) {
+    public VisualEntity(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox, GamePanel gamePanel, String currentSpriteKey,boolean drawHitbox) {
         super(worldPosition);
         this.sprites = new HashMap<String, Sprite>();
         this.gamePanel = gamePanel;
         this.currentSpriteKey = currentSpriteKey;
         this.screenPosition = screenPosition;
         this.hitbox = hitbox;
+        this.drawHitbox = drawHitbox;
     }
     VisualEntity(Vec2 worldPosition,Vec2 screenPosition, Map<String, Sprite> sprites, GamePanel gamePanel) {
         super(worldPosition);
@@ -86,6 +88,16 @@ public class VisualEntity extends Entity implements Drawable {
                     gamePanel.tileSize,
                     null
             );
+
+            if(drawHitbox == true) {
+                Rectangle hit = new Rectangle(screenPosition.getXInt() + hitbox.getBounds().x, screenPosition.getYInt() + hitbox.getBounds().y, hitbox.getBounds().width, hitbox.getBounds().height);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
+                g2.setColor(Color.BLUE);
+                g2.fill(hit);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 50% opacity
+                g2.setColor(Color.RED);
+                g2.draw(hit);
+            }
         }
     }
 }

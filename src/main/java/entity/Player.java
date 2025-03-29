@@ -33,6 +33,7 @@ public class Player extends Character{
                 ),
                 gamePanel,
                 "idle-down",
+                true,
                 6,
                 false
         );

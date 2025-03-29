@@ -11,8 +11,8 @@ public abstract class SuperObject extends VisualEntity {
 
     String name;
 
-    public SuperObject(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox, GamePanel gamePanel, String currentSpriteKey,String name) {
-        super(worldPosition,screenPosition,hitbox,gamePanel,currentSpriteKey);
+    public SuperObject(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox, GamePanel gamePanel, String currentSpriteKey,boolean drawHitbox,String name) {
+        super(worldPosition,screenPosition,hitbox,gamePanel,currentSpriteKey,drawHitbox);
         this.name = name;
     }
 
