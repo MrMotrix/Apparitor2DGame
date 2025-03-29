@@ -18,8 +18,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * max_screenCol;
     public final int screenHeight = tileSize * max_screenRow;
 
-    public final int maxWorldCol = 27;
-    public final int maxWorldRow = 24;
+    public final int maxWorldCol = 53;
+    public final int maxWorldRow = 31;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //game state
     public int gameState = 2;
-    public int pauseState = 0; //le pause state gere aussi l'affichage du menu
+    public int pauseState = 0; //pause state = menu state
     public int playState = 1;
     public int titleState = 2;
 
