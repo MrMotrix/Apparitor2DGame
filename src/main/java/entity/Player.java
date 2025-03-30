@@ -89,7 +89,8 @@ public class Player extends Character{
     public void pickUpObject(int index){
         if(index != 999) {
             gamePanel.obj[index].onPickUp();
-            gamePanel.obj[index] = null;
+            if(gamePanel.obj[index].isPeakable())
+                gamePanel.obj[index] = null;
         }
     }
 
