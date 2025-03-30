@@ -100,26 +100,22 @@ public class VisualEntity extends Entity implements Drawable {
             }
         }
 
-        if(    drawHitbox &&
-                this.worldPosition.getXInt() + this.hitbox.defaultBoundsX+ gamePanel.tileSize > gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() &&
-                this.worldPosition.getXInt() + this.hitbox.defaultBoundsX- gamePanel.tileSize < gamePanel.player.worldPosition.getXInt() + gamePanel.player.screenPosition.getXInt() &&
-                this.worldPosition.getYInt() + this.hitbox.defaultBoundsY+ gamePanel.tileSize > gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() &&
-                this.worldPosition.getYInt() + this.hitbox.defaultBoundsY- gamePanel.tileSize < gamePanel.player.worldPosition.getYInt() + gamePanel.player.screenPosition.getYInt()
-        ){
+        boolean shouldDraw = false;
+        if(drawHitbox) {
+            for(int i =0;i<this.hitbox.getBounds().xpoints.length && !shouldDraw; i++){
+                if(this.worldPosition.getXInt() + this.hitbox.getBounds().xpoints[i] > gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() &&
+                        this.worldPosition.getXInt() + this.hitbox.getBounds().xpoints[i]- gamePanel.tileSize < gamePanel.player.worldPosition.getXInt() + gamePanel.player.screenPosition.getXInt() &&
+                        this.worldPosition.getYInt() + this.hitbox.getBounds().ypoints[i]+ gamePanel.tileSize > gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() &&
+                        this.worldPosition.getYInt() + this.hitbox.getBounds().ypoints[i]- gamePanel.tileSize < gamePanel.player.worldPosition.getYInt() + gamePanel.player.screenPosition.getYInt()
+                ){
+                    shouldDraw = true;
+                }
+            }
+        }
+
+        if(shouldDraw) {
             drawHitbox(g2);
         }
-            /*if(drawHitbox == true) {
-                Rectangle hit = new Rectangle(screenPosition.getXInt() + hitbox.getBounds().x, screenPosition.getYInt() + hitbox.getBounds().y, hitbox.getBounds().width, hitbox.getBounds().height);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
-                g2.setColor(Color.BLUE);
-                g2.fill(hit);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 50% opacity
-                g2.setColor(Color.RED);
-                g2.draw(hit);
-            }*/
-
-
-
     }
 
     public void drawHitbox(Graphics2D g2) {
