@@ -30,7 +30,7 @@ public class Player extends Character{
                         32,
                         32,
                         HitboxState.DISABLED,
-                        HitboxType.SOLID
+                        HitboxType.NONE
                 ),
                 gamePanel,
                 "idle-down",
@@ -91,6 +91,8 @@ public class Player extends Character{
             gamePanel.obj[index].onPickUp();
             if(gamePanel.obj[index].isPeakable())
                 gamePanel.obj[index] = null;
+        }else{
+            hitbox.setType(HitboxType.NONE);
         }
     }
 

@@ -15,6 +15,7 @@ public class OBJ_Camera extends SuperObject {
 
     private double angle = 0;
     private double viewDistance;
+    public int detectCounter = 0;
 
     public OBJ_Camera(GamePanel gamePanel, Vec2 worldPosition,double viewDistance) {
         super(
@@ -109,7 +110,8 @@ public class OBJ_Camera extends SuperObject {
     public void update() {
         super.update();
 
-        angle += Math.toRadians(2); // Avancer sur le cercle
+        angle = (angle + Math.toRadians(2))%Math.PI; // Avancer sur le cercle
+        angle = 0;
         double radius = gamePanel.tileSize/2;
         int centerX = (int) worldPosition.x + (gamePanel.tileSize / 2);
         int centerY = (int) worldPosition.y + (gamePanel.tileSize / 2);
@@ -149,7 +151,12 @@ public class OBJ_Camera extends SuperObject {
 
     @Override
     public void onPickUp(){
-        gamePanel.player.healthPoints --;
+        if(gamePanel.player.hitbox.getType() == HitboxType.NONE || detectCounter == 180) {
+            gamePanel.player.hitbox.setType(HitboxType.HURTBOX);
+            gamePanel.player.healthPoints--;
+            detectCounter = 0;
+        }
+        detectCounter++;
         System.out.println(gamePanel.player.healthPoints);
     }
 }
