@@ -13,11 +13,13 @@ import java.awt.geom.AffineTransform;
 
 public class OBJ_Camera extends SuperObject {
 
-    private double angle = 0;
+    private double angle;
     private double viewDistance;
+    private double angleOffset;
+    private double angleRoationPerFrame;
     public int detectCounter = 0;
 
-    public OBJ_Camera(GamePanel gamePanel, Vec2 worldPosition,double viewDistance) {
+    public OBJ_Camera(GamePanel gamePanel, Vec2 worldPosition,double viewDistance,double initialAngleDegree,double angleRangeDegree, double angleDegreeRoationPerFrame) {
         super(
                 worldPosition,
                 new Vec2(0,0),
@@ -37,6 +39,9 @@ public class OBJ_Camera extends SuperObject {
         );
 
         this.viewDistance = viewDistance;
+        this.angle = Math.toRadians(initialAngleDegree);
+        this.angleOffset = Math.toRadians(angleRangeDegree);
+        this.angleRoationPerFrame = Math.toRadians(angleDegreeRoationPerFrame);
         super.hitbox.getBounds().addPoint(0,0);
         super.hitbox.getBounds().addPoint((int)(gamePanel.tileSize*viewDistance), gamePanel.tileSize/2);
         super.hitbox.getBounds().addPoint((int)(gamePanel.tileSize*viewDistance), -gamePanel.tileSize/2);
@@ -110,8 +115,7 @@ public class OBJ_Camera extends SuperObject {
     public void update() {
         super.update();
 
-        angle = (angle + Math.toRadians(2))%Math.PI; // Avancer sur le cercle
-        angle = 0;
+        angle = (angle + Math.toRadians(angleRoationPerFrame))%angleOffset; // Avancer sur le cercle
         double radius = gamePanel.tileSize/2;
         int centerX = (int) worldPosition.x + (gamePanel.tileSize / 2);
         int centerY = (int) worldPosition.y + (gamePanel.tileSize / 2);

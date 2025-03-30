@@ -45,7 +45,11 @@ public class AssetSetter {
                         10*gp.tileSize,
                         5*gp.tileSize
                 ),
-                2
+                2,
+                180,
+                180,
+                30
+
         );
     }
 }
