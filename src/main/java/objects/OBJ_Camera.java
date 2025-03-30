@@ -9,17 +9,27 @@ import temp.HitboxType;
 import tools.SpriteLibrary;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 public class OBJ_Camera extends SuperObject {
 
     private double angle;
     private double viewDistance;
     private double angleOffset;
-    private double angleRoationPerFrame;
+    private double angleRotationPerFrame;
+    private double width;
+    private double angleShift=0;
     public int detectCounter = 0;
+    private int direction = 1;
 
-    public OBJ_Camera(GamePanel gamePanel, Vec2 worldPosition,double viewDistance,double initialAngleDegree,double angleRangeDegree, double angleDegreeRoationPerFrame) {
+    /***********************
+
+     * angleDegreeRotationPerFrame = 0 => static camera
+     * angleRangeDegree = 0 && angleDegreeRotationPerFrame > 0 => 360 camera
+     * angleRangeDegree > 0 && angleDegreeRotationPerFrame > 0 => ping-pong camera
+
+     ************************/
+
+    public OBJ_Camera(GamePanel gamePanel, Vec2 worldPosition,double viewDistance,double width,double initialAngleDegree,double angleRangeDegree, double angleDegreeRotationPerFrame) {
         super(
                 worldPosition,
                 new Vec2(0,0),
@@ -41,10 +51,11 @@ public class OBJ_Camera extends SuperObject {
         this.viewDistance = viewDistance;
         this.angle = Math.toRadians(initialAngleDegree);
         this.angleOffset = Math.toRadians(angleRangeDegree);
-        this.angleRoationPerFrame = Math.toRadians(angleDegreeRoationPerFrame);
+        this.angleRotationPerFrame = Math.toRadians(angleDegreeRotationPerFrame);
+        this.width = width;
         super.hitbox.getBounds().addPoint(0,0);
-        super.hitbox.getBounds().addPoint((int)(gamePanel.tileSize*viewDistance), gamePanel.tileSize/2);
-        super.hitbox.getBounds().addPoint((int)(gamePanel.tileSize*viewDistance), -gamePanel.tileSize/2);
+        super.hitbox.getBounds().addPoint((int)(gamePanel.tileSize*viewDistance), (int)(width/2));
+        super.hitbox.getBounds().addPoint((int)(gamePanel.tileSize*viewDistance), (int)(-width/2));
 
 
         addSprite(
@@ -115,7 +126,21 @@ public class OBJ_Camera extends SuperObject {
     public void update() {
         super.update();
 
-        angle = (angle + Math.toRadians(angleRoationPerFrame))%angleOffset; // Avancer sur le cercle
+        if(direction==1) {
+            if((angleShift+angleRotationPerFrame)%angleOffset < angleShift){
+                direction *= -1;
+            }
+            angleShift+=angleRotationPerFrame;
+        }else{
+
+            if((angleShift+angleRotationPerFrame) < 0){
+                direction *= -1;
+            }
+            angleShift-=angleRotationPerFrame;
+        }
+
+        angle = angle + direction*angleRotationPerFrame; // Avancer sur le cercle
+
         double radius = gamePanel.tileSize/2;
         int centerX = (int) worldPosition.x + (gamePanel.tileSize / 2);
         int centerY = (int) worldPosition.y + (gamePanel.tileSize / 2);
@@ -124,8 +149,8 @@ public class OBJ_Camera extends SuperObject {
         double y1 = centerY + radius * Math.sin(angle);
 
         // Points du triangle avant rotation
-        double[] point2 = {gamePanel.tileSize * viewDistance, gamePanel.tileSize / 2};
-        double[] point3 = {gamePanel.tileSize * viewDistance, -gamePanel.tileSize / 2};
+        double[] point2 = {gamePanel.tileSize * viewDistance, width / 2};
+        double[] point3 = {gamePanel.tileSize * viewDistance, -width / 2};
 
         // Appliquer la rotation au triangle autour du premier point
         double[] rotated2 = rotatePoint(point2[0], point2[1], angle);
