@@ -17,6 +17,7 @@ public class Player extends Character{
     //public final int screenX;
     //public final int screenY;
     public int nbKey = 0;
+    public int healthPoints = 3;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
@@ -40,6 +41,10 @@ public class Player extends Character{
 
         this.keyHandler = keyHandler;
         super.direction = Direction.DOWN;
+        super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY);
+        super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY);
+        super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY + hitbox.height);
+        super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY + hitbox.height);
         loadSprites();
     }
 
@@ -85,7 +90,6 @@ public class Player extends Character{
         if(index != 999) {
             gamePanel.obj[index].onPickUp();
             gamePanel.obj[index] = null;
-            System.out.println(nbKey);
         }
     }
 
@@ -114,7 +118,7 @@ public class Player extends Character{
         else handleIdleState();*/
         this.hitbox.setState(HitboxState.DISABLED);
         gamePanel.cChecker.checkTile(this);
-        int objIndex = gamePanel.cChecker.checkObejct(this,true);
+        int objIndex = gamePanel.cChecker.checkObject(this,true);
         pickUpObject(objIndex);
         if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
         super.update();

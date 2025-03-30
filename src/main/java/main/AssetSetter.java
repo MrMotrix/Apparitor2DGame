@@ -1,6 +1,7 @@
 package main;
 
 import math.Vec2;
+import objects.OBJ_Camera;
 import objects.OBJ_Key;
 
 public class AssetSetter {
@@ -34,6 +35,17 @@ public class AssetSetter {
                         5*gp.tileSize,
                         5*gp.tileSize
                 )
+        );
+
+        //CAMERA
+
+        gp.obj[3] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        10*gp.tileSize,
+                        5*gp.tileSize
+                ),
+                2
         );
     }
 }

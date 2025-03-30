@@ -2,6 +2,10 @@ package main;
 import entity.Character;
 import temp.HitboxState;
 
+import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.Polygon;
+import java.awt.geom.Area;
 public class CollisionChecker {
 
     GamePanel gp;
@@ -11,10 +15,18 @@ public class CollisionChecker {
     }
 
     public void checkTile(Character c) {
-        int cLeftWorldX = c.worldPosition.getXInt() + c.hitbox.getBounds().x;
-        int cRightWorldX = c.worldPosition.getXInt() + c.hitbox.getBounds().x + c.hitbox.getBounds().width;
-        int cTopWorldY = c.worldPosition.getYInt() + c.hitbox.getBounds().y;
-        int cBottomWorldY = c.worldPosition.getYInt() + c.hitbox.getBounds().y + c.hitbox.getBounds().height;
+
+        Rectangle bounds = new Rectangle(
+                c.hitbox.defaultBoundsX,
+                c.hitbox.defaultBoundsY,
+                c.hitbox.width,
+                c.hitbox.height
+        );
+
+        int cLeftWorldX = c.worldPosition.getXInt() + bounds.x;
+        int cRightWorldX = c.worldPosition.getXInt() + bounds.x + bounds.width;
+        int cTopWorldY = c.worldPosition.getYInt() + bounds.y;
+        int cBottomWorldY = c.worldPosition.getYInt() + bounds.y + bounds.height;
 
         int cLeftCol = cLeftWorldX / gp.tileSize;
         int cRightCol = cRightWorldX / gp.tileSize;
@@ -62,8 +74,7 @@ public class CollisionChecker {
                 break;
         }
     }
-
-    public int checkObejct(Character c, boolean player) {
+    /*public int checkObejct(Character c, boolean player) {
         int index =999;
 
         for(int i =0; i< gp.obj.length;i++){
@@ -124,6 +135,33 @@ public class CollisionChecker {
         }
 
         return index;
-    }
+    }*/
 
+    public int checkObject(Character c, boolean player) {
+        int index = 999; // Default value for no collision
+
+        for (int i = 0; i < gp.obj.length; i++) {
+            if (gp.obj[i] == null) continue;
+
+            // Get polygons instead of bounds
+            Polygon charPoly = c.hitbox.getPolygonAt(c.worldPosition);
+            Polygon objPoly = gp.obj[i].hitbox.getPolygonAt(gp.obj[i].worldPosition);
+
+            // Convert to Area for collision check
+            Area charArea = new Area(charPoly);
+            Area objArea = new Area(objPoly);
+
+            // Check intersection
+            charArea.intersect(objArea);
+            if (!charArea.isEmpty()) { // Collision detected
+                if (gp.obj[i].hitbox.getState() == HitboxState.ACTIVE) {
+                    c.hitbox.setState(HitboxState.ACTIVE);
+                }
+                if (player) index = i;
+
+                System.out.println("Object collision detected");
+            }
+        }
+        return index;
+    }
 }

@@ -75,21 +75,40 @@ public class VisualEntity extends Entity implements Drawable {
         if(currentSpriteKey != null) {
             sprites.get(currentSpriteKey).update();
         }
+        screenPosition.set(
+                this.worldPosition.getXInt() - gamePanel.player.worldPosition.getXInt() + gamePanel.player.screenPosition.getXInt(),
+                this.worldPosition.getYInt() - gamePanel.player.worldPosition.getYInt() + gamePanel.player.screenPosition.getYInt()
+        );
     }
 
     @Override
     public void draw(Graphics2D g2) {
-        if(currentSpriteKey != null) {
-            g2.drawImage(
-                    sprites.get(currentSpriteKey).getSprite(),
-                    screenPosition.getXInt(),
-                    screenPosition.getYInt(),
-                    gamePanel.tileSize,
-                    gamePanel.tileSize,
-                    null
-            );
+        if(     this.worldPosition.getXInt() + gamePanel.tileSize > gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() &&
+                this.worldPosition.getXInt() - gamePanel.tileSize < gamePanel.player.worldPosition.getXInt() + gamePanel.player.screenPosition.getXInt() &&
+                this.worldPosition.getYInt() + gamePanel.tileSize > gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() &&
+                this.worldPosition.getYInt() - gamePanel.tileSize < gamePanel.player.worldPosition.getYInt() + gamePanel.player.screenPosition.getYInt()
+        ) {
+            if (currentSpriteKey != null) {
+                g2.drawImage(
+                        sprites.get(currentSpriteKey).getSprite(),
+                        screenPosition.getXInt(),
+                        screenPosition.getYInt(),
+                        gamePanel.tileSize,
+                        gamePanel.tileSize,
+                        null
+                );
+            }
+        }
 
-            if(drawHitbox == true) {
+        if(    drawHitbox &&
+                this.worldPosition.getXInt() + this.hitbox.defaultBoundsX+ gamePanel.tileSize > gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() &&
+                this.worldPosition.getXInt() + this.hitbox.defaultBoundsX- gamePanel.tileSize < gamePanel.player.worldPosition.getXInt() + gamePanel.player.screenPosition.getXInt() &&
+                this.worldPosition.getYInt() + this.hitbox.defaultBoundsY+ gamePanel.tileSize > gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() &&
+                this.worldPosition.getYInt() + this.hitbox.defaultBoundsY- gamePanel.tileSize < gamePanel.player.worldPosition.getYInt() + gamePanel.player.screenPosition.getYInt()
+        ){
+            drawHitbox(g2);
+        }
+            /*if(drawHitbox == true) {
                 Rectangle hit = new Rectangle(screenPosition.getXInt() + hitbox.getBounds().x, screenPosition.getYInt() + hitbox.getBounds().y, hitbox.getBounds().width, hitbox.getBounds().height);
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
                 g2.setColor(Color.BLUE);
@@ -97,7 +116,27 @@ public class VisualEntity extends Entity implements Drawable {
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 50% opacity
                 g2.setColor(Color.RED);
                 g2.draw(hit);
-            }
+            }*/
+
+
+
+    }
+
+    public void drawHitbox(Graphics2D g2) {
+        if (drawHitbox) {
+            // Get the transformed polygon for drawing
+            Polygon hitboxPolygon = hitbox.getTransformedPolygon(screenPosition);
+
+            // Set the opacity and color for filling
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
+            g2.setColor(Color.BLUE);
+            g2.fill(hitboxPolygon);  // Draw filled polygon
+
+            // Reset opacity and set the color for the outline
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 100% opacity
+            g2.setColor(Color.RED);
+            g2.draw(hitboxPolygon);  // Draw polygon outline
         }
+
     }
 }

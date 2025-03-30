@@ -28,6 +28,11 @@ public class OBJ_Key extends SuperObject{
                 "key"
         );
 
+        hitbox.getBounds().addPoint(0,0);
+        hitbox.getBounds().addPoint(gamePanel.tileSize,0);
+        hitbox.getBounds().addPoint(gamePanel.tileSize,gamePanel.tileSize);
+        hitbox.getBounds().addPoint(0,gamePanel.tileSize);
+
         addSprite(
                 name,
                 new Sprite(
