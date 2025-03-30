@@ -31,6 +31,7 @@ public class OBJ_Camera extends SuperObject {
                 gamePanel,
                 "key",
                 true,
+                false,
                 "key"
         );
 
