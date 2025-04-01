@@ -118,11 +118,17 @@ public class VisualEntity extends Entity implements Drawable {
             drawHitbox(g2);
         }*/
         if(drawHitbox) {
+
+            Vec2 screenWorldPosition = new Vec2(
+                    gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt(),
+                    gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt()
+            );
+
             Polygon screenPoly = new Polygon();
-            screenPoly.addPoint(gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt(), gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt());
-            screenPoly.addPoint(gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() + gamePanel.screenWidth,gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt());
-            screenPoly.addPoint(gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() + gamePanel.screenWidth, gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() + gamePanel.screenHeight);
-            screenPoly.addPoint(gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt(), gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() + gamePanel.screenHeight);
+            screenPoly.addPoint(screenWorldPosition.getXInt(), screenWorldPosition.getYInt());
+            screenPoly.addPoint(screenWorldPosition.getXInt() + gamePanel.screenWidth,screenWorldPosition.getYInt());
+            screenPoly.addPoint(screenWorldPosition.getXInt() + gamePanel.screenWidth, screenWorldPosition.getYInt() + gamePanel.screenHeight);
+            screenPoly.addPoint(screenWorldPosition.getXInt(), screenWorldPosition.getYInt()+ gamePanel.screenHeight);
 
             Polygon visualEntityPoly = this.hitbox.getPolygonAt(worldPosition);
             // Convert to Area for collision check
