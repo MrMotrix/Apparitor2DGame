@@ -117,22 +117,23 @@ public class VisualEntity extends Entity implements Drawable {
         if(shouldDraw) {
             drawHitbox(g2);
         }*/
+        if(drawHitbox) {
+            Polygon screenPoly = new Polygon();
+            screenPoly.addPoint(gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt(), gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt());
+            screenPoly.addPoint(gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() + gamePanel.screenWidth,gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt());
+            screenPoly.addPoint(gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() + gamePanel.screenWidth, gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() + gamePanel.screenHeight);
+            screenPoly.addPoint(gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt(), gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() + gamePanel.screenHeight);
 
-        Polygon screenPoly = new Polygon();
-        screenPoly.addPoint(worldPosition.getXInt(), worldPosition.getYInt());
-        screenPoly.addPoint(worldPosition.getXInt()+gamePanel.screenWidth, worldPosition.getYInt());
-        screenPoly.addPoint(worldPosition.getXInt()+gamePanel.screenWidth, worldPosition.getYInt()+gamePanel.screenHeight);
-        screenPoly.addPoint(worldPosition.getXInt(), worldPosition.getYInt()+gamePanel.screenHeight);
+            Polygon visualEntityPoly = this.hitbox.getPolygonAt(worldPosition);
+            // Convert to Area for collision check
+            Area screenArea = new Area(screenPoly);
+            Area visualEntityArea = new Area(visualEntityPoly);
 
-        Polygon visualEntityPoly = this.hitbox.getPolygonAt(worldPosition);
-        // Convert to Area for collision check
-        Area screenArea = new Area(screenPoly);
-        Area  visualEntityArea = new Area(visualEntityPoly);
-
-        // Check intersection
-        screenArea.intersect(visualEntityArea);
-        if (!screenArea.isEmpty()) {// Collision detected
-            drawHitbox(g2);
+            // Check intersection
+            screenArea.intersect(visualEntityArea);
+            if (!screenArea.isEmpty()) {// Collision detected
+                drawHitbox(g2);
+            }
         }
     }
 
