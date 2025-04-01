@@ -1,5 +1,8 @@
+import org.gradle.api.plugins.JavaApplication
+
 plugins {
     id("java")
+    id("application")
 }
 
 group = ""
@@ -17,4 +20,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+configure<JavaApplication> {
+    mainClass.set("main.Main")
 }
