@@ -171,6 +171,30 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    public void drawFog(Graphics2D g2) {
+        int centerX = screenWidth / 2;
+        int centerY = screenHeight / 2;
+        float radius = Math.min(screenWidth, screenHeight) / 3.0f; // Rayon du spot lumineux
+        int TILE_SIZE = 16;
+        int MAX_OPACITY = 255;
+
+        // Dessiner la grille de carrés noirs avec opacité variable
+        for (int x = 0; x < screenWidth; x += TILE_SIZE) {
+            for (int y = 0; y < screenHeight; y += TILE_SIZE) {
+                // Calculer la distance du centre à ce carré
+                double distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+
+                // Opacité 0% au centre, 100% au-delà du rayon
+                float opacity = (float) Math.min(1, distance / radius);
+                int alpha = (int) (opacity * MAX_OPACITY);
+
+                // Dessiner le carré noir avec une opacité variable
+                g2.setColor(new Color(0, 0, 0, alpha));
+                g2.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+            }
+        }
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
@@ -189,6 +213,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2);
 
+        drawFog(g2);
+
         if (gameState == pauseState) {
             menu.draw(g2);
         }
@@ -197,5 +223,6 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         g2.dispose();
+        Toolkit.getDefaultToolkit().sync();
     }
 }
