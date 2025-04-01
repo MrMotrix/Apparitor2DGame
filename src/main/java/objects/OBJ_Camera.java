@@ -42,10 +42,10 @@ public class OBJ_Camera extends SuperObject {
                         HitboxType.SOLID
                 ),
                 gamePanel,
-                "key",
+                "camera",
                 true,
                 false,
-                "key"
+                "camera"
         );
 
         this.viewDistance = viewDistance;

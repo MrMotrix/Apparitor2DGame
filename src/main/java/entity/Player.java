@@ -25,8 +25,8 @@ public class Player extends Character{
                 new Vec2(100,100),
                 new Vec2(gamePanel.screenWidth/2 - (gamePanel.tileSize/2),gamePanel.screenHeight/2 - (gamePanel.tileSize/2)),
                 new Hitbox(
-                        8,
-                        16,
+                        13,
+                        21,
                         32,
                         32,
                         HitboxState.DISABLED,

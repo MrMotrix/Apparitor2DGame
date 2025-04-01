@@ -7,6 +7,7 @@ import math.Vec2;
 import temp.Hitbox;
 
 import java.awt.*;
+import java.awt.geom.Area;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,7 +101,7 @@ public class VisualEntity extends Entity implements Drawable {
             }
         }
 
-        boolean shouldDraw = false;
+        /*boolean shouldDraw = false;
         if(drawHitbox) {
             for(int i =0;i<this.hitbox.getBounds().xpoints.length && !shouldDraw; i++){
                 if(this.worldPosition.getXInt() + this.hitbox.getBounds().xpoints[i] > gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() &&
@@ -114,6 +115,23 @@ public class VisualEntity extends Entity implements Drawable {
         }
 
         if(shouldDraw) {
+            drawHitbox(g2);
+        }*/
+
+        Polygon screenPoly = new Polygon();
+        screenPoly.addPoint(worldPosition.getXInt(), worldPosition.getYInt());
+        screenPoly.addPoint(worldPosition.getXInt()+gamePanel.screenWidth, worldPosition.getYInt());
+        screenPoly.addPoint(worldPosition.getXInt()+gamePanel.screenWidth, worldPosition.getYInt()+gamePanel.screenHeight);
+        screenPoly.addPoint(worldPosition.getXInt(), worldPosition.getYInt()+gamePanel.screenHeight);
+
+        Polygon visualEntityPoly = this.hitbox.getPolygonAt(worldPosition);
+        // Convert to Area for collision check
+        Area screenArea = new Area(screenPoly);
+        Area  visualEntityArea = new Area(visualEntityPoly);
+
+        // Check intersection
+        screenArea.intersect(visualEntityArea);
+        if (!screenArea.isEmpty()) {// Collision detected
             drawHitbox(g2);
         }
     }

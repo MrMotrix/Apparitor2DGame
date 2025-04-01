@@ -48,6 +48,14 @@ public class SpriteLibrary {
                     )
             );
 
+            addSprites(
+                    "world",
+                    SpriteJSONExtractor.getSprites(
+                            basePath+"objects/camera.json",
+                            basePath+"objects/camera.png"
+                    )
+            );
+
         } catch (IOException e) {
             System.err.println("Error loading sprites: " + e.getMessage());
             e.printStackTrace();
