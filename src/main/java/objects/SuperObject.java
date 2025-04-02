@@ -15,6 +15,10 @@ public abstract class SuperObject extends VisualEntity {
         super(worldPosition,screenPosition,hitbox,gamePanel,currentSpriteKey,drawHitbox);
         this.name = name;
         this.peakable = peakable;
+        screenPosition.set(
+                this.worldPosition.getXInt() - gamePanel.player.worldPosition.getXInt() + gamePanel.player.screenPosition.getXInt(),
+                this.worldPosition.getYInt() - gamePanel.player.worldPosition.getYInt() + gamePanel.player.screenPosition.getYInt()
+        );
     }
 
     public abstract void onPickUp();
