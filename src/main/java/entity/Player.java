@@ -113,6 +113,10 @@ public class Player extends Character{
         else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
         else handleIdleState();
 
+        if(keyHandler.sprintPressed)
+            speed = defaultSpeed*1.3;
+        else speed = defaultSpeed;
+
         /*
         //DIAGONAL MOVEMENT IF ACTIVE CHECK HITBOX ISSUE
         if(handleDiagonalMovement()){}
