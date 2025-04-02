@@ -255,6 +255,7 @@ public class GamePanel extends JPanel implements Runnable {
             inventory.draw(g2);
         }
 
+
         if (gameState == pauseState) {
             menu.draw(g2);
         }
