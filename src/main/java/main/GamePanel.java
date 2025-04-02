@@ -202,16 +202,17 @@ public class GamePanel extends JPanel implements Runnable {
         }
         // Cut out a polygon shape where we want to see through (Test Pour Camera)
         //faudra itérer sur les hitbox visible dans le noir
-        if (obj[3] != null && obj[3].hitbox != null) {
-            fogG.setComposite(AlphaComposite.DstOut); // This makes the polygon transparent
-            fogG.fill(obj[3].hitbox.getPolygonAt(obj[3].screenPosition));
+
+        for(int i = 3; i <= 5 ; i++) {
+            if (obj[i] != null && obj[i].hitbox != null) {
+                fogG.setComposite(AlphaComposite.DstOut); // This makes the polygon transparent
+                fogG.fill(obj[i].hitbox.getPolygonAt(obj[i].screenPosition));
+            }
         }
 
-        fogG.dispose();
-    }
 
-    private void initFog() {
-        fogImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+
+        fogG.dispose();
     }
 
     public void paintComponent(Graphics g) {

@@ -49,6 +49,34 @@ public class AssetSetter {
                 128,
                 0,
                 180,
+                2
+
+        );
+
+        gp.obj[4] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        16*gp.tileSize,
+                        5*gp.tileSize
+                ),
+                9,
+                90,
+                90,
+                90,
+                2
+
+        );
+
+        gp.obj[5] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        10*gp.tileSize,
+                        20*gp.tileSize
+                ),
+                2,
+                1,
+                0,
+                0,
                 3
 
         );

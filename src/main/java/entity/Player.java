@@ -126,6 +126,10 @@ public class Player extends Character{
         int objIndex = gamePanel.cChecker.checkObject(this,true);
         pickUpObject(objIndex);
         if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
+
+        if(keyHandler.sprintPressed) super.sprint = true;
+        else super.sprint = false;
+
         super.update();
     }
 
