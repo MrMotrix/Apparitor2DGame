@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import entity.Player;
@@ -22,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int worldHeight = tileSize * maxWorldRow;
 
     private final int FPS = 60;
+    private BufferedImage fogImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);;
 
     private Thread gameThread;
     public KeyHandler keyH;
@@ -172,10 +174,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void drawFog(Graphics2D g2) {
+        // Get graphics context for the fog image
+        Graphics2D fogG = fogImage.createGraphics();
+
+        // Reset fog (fully black)
+        fogG.setComposite(AlphaComposite.Src);
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
         float radius = Math.min(screenWidth, screenHeight) / 3.0f; // Rayon du spot lumineux
-        int TILE_SIZE = 16;
+        int TILE_SIZE = 8;
         int MAX_OPACITY = 255;
 
         // Dessiner la grille de carrés noirs avec opacité variable
@@ -189,10 +196,22 @@ public class GamePanel extends JPanel implements Runnable {
                 int alpha = (int) (opacity * MAX_OPACITY);
 
                 // Dessiner le carré noir avec une opacité variable
-                g2.setColor(new Color(0, 0, 0, alpha));
-                g2.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                fogG.setColor(new Color(0, 0, 0, alpha));
+                fogG.fillRect(x, y, TILE_SIZE, TILE_SIZE);
             }
         }
+        // Cut out a polygon shape where we want to see through (Test Pour Camera)
+        //faudra itérer sur les hitbox visible dans le noir
+        if (obj[3] != null && obj[3].hitbox != null) {
+            fogG.setComposite(AlphaComposite.DstOut); // This makes the polygon transparent
+            fogG.fill(obj[3].hitbox.getPolygonAt(obj[3].screenPosition));
+        }
+
+        fogG.dispose();
+    }
+
+    private void initFog() {
+        fogImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
     }
 
     public void paintComponent(Graphics g) {
@@ -215,6 +234,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
 
         drawFog(g2);
+        g2.drawImage(fogImage, 0, 0, null);
 
         if (gameState == pauseState) {
             menu.draw(g2);
