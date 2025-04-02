@@ -11,12 +11,14 @@ public class Hitbox {
     private HitboxType type;
     //private Rectangle bounds;
     private Polygon bounds;
+    public Color insideHitBoxColor;
+    public Color outsideHitBoxColor;
     public int width;
     public int height;
     public  int defaultBoundsX;
     public  int defaultBoundsY;
 
-    public Hitbox(int x, int y, int width, int height, HitboxState state,HitboxType type) {
+    public Hitbox(int x, int y, int width, int height, HitboxState state,HitboxType type, Color insideHitBoxColor, Color outsideHitBoxColor) {
         this.state = state;
         this.type = type;
         //this.bounds = new Rectangle(x, y, width, height);
@@ -29,6 +31,8 @@ public class Hitbox {
         this.defaultBoundsY = y;
         this.width = width;
         this.height = height;
+        this.insideHitBoxColor = insideHitBoxColor;
+        this.outsideHitBoxColor = outsideHitBoxColor;
     }
 
     /*public void updatePosition(int x, int y) {

@@ -30,7 +30,9 @@ public class Player extends Character{
                         32,
                         32,
                         HitboxState.DISABLED,
-                        HitboxType.NONE
+                        HitboxType.NONE,
+                        Color.GREEN,
+                        Color.YELLOW
                 ),
                 gamePanel,
                 "idle-down",
