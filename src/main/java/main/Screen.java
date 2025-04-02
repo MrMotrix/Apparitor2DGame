@@ -26,7 +26,16 @@ public abstract class Screen {
         g2.drawString(text, gamePanel.screenWidth / 2 - 60, gamePanel.screenHeight / 2 + yOffset);
     }
 
+    protected void drawMenuOption(Graphics2D g2, String text, int menuY, int menuX) {
+        g2.drawString(text, menuX , menuY );
+    }
+
+
     protected void drawMenuBox(Graphics2D g2, int yOffset) {
+        g2.drawRect(menuX, menuY + yOffset, menuWidth, optionHeight);
+    }
+
+    protected void drawMenuBox(Graphics2D g2, int yOffset, int menuX, int menuY) {
         g2.drawRect(menuX, menuY + yOffset, menuWidth, optionHeight);
     }
 
@@ -46,7 +55,7 @@ public abstract class Screen {
         }
     }
 
-    public abstract void firstOption();
-    public abstract void secondOption();
-    public abstract void thirdOption();
+    public void firstOption(){};
+    public void secondOption(){};
+    public void thirdOption(){};
 }

@@ -47,7 +47,14 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
-
+        if(code == 73 ){
+            if(gp.gameState == gp.playState){
+                gp.gameState = gp.inventoryState;
+            }
+            else if(gp.gameState == gp.inventoryState){
+                gp.gameState = gp.playState;
+            }
+        }
 
     }
 

@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import entity.Player;
 import objects.SuperObject;
 import tile.TileManager;
+import entity.Inventory;
 
 public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 32;
@@ -36,12 +37,14 @@ public class GamePanel extends JPanel implements Runnable {
     public MouseHandler mouseH;
 
     public TitleScreen titleScreen;
+    public InventoryScreen inventory;
 
     //game state
     public int gameState = 2;
     public int pauseState = 0; //pause state = menu state
     public int playState = 1;
     public int titleState = 2;
+    public int inventoryState = 3;
 
 
     public GamePanel() {
@@ -58,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addMouseListener(mouseH);
         this.titleScreen = new TitleScreen(this);
         this.aSetter = new AssetSetter(this);
+        this.inventory = new InventoryScreen(this,player.getInventory());
     }
 
     public void setupGame() {
@@ -137,7 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= 1_000_000_000) { // Affiche le nombre de FPS toutes les secondes
-                System.out.println("FPS: " + frames);
+                //System.out.println("FPS: " + frames);
                 frames = 0;
                 timer = 0;
             }
@@ -169,13 +173,20 @@ public class GamePanel extends JPanel implements Runnable {
             titleScreen.checkClick(mouseH.getLastClick());
             mouseH.resetLastClick();
         }
+        else if(gameState == inventoryState) {
+            player.update();
+            for(int i = 0; i < obj.length; i++) {
+                if(obj[i] != null)
+                    obj[i].update();
+            }
+        }
     }
 
     public void drawFog(Graphics2D g2) {
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
         float radius = Math.min(screenWidth, screenHeight) / 3.0f; // Rayon du spot lumineux
-        int TILE_SIZE = 16;
+        int TILE_SIZE = 8;
         int MAX_OPACITY = 255;
 
         // Dessiner la grille de carrés noirs avec opacité variable
@@ -214,7 +225,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2);
 
+
         drawFog(g2);
+
+        if (gameState == inventoryState) {
+            inventory.draw(g2);
+
+        }
 
         if (gameState == pauseState) {
             menu.draw(g2);
@@ -222,6 +239,7 @@ public class GamePanel extends JPanel implements Runnable {
         else if(gameState == titleState) {
             titleScreen.draw(g2);
         }
+
 
         g2.dispose();
         Toolkit.getDefaultToolkit().sync();

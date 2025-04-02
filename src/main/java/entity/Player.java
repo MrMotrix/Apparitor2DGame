@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.HierarchyBoundsAdapter;
 import java.nio.file.Paths;
 import java.util.List;
+import objects.SuperObject;
 
 public class Player extends Character{
     private KeyHandler keyHandler;
@@ -18,6 +19,7 @@ public class Player extends Character{
     //public final int screenY;
     public int nbKey = 0;
     public int healthPoints = 3;
+    private Inventory inventory;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
@@ -39,6 +41,7 @@ public class Player extends Character{
                 false
         );
 
+        this.inventory = new Inventory(10);
         this.keyHandler = keyHandler;
         super.direction = Direction.DOWN;
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY);
@@ -46,6 +49,10 @@ public class Player extends Character{
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY + hitbox.height);
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY + hitbox.height);
         loadSprites();
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     private boolean handleDiagonalMovement() {
@@ -87,10 +94,14 @@ public class Player extends Character{
     }
 
     public void pickUpObject(int index){
-        if(index != 999) {
-            gamePanel.obj[index].onPickUp();
-            if(gamePanel.obj[index].isPeakable())
-                gamePanel.obj[index] = null;
+        if (index != 999) {
+            SuperObject pickedObject = gamePanel.obj[index];
+            pickedObject.onPickUp();
+
+            if (pickedObject.isPeakable()) {
+                inventory.addItem(pickedObject); // Ajout de l'objet à l'inventaire
+                gamePanel.obj[index] = null; // Suppression de l'objet du tableau
+            }
         }else{
             hitbox.setType(HitboxType.NONE);
         }
