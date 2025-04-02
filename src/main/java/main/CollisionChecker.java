@@ -37,7 +37,7 @@ public class CollisionChecker {
 
         switch (c.direction){
             case UP:
-                cTopRow = (int)((cTopWorldY - c.speed)/gp.tileSize);
+                cTopRow = ((cTopWorldY - c.speed)/gp.tileSize);
                 tileNum1 = gp.tileManager.mapTileNum[cLeftCol][cTopRow];
                 tileNum2 = gp.tileManager.mapTileNum[cRightCol][cTopRow];
 
@@ -46,7 +46,7 @@ public class CollisionChecker {
                 }
                 break;
             case DOWN:
-                cBottomRow = (int)((cBottomWorldY + c.speed)/gp.tileSize);
+                cBottomRow = ((cBottomWorldY + c.speed)/gp.tileSize);
                 tileNum1 = gp.tileManager.mapTileNum[cLeftCol][cBottomRow];
                 tileNum2 = gp.tileManager.mapTileNum[cRightCol][cBottomRow];
 
@@ -55,7 +55,7 @@ public class CollisionChecker {
                 }
                 break;
             case LEFT:
-                cLeftCol = (int)((cLeftWorldX - c.speed)/gp.tileSize);
+                cLeftCol = ((cLeftWorldX - c.speed)/gp.tileSize);
                 tileNum1 = gp.tileManager.mapTileNum[cLeftCol][cTopRow];
                 tileNum2 = gp.tileManager.mapTileNum[cLeftCol][cBottomRow];
 
@@ -64,7 +64,7 @@ public class CollisionChecker {
                 }
                 break;
             case RIGHT:
-                cRightCol = (int)((cRightWorldX + c.speed)/gp.tileSize);
+                cRightCol = ((cRightWorldX + c.speed)/gp.tileSize);
                 tileNum1 = gp.tileManager.mapTileNum[cRightCol][cTopRow];
                 tileNum2 = gp.tileManager.mapTileNum[cRightCol][cBottomRow];
 

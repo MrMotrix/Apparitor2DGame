@@ -125,7 +125,7 @@ public class Player extends Character{
         else handleIdleState();
 
         if(keyHandler.sprintPressed)
-            speed = defaultSpeed*1.3;
+            speed = defaultSpeed+2;
         else speed = defaultSpeed;
 
         /*
