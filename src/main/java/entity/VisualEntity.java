@@ -150,12 +150,12 @@ public class VisualEntity extends Entity implements Drawable {
 
             // Set the opacity and color for filling
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
-            g2.setColor(Color.BLUE);
+            g2.setColor(hitbox.insideHitBoxColor);
             g2.fill(hitboxPolygon);  // Draw filled polygon
 
             // Reset opacity and set the color for the outline
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 100% opacity
-            g2.setColor(Color.RED);
+            g2.setColor(hitbox.outsideHitBoxColor);
             g2.draw(hitboxPolygon);  // Draw polygon outline
         }
 

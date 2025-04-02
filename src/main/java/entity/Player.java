@@ -32,7 +32,9 @@ public class Player extends Character{
                         32,
                         32,
                         HitboxState.DISABLED,
-                        HitboxType.NONE
+                        HitboxType.NONE,
+                        Color.GREEN,
+                        Color.YELLOW
                 ),
                 gamePanel,
                 "idle-down",
@@ -122,6 +124,10 @@ public class Player extends Character{
         else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
         else handleIdleState();
 
+        if(keyHandler.sprintPressed)
+            speed = defaultSpeed*1.3;
+        else speed = defaultSpeed;
+
         /*
         //DIAGONAL MOVEMENT IF ACTIVE CHECK HITBOX ISSUE
         if(handleDiagonalMovement()){}
@@ -135,6 +141,10 @@ public class Player extends Character{
         int objIndex = gamePanel.cChecker.checkObject(this,true);
         pickUpObject(objIndex);
         if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
+
+        if(keyHandler.sprintPressed) super.sprint = true;
+        else super.sprint = false;
+
         super.update();
     }
 

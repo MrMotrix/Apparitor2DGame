@@ -39,7 +39,9 @@ public class OBJ_Camera extends SuperObject {
                         0,
                         0,
                         HitboxState.DISABLED,
-                        HitboxType.SOLID
+                        HitboxType.SOLID,
+                        Color.RED,
+                        Color.RED
                 ),
                 gamePanel,
                 "camera",

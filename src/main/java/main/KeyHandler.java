@@ -9,6 +9,7 @@ public class KeyHandler implements KeyListener {
     public boolean leftPressed;
     public boolean rightPressed;
     public boolean actionPressed;
+    public boolean sprintPressed;
     public GamePanel gp;
     public KeyHandler(GamePanel gp) {
         this.gp = gp;
@@ -36,6 +37,9 @@ public class KeyHandler implements KeyListener {
         }
         if (code == 69) {
             this.actionPressed = true;
+        }
+        if(code == 16){
+            this.sprintPressed = true;
         }
 
 
@@ -71,6 +75,9 @@ public class KeyHandler implements KeyListener {
         }
         if (code == 81) {
             this.leftPressed = false;
+        }
+        if(code == 16){
+            this.sprintPressed = false;
         }
 
     }

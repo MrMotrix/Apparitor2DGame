@@ -8,6 +8,8 @@ import temp.HitboxState;
 import temp.HitboxType;
 import tools.SpriteLibrary;
 
+import java.awt.*;
+
 public class OBJ_Key extends SuperObject{
 
     public OBJ_Key(GamePanel gamePanel,Vec2 worldPosition) {
@@ -20,7 +22,9 @@ public class OBJ_Key extends SuperObject{
                         64,
                         64,
                         HitboxState.DISABLED,
-                        HitboxType.SOLID
+                        HitboxType.SOLID,
+                        Color.BLUE,
+                        Color.RED
                 ),
                 gamePanel,
                 "key",
