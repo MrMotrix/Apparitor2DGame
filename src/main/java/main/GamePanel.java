@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int pauseState = 0; //pause state = menu state
     public int playState = 1;
     public int titleState = 2;
-    public int inventoryState = 3;
+    public boolean inventoryState = false;
 
 
     public GamePanel() {
@@ -175,12 +175,14 @@ public class GamePanel extends JPanel implements Runnable {
             titleScreen.checkClick(mouseH.getLastClick());
             mouseH.resetLastClick();
         }
-        else if(gameState == inventoryState) {
+        else if(inventoryState == true){ {
             player.update();
             for(int i = 0; i < obj.length; i++) {
-                if(obj[i] != null)
+                if (obj[i] != null)
                     obj[i].update();
+
             }
+        }
         }
     }
 
@@ -249,14 +251,14 @@ public class GamePanel extends JPanel implements Runnable {
         drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
 
-        if (gameState == inventoryState) {
+        if (inventoryState == true) {
             inventory.draw(g2);
-
         }
 
         if (gameState == pauseState) {
             menu.draw(g2);
         }
+
         else if(gameState == titleState) {
             titleScreen.draw(g2);
         }

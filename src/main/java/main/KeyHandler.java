@@ -10,6 +10,7 @@ public class KeyHandler implements KeyListener {
     public boolean rightPressed;
     public boolean actionPressed;
     public boolean sprintPressed;
+    public boolean echapPressed;
     public GamePanel gp;
     public KeyHandler(GamePanel gp) {
         this.gp = gp;
@@ -44,19 +45,20 @@ public class KeyHandler implements KeyListener {
 
 
         if (code == 27) { //27 = échape
-            if(gp.gameState == gp.playState){
-                gp.gameState = gp.pauseState;
-            }
-            else if(gp.gameState == gp.pauseState){
+
+           if(gp.gameState == gp.playState){
+               gp.gameState = gp.pauseState;
+         }
+           else if(gp.gameState == gp.pauseState){
                 gp.gameState = gp.playState;
-            }
+           }
         }
         if(code == 73 ){
-            if(gp.gameState == gp.playState){
-                gp.gameState = gp.inventoryState;
+            if(gp.inventoryState == false){
+                gp.inventoryState = true;
             }
-            else if(gp.gameState == gp.inventoryState){
-                gp.gameState = gp.playState;
+            else{
+                gp.inventoryState = false;
             }
         }
 

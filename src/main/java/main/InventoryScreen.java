@@ -13,8 +13,6 @@ public class InventoryScreen extends Screen {
     private static final int SPRITE_SIZE = 32;
     private static final int PADDING = 10;
 
-
-
     public int MenuX = 10;
     public int MenuY = 10;
 
@@ -43,7 +41,7 @@ public class InventoryScreen extends Screen {
             else {
                 g2.setColor(Color.WHITE);
             }
-            drawMenuBox(g2, i * optionHeight, menuY -300, menuX -250);
+            drawMenuBox(g2, i * optionHeight, menuY -200, menuX -250);
 
             if (item.getSprite() != null) {
                 g2.drawImage(
