@@ -2,8 +2,8 @@ package main;
 
 import java.awt.*;
 import javax.swing.JPanel;
+
 import entity.Player;
-import objects.OBJ_Key;
 import objects.SuperObject;
 import tile.TileManager;
 
@@ -210,6 +210,7 @@ public class GamePanel extends JPanel implements Runnable {
             if(obj[i] != null)
                 obj[i].draw(g2);
         }
+
 
         player.draw(g2);
 
