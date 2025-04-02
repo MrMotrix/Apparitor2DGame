@@ -8,7 +8,7 @@ public class TitleScreen extends Screen {
 
     @Override
     public void draw(Graphics2D g2) {
-        g2.setColor(new Color(0, 0, 0));
+        g2.setColor(new Color(6, 21, 43));
         g2.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
 
         g2.setFont(new Font("Arial", Font.BOLD, 30));

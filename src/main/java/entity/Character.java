@@ -11,6 +11,7 @@ public class Character extends VisualEntity {
     public Vec2 velocity;
     public int speed;
     public Direction direction;
+    public String dialogue;
 
     public Character(Vec2 worldPosition,Vec2 screenPosition, GamePanel gamePanel, int speed, boolean isStatic) {
         super(worldPosition,screenPosition, gamePanel);
@@ -25,6 +26,16 @@ public class Character extends VisualEntity {
         this.velocity = new Vec2(0, 0);
         this.isStatic = isStatic;
     }
+
+    public Character(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox,String dialogue, GamePanel gamePanel, String currentSpriteKey,boolean drawHitbox, int speed, boolean isStatic) {
+        super(worldPosition,screenPosition ,hitbox,gamePanel,currentSpriteKey,drawHitbox);
+        this.speed = speed;
+        this.velocity = new Vec2(0, 0);
+        this.isStatic = isStatic;
+        this.dialogue = dialogue;
+    }
+
+
 
     public void setDirection(Direction direction) {
         this.direction = direction;
