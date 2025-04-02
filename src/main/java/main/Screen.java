@@ -26,7 +26,7 @@ public abstract class Screen {
         g2.drawString(text, gamePanel.screenWidth / 2 - 60, gamePanel.screenHeight / 2 + yOffset);
     }
 
-    protected void drawMenuOption(Graphics2D g2, String text, int menuY, int menuX) {
+    protected void drawMenuOption(Graphics2D g2, String text, int menuX, int menuY) {
         g2.drawString(text, menuX , menuY );
     }
 
