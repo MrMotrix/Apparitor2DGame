@@ -1,6 +1,8 @@
 package main;
 
 import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
@@ -32,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker;
     public AssetSetter aSetter;
     public Player player;
-    public SuperObject obj[] = new SuperObject[10];
+    public SuperObject obj[] = new SuperObject[100];
 
 
     public Menu menu;
@@ -178,44 +180,33 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void drawFog(Graphics2D g2) {
-        // Get graphics context for the fog image
         Graphics2D fogG = fogImage.createGraphics();
-
-        // Reset fog (fully black)
         fogG.setComposite(AlphaComposite.Src);
+
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
-        float radius = Math.min(screenWidth, screenHeight) / 3.0f; // Rayon du spot lumineux
-        int TILE_SIZE = 8;
-        int MAX_OPACITY = 255;
+        float radius = Math.min(screenWidth, screenHeight) / 4.0f; // Rayon du spot lumineux
 
-        // Dessiner la grille de carrés noirs avec opacité variable
-        for (int x = 0; x < screenWidth; x += TILE_SIZE) {
-            for (int y = 0; y < screenHeight; y += TILE_SIZE) {
-                // Calculer la distance du centre à ce carré
-                double distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+        // Dégradé radial pour simuler l’effet du brouillard
+        Point2D center = new Point2D.Float(centerX, centerY);
+        float[] dist = {0.0f, 1.0f}; // Début à 0% d'opacité, Fin à 100% d'opacité
+        Color[] colors = {new Color(0, 0, 0, 0), new Color(0, 0, 0, 255)}; // Transparent → Noir
 
-                // Opacité 0% au centre, 100% au-delà du rayon
-                float opacity = (float) Math.min(1, distance / radius);
-                int alpha = (int) (opacity * MAX_OPACITY);
+        RadialGradientPaint gradient = new RadialGradientPaint(center, radius, dist, colors);
+        fogG.setPaint(gradient);
+        fogG.fillRect(0, 0, screenWidth, screenHeight); // Appliquer le gradient sur toute la surface
 
-                // Dessiner le carré noir avec une opacité variable
-                fogG.setColor(new Color(0, 0, 0, alpha));
-                fogG.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-            }
-        }
-        // Cut out a polygon shape where we want to see through (Test Pour Camera)
-        //faudra itérer sur les hitbox visible dans le noir
-
-        for(int i = 3; i <= 5 ; i++) {
+        // Supprimer les zones visibles
+        Area visibleArea = new Area();
+        for (int i = 3; i < 100; i++) {
             if (obj[i] != null && obj[i].hitbox != null) {
-                fogG.setComposite(AlphaComposite.DstOut); // This makes the polygon transparent
-                fogG.fill(obj[i].hitbox.getPolygonAt(obj[i].screenPosition));
+                visibleArea.add(new Area(obj[i].hitbox.getPolygonAt(obj[i].screenPosition)));
             }
         }
 
-
-
+        // Rendre ces zones transparentes
+        fogG.setComposite(AlphaComposite.DstOut);
+        fogG.fill(visibleArea);
         fogG.dispose();
     }
 
