@@ -175,15 +175,7 @@ public class GamePanel extends JPanel implements Runnable {
             titleScreen.checkClick(mouseH.getLastClick());
             mouseH.resetLastClick();
         }
-        else if(inventoryState == true){ {
-            player.update();
-            for(int i = 0; i < obj.length; i++) {
-                if (obj[i] != null)
-                    obj[i].update();
 
-            }
-        }
-        }
     }
 
     public void drawFog(Graphics2D g2) {
