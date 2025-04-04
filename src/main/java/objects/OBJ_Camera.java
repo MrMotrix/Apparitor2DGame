@@ -188,6 +188,6 @@ public class OBJ_Camera extends SuperObject {
             detectCounter = 0;
         }
         detectCounter++;
-        System.out.println(gamePanel.player.healthPoints);
+        System.out.println("HP = "+gamePanel.player.healthPoints);
     }
 }

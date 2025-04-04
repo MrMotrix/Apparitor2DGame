@@ -12,6 +12,13 @@ public class AssetSetter {
         this.gp = gp;
     }
 
+
+    //METHODE JUSTE POUR GENERER DES OBJETS A DES POS ALEATOIRE SUR LA MAP
+    private int getRandom(int min, int max) {
+
+        return (int) (Math.random() * (max - min +1) + min);
+    }
+
     public void setObjects(){
         gp.obj[0] = new OBJ_Key(
                 gp,
@@ -80,5 +87,21 @@ public class AssetSetter {
                 3
 
         );
+
+        for(int i = 6;i<10;i++){
+            gp.obj[i] = new OBJ_Camera(
+                    gp,
+                    new Vec2(
+                            getRandom(0, gp.worldWidth),
+                            getRandom(0, gp.worldHeight)
+                    ),
+                    8,
+                    128,
+                    0,
+                    0,
+                    3
+
+            );
+        }
     }
 }

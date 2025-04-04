@@ -9,8 +9,8 @@ public class Character extends VisualEntity {
 
     public boolean isStatic; // false = can move, true = fix
     public Vec2 velocity;
-    public double defaultSpeed;
-    public double speed;
+    public int defaultSpeed;
+    public int speed;
     public boolean sprint;
     public Direction direction;
     public String dialogue;
