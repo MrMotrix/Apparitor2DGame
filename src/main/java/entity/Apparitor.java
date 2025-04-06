@@ -1,37 +1,31 @@
 package entity;
 
 import main.GamePanel;
-import main.KeyHandler;
 import math.Vec2;
-import tools.SpriteLibrary;
-import temp.*;
 import sprite.Sprite;
+import temp.*;
+import tools.SpriteLibrary;
 
 import java.awt.*;
-import java.awt.event.HierarchyBoundsAdapter;
+import java.awt.geom.Area;
 import java.nio.file.Paths;
 import java.util.List;
-import objects.SuperObject;
 
-public class Player extends Character{
-    private KeyHandler keyHandler;
-    //public final int screenX;
-    //public final int screenY;
-    public int nbKey = 0;
-    public int healthPoints = 3;
-    private Inventory inventory;
+public class Apparitor extends Character {
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
+    public VisionCone detectionZone;
+    public int detectCounter = 0;
 
+    public Apparitor(GamePanel gamePanel, double viewDistance, double width, double initialAngleDegree,double angleRangeDegree,double angleDegreeRotationPerFrame ) {
         super(
-                new Vec2(100,100),
+                new Vec2(164,100),
                 new Vec2(gamePanel.screenWidth/2 - (gamePanel.tileSize/2),gamePanel.screenHeight/2 - (gamePanel.tileSize/2)),
                 new Hitbox(
                         13,
                         21,
                         32,
                         32,
-                        HitboxState.DISABLED,
+                        HitboxState.ACTIVE,
                         HitboxType.NONE,
                         Color.GREEN,
                         Color.YELLOW
@@ -42,125 +36,90 @@ public class Player extends Character{
                 6,
                 false
         );
-
-        this.inventory = new Inventory(10);
-        this.keyHandler = keyHandler;
         super.direction = Direction.DOWN;
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY);
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY);
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY + hitbox.height);
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY + hitbox.height);
+
+        detectionZone = new VisionCone(
+                0,
+                0,
+                (int)width,
+                0,
+                HitboxState.DISABLED,
+                HitboxType.SOLID,
+                new Color(140, 120, 50),
+                new Color(20, 18, 10),
+                initialAngleDegree,
+                viewDistance,
+                angleRangeDegree,
+                angleDegreeRotationPerFrame,
+                super.gamePanel,
+                super.worldPosition
+        );
+
         loadSprites();
     }
 
-    public Inventory getInventory() {
-        return inventory;
+    public void onCollision() {
+        if(gamePanel.player.hitbox.getType() == HitboxType.NONE || detectCounter == 180) {
+            gamePanel.player.hitbox.setType(HitboxType.HURTBOX);
+            gamePanel.player.healthPoints--;
+            detectCounter = 0;
+        }
+        detectCounter++;
+        System.out.println("HP = "+gamePanel.player.healthPoints);
     }
 
-    private boolean handleDiagonalMovement() {
-        if (keyHandler.upPressed && keyHandler.leftPressed) {
-            setMovementInfo(Direction.UP, "up", -1, -1);
-            return true;
-        }
-        if (keyHandler.upPressed && keyHandler.rightPressed) {
-            setMovementInfo(Direction.UP, "up", 1, -1);
-            return true;
-        }
-        if (keyHandler.downPressed && keyHandler.leftPressed) {
-            setMovementInfo(Direction.DOWN, "down", -1, 1);
-            return true;
-        }
-        if (keyHandler.downPressed && keyHandler.rightPressed) {
-            setMovementInfo(Direction.DOWN, "down", 1, 1);
-            return true;
-        }
-        return false;
-    }
+    @Override
+    public void draw(Graphics2D g2) {
+        super.draw(g2);
 
-    private void setMovementInfo(Direction direction, String spriteKey, int vx, int vy) {
-        super.setDirection(direction);
-        super.setCurrentSpriteKey(spriteKey);
-        velocity.set(vx, vy);
-    }
+        Vec2 screenWorldPosition = new Vec2(
+                gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt(),
+                gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt()
+        );
+        Polygon detectionZonePolygonWorld = detectionZone.getTransformedPolygon(worldPosition);
+        Polygon screenPoly = new Polygon();
+        screenPoly.addPoint(screenWorldPosition.getXInt(), screenWorldPosition.getYInt());
+        screenPoly.addPoint(screenWorldPosition.getXInt() + gamePanel.screenWidth,screenWorldPosition.getYInt());
+        screenPoly.addPoint(screenWorldPosition.getXInt() + gamePanel.screenWidth, screenWorldPosition.getYInt() + gamePanel.screenHeight);
+        screenPoly.addPoint(screenWorldPosition.getXInt(), screenWorldPosition.getYInt()+ gamePanel.screenHeight);
 
-    private void handleIdleState() {
-        switch (direction) {
-            case Direction.UP -> super.setCurrentSpriteKey("idle-up");
-            case Direction.DOWN -> super.setCurrentSpriteKey("idle-down");
-            case Direction.LEFT -> super.setCurrentSpriteKey("idle-left");
-            case Direction.RIGHT -> super.setCurrentSpriteKey("idle-right");
-            //default -> super.setCurrentSpriteKey("idle");
+        // Convert to Area for collision check
+        Area screenArea = new Area(screenPoly);
+        Area detectionZoneArea = new Area(detectionZonePolygonWorld);
+
+        // Check intersection
+        screenArea.intersect(detectionZoneArea);
+        if (!screenArea.isEmpty()) {// Collision detected
+
+            Polygon detectionZonePolygon = detectionZone.getTransformedPolygon(screenPosition);
+
+            // Set the opacity and color for filling
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
+            g2.setColor(detectionZone.insideHitBoxColor);
+            g2.fill(detectionZonePolygon);  // Draw filled polygon
+
+            // Reset opacity and set the color for the outline
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 100% opacity
+            g2.setColor(detectionZone.outsideHitBoxColor);
+            g2.draw(detectionZonePolygon);  // Draw polygon outline
         }
-        super.setDirection(Direction.IDLE);
-        velocity.set(0, 0);
-    }
 
-    public void pickUpObject(int index){
-        if (index != 999) {
-            SuperObject pickedObject = gamePanel.obj[index];
-            pickedObject.onPickUp();
-
-            if (pickedObject.isPeakable()) {
-                inventory.addItem(pickedObject); // Ajout de l'objet à l'inventaire
-                gamePanel.obj[index] = null; // Suppression de l'objet du tableau
-            }
-        }
     }
 
     @Override
     public void update() {
-
-        if ((keyHandler.upPressed && keyHandler.downPressed) ||
-                (keyHandler.leftPressed && keyHandler.rightPressed)){
-            handleIdleState();
-            return;
-        }
-
-        if (keyHandler.upPressed) setMovementInfo(Direction.UP, "up", 0, -1);
-        else if (keyHandler.downPressed) setMovementInfo(Direction.DOWN, "down", 0, 1);
-        else if (keyHandler.leftPressed) setMovementInfo(Direction.LEFT, "left", -1, 0);
-        else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
-        else handleIdleState();
-
-        if(keyHandler.sprintPressed)
-            speed = defaultSpeed+2;
-        else speed = defaultSpeed;
-
-        /*
-        //DIAGONAL MOVEMENT IF ACTIVE CHECK HITBOX ISSUE
-        if(handleDiagonalMovement()){}
-        else if (keyHandler.upPressed) setMovementInfo(Direction.UP, "up", 0, -1);
-        else if (keyHandler.downPressed) setMovementInfo(Direction.DOWN, "down", 0, 1);
-        else if (keyHandler.leftPressed) setMovementInfo(Direction.LEFT, "left", -1, 0);
-        else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
-        else handleIdleState();*/
-
-        this.hitbox.setState(HitboxState.DISABLED);
-        gamePanel.cChecker.checkTile(this);
-
-        // ATTENTION ICI LES DEUX FONCTIONS DOIVENT ETRE APPELLER PAS DE FACTORISATION AVEC UN ET DANS UN IF
-        int collisionCount = 0;
-        if(gamePanel.cChecker.checkApparitorsCollision(this,true))
-            collisionCount++;
-        if (gamePanel.cChecker.checkCamerasCollision(this,true))
-            collisionCount++;
-        if(collisionCount==0)
-            hitbox.setType(HitboxType.NONE);
-
-
-        int objIndex = gamePanel.cChecker.checkObject(this,true);
-        pickUpObject(objIndex);
-        if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
-        if(keyHandler.sprintPressed) super.sprint = true;
-        else super.sprint = false;
-
         super.update();
+        detectionZone.update(worldPosition.x, worldPosition.y);
     }
 
     private void loadSprites(){
         String basePath = Paths.get("src/main/resources").toAbsolutePath().toString()+"/";
         Sprite frontSprite = new Sprite(
-                List.of(
+                java.util.List.of(
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-0"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-1"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-2"),
@@ -172,7 +131,7 @@ public class Player extends Character{
         );
 
         Sprite backSprite = new Sprite(
-                List.of(
+                java.util.List.of(
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-1"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-2"),
@@ -183,7 +142,7 @@ public class Player extends Character{
                 10
         );
         Sprite leftSprite = new Sprite(
-                List.of(
+                java.util.List.of(
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-0"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-1"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-2"),
@@ -194,7 +153,7 @@ public class Player extends Character{
                 10
         );
         Sprite rightSprite = new Sprite(
-                List.of(
+                java.util.List.of(
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-0"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-1"),
                         SpriteLibrary.getInstance(basePath).getSprite("characters","player-right-frame-2"),
@@ -210,21 +169,21 @@ public class Player extends Character{
         addSprite("left",leftSprite);
         addSprite("right",rightSprite);
         addSprite("idle-up", new Sprite(
-                List.of(
-                    SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0")),
-                10
+                        java.util.List.of(
+                                SpriteLibrary.getInstance(basePath).getSprite("characters","player-up-frame-0")),
+                        10
                 )
         );
 
         addSprite("idle-down", new Sprite(
-                        List.of(
+                        java.util.List.of(
                                 SpriteLibrary.getInstance(basePath).getSprite("characters","player-down-frame-0")),
                         10
                 )
         );
 
         addSprite("idle-left", new Sprite(
-                        List.of(
+                        java.util.List.of(
                                 SpriteLibrary.getInstance(basePath).getSprite("characters","player-left-frame-5")),
                         10
                 )

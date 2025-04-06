@@ -1,8 +1,8 @@
 package main;
 
+import entity.Apparitor;
 import math.Vec2;
 import objects.OBJ_Camera;
-import objects.OBJ_Doormats;
 import objects.OBJ_Key;
 
 public class AssetSetter {
@@ -47,7 +47,7 @@ public class AssetSetter {
 
         //CAMERA
 
-        gp.obj[3] = new OBJ_Camera(
+        gp.cameras[3] = new OBJ_Camera(
                 gp,
                 new Vec2(
                         10*gp.tileSize,
@@ -57,11 +57,11 @@ public class AssetSetter {
                 128,
                 0,
                 180,
-                2
+                0
 
         );
 
-        gp.obj[4] = new OBJ_Camera(
+        gp.cameras[4] = new OBJ_Camera(
                 gp,
                 new Vec2(
                         16*gp.tileSize,
@@ -71,11 +71,11 @@ public class AssetSetter {
                 90,
                 90,
                 90,
-                2
+                0
 
         );
 
-        gp.obj[5] = new OBJ_Camera(
+        gp.cameras[5] = new OBJ_Camera(
                 gp,
                 new Vec2(
                         10*gp.tileSize,
@@ -85,10 +85,12 @@ public class AssetSetter {
                 1,
                 0,
                 0,
-                3
+                0
 
         );
 
+        for(int i = 6;i<10;i++){
+            gp.cameras[i] = new OBJ_Camera(
         //paillassons
         gp.obj[6] = new OBJ_Doormats(
                 new Vec2(
@@ -109,9 +111,19 @@ public class AssetSetter {
                     128,
                     0,
                     0,
-                    3
+                    0
 
             );
         }
+
+        gp.apparitors[0] = new Apparitor(
+                gp,
+                8,
+                128,
+                0,
+                0,
+                3
+
+        );
     }
 }

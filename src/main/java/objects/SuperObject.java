@@ -5,6 +5,7 @@ import main.GamePanel;
 import math.Vec2;
 import temp.Hitbox;
 import sprite.Sprite;
+import temp.HitboxState;
 
 import java.awt.*;
 
@@ -25,7 +26,7 @@ public abstract class SuperObject extends VisualEntity {
     public abstract void onPickUp();
 
     public boolean isPeakable() {
-        return peakable;
+        return peakable && super.hitbox.getState() != HitboxState.ACTIVE;
     }
 
     public String getName() {

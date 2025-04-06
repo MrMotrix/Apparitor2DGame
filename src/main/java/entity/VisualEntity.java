@@ -101,22 +101,6 @@ public class VisualEntity extends Entity implements Drawable {
             }
         }
 
-        /*boolean shouldDraw = false;
-        if(drawHitbox) {
-            for(int i =0;i<this.hitbox.getBounds().xpoints.length && !shouldDraw; i++){
-                if(this.worldPosition.getXInt() + this.hitbox.getBounds().xpoints[i] > gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt() &&
-                        this.worldPosition.getXInt() + this.hitbox.getBounds().xpoints[i]- gamePanel.tileSize < gamePanel.player.worldPosition.getXInt() + gamePanel.player.screenPosition.getXInt() &&
-                        this.worldPosition.getYInt() + this.hitbox.getBounds().ypoints[i]+ gamePanel.tileSize > gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt() &&
-                        this.worldPosition.getYInt() + this.hitbox.getBounds().ypoints[i]- gamePanel.tileSize < gamePanel.player.worldPosition.getYInt() + gamePanel.player.screenPosition.getYInt()
-                ){
-                    shouldDraw = true;
-                }
-            }
-        }
-
-        if(shouldDraw) {
-            drawHitbox(g2);
-        }*/
         if(drawHitbox) {
 
             Vec2 screenWorldPosition = new Vec2(

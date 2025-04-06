@@ -6,20 +6,16 @@ import sprite.Sprite;
 import temp.Hitbox;
 import temp.HitboxState;
 import temp.HitboxType;
+import temp.VisionCone;
 import tools.SpriteLibrary;
 
 import java.awt.*;
+import java.awt.geom.Area;
 
 public class OBJ_Camera extends SuperObject {
 
-    private double angle;
-    private double viewDistance;
-    private double angleOffset;
-    private double angleRotationPerFrame;
-    private double width;
-    private double angleShift=0;
     public int detectCounter = 0;
-    private int direction = 1;
+    public VisionCone detectionZone;
 
     /***********************
 
@@ -34,14 +30,14 @@ public class OBJ_Camera extends SuperObject {
                 worldPosition,
                 new Vec2(0,0),
                 new Hitbox(
-                        0,
-                        0,
-                        0,
-                        0,
-                        HitboxState.DISABLED,
-                        HitboxType.SOLID,
-                        Color.RED,
-                        Color.RED
+                        13,
+                        21,
+                        32,
+                        32,
+                        HitboxState.ACTIVE,
+                        HitboxType.NONE,
+                        Color.GREEN,
+                        Color.YELLOW
                 ),
                 gamePanel,
                 "camera",
@@ -50,15 +46,28 @@ public class OBJ_Camera extends SuperObject {
                 "camera"
         );
 
-        this.viewDistance = viewDistance;
-        this.angle = Math.toRadians(initialAngleDegree);
-        this.angleOffset = Math.toRadians(angleRangeDegree);
-        this.angleRotationPerFrame = Math.toRadians(angleDegreeRotationPerFrame);
-        this.width = width;
-        super.hitbox.getBounds().addPoint(0,0);
-        super.hitbox.getBounds().addPoint((int)(gamePanel.tileSize*viewDistance), (int)(width/2));
-        super.hitbox.getBounds().addPoint((int)(gamePanel.tileSize*viewDistance), (int)(-width/2));
+        super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY);
+        super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY);
+        super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY + hitbox.height);
+        super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY + hitbox.height);
 
+        detectionZone = new VisionCone(
+
+            0,
+            0,
+                (int)width,
+            0,
+            HitboxState.DISABLED,
+            HitboxType.SOLID,
+            Color.RED,
+            Color.RED,
+                initialAngleDegree,
+                viewDistance,
+                angleRangeDegree,
+                angleDegreeRotationPerFrame,
+                super.gamePanel,
+                super.worldPosition
+        );
 
         addSprite(
                 name,
@@ -124,7 +133,7 @@ public class OBJ_Camera extends SuperObject {
         hitbox.getBounds().xpoints = xPoints;
         hitbox.getBounds().ypoints = yPoints;
     }*/
-
+/*
     public void update() {
         super.update();
 
@@ -177,11 +186,15 @@ public class OBJ_Camera extends SuperObject {
         double newX = x * Math.cos(angle) - y * Math.sin(angle);
         double newY = x * Math.sin(angle) + y * Math.cos(angle);
         return new double[]{newX, newY};
+    }*/
+
+    public void update() {
+        super.update();
+        detectionZone.update(worldPosition.x,worldPosition.y);
     }
 
 
-    @Override
-    public void onPickUp(){
+    public void onCollision(){
         if(gamePanel.player.hitbox.getType() == HitboxType.NONE || detectCounter == 180) {
             gamePanel.player.hitbox.setType(HitboxType.HURTBOX);
             gamePanel.player.healthPoints--;
@@ -189,5 +202,48 @@ public class OBJ_Camera extends SuperObject {
         }
         detectCounter++;
         System.out.println("HP = "+gamePanel.player.healthPoints);
+    }
+
+    @Override
+    public void draw(Graphics2D g2) {
+        super.draw(g2);
+
+        Vec2 screenWorldPosition = new Vec2(
+                gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt(),
+                gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt()
+        );
+        Polygon detectionZonePolygonWorld = detectionZone.getTransformedPolygon(worldPosition);
+        Polygon screenPoly = new Polygon();
+        screenPoly.addPoint(screenWorldPosition.getXInt(), screenWorldPosition.getYInt());
+        screenPoly.addPoint(screenWorldPosition.getXInt() + gamePanel.screenWidth,screenWorldPosition.getYInt());
+        screenPoly.addPoint(screenWorldPosition.getXInt() + gamePanel.screenWidth, screenWorldPosition.getYInt() + gamePanel.screenHeight);
+        screenPoly.addPoint(screenWorldPosition.getXInt(), screenWorldPosition.getYInt()+ gamePanel.screenHeight);
+
+        // Convert to Area for collision check
+        Area screenArea = new Area(screenPoly);
+        Area detectionZoneArea = new Area(detectionZonePolygonWorld);
+
+        // Check intersection
+        screenArea.intersect(detectionZoneArea);
+        if (!screenArea.isEmpty()) {// Collision detected
+
+            Polygon detectionZonePolygon = detectionZone.getTransformedPolygon(screenPosition);
+
+            // Set the opacity and color for filling
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
+            g2.setColor(detectionZone.insideHitBoxColor);
+            g2.fill(detectionZonePolygon);  // Draw filled polygon
+
+            // Reset opacity and set the color for the outline
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 100% opacity
+            g2.setColor(detectionZone.outsideHitBoxColor);
+            g2.draw(detectionZonePolygon);  // Draw polygon outline
+        }
+
+    }
+
+    @Override
+    public void onPickUp(){
+        // Pour l'instant sert a tchi
     }
 }

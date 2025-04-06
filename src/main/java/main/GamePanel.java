@@ -6,7 +6,9 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
+import entity.Apparitor;
 import entity.Player;
+import objects.OBJ_Camera;
 import objects.SuperObject;
 import tile.TileManager;
 import entity.Inventory;
@@ -35,6 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter;
     public Player player;
     public SuperObject obj[] = new SuperObject[100];
+    public OBJ_Camera cameras[] = new OBJ_Camera[100];
+    public Apparitor apparitors[] = new Apparitor[100];
 
 
     public Menu menu;
@@ -168,6 +172,16 @@ public class GamePanel extends JPanel implements Runnable {
                 if(obj[i] != null)
                     obj[i].update();
             }
+
+            for(int i = 0; i < apparitors.length; i++) {
+                if(apparitors[i] != null)
+                    apparitors[i].update();
+            }
+
+            for(int i = 0; i < cameras.length; i++) {
+                if(cameras[i] != null)
+                    cameras[i].update();
+            }
         }
         else if(gameState == pauseState) {
            menu.checkClick(mouseH.getLastClick());
@@ -198,10 +212,22 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Supprimer les zones visibles
         Area visibleArea = new Area();
-        for (int i = 3; i < 100; i++) {
+
+        /*for (int i = 3; i < 100; i++) {
             if (obj[i] != null && obj[i].hitbox != null) {
                 visibleArea.add(new Area(obj[i].hitbox.getPolygonAt(obj[i].screenPosition)));
             }
+        }*/
+
+       for(int i = 0; i < cameras.length; i++) {
+            if(cameras[i] != null) {
+                visibleArea.add(new Area(cameras[i].detectionZone.getPolygonAt(cameras[i].screenPosition)));
+            }
+        }
+
+        for(int i = 0; i < apparitors.length; i++) {
+            if(apparitors[i] != null)
+                visibleArea.add(new Area(apparitors[i].detectionZone.getPolygonAt(apparitors[i].screenPosition)));
         }
 
         // Rendre ces zones transparentes
@@ -226,6 +252,15 @@ public class GamePanel extends JPanel implements Runnable {
                 obj[i].draw(g2);
         }
 
+        for(int i = 0; i < cameras.length; i++) {
+            if(cameras[i] != null)
+                cameras[i].draw(g2);
+        }
+
+        for(int i = 0; i < apparitors.length; i++) {
+            if(apparitors[i] != null)
+                apparitors[i].draw(g2);
+        }
 
         player.draw(g2);
 
