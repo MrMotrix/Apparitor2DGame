@@ -2,6 +2,7 @@ package main;
 
 import math.Vec2;
 import objects.OBJ_Camera;
+import objects.OBJ_Doormats;
 import objects.OBJ_Key;
 
 public class AssetSetter {
@@ -88,7 +89,16 @@ public class AssetSetter {
 
         );
 
-        for(int i = 6;i<10;i++){
+        //paillassons
+        gp.obj[6] = new OBJ_Doormats(
+                new Vec2(
+                        6*gp.tileSize,
+                        6*gp.tileSize
+                ),
+                gp
+        );
+
+        for(int i = 7;i<10;i++){
             gp.obj[i] = new OBJ_Camera(
                     gp,
                     new Vec2(

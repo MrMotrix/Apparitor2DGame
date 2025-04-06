@@ -39,7 +39,9 @@ public class Character extends VisualEntity {
         this.dialogue = dialogue;
     }
 
-
+    public void setWorldPosition(Vec2 worldPosition) {
+        this.worldPosition = worldPosition;
+    }
 
     public void setDirection(Direction direction) {
         this.direction = direction;

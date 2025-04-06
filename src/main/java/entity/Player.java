@@ -12,6 +12,7 @@ import java.awt.event.HierarchyBoundsAdapter;
 import java.nio.file.Paths;
 import java.util.List;
 import objects.SuperObject;
+import objects.OBJ_Doormats;
 
 public class Player extends Character{
     private KeyHandler keyHandler;
@@ -109,6 +110,7 @@ public class Player extends Character{
         }
     }
 
+
     @Override
     public void update() {
 
@@ -141,6 +143,11 @@ public class Player extends Character{
         int objIndex = gamePanel.cChecker.checkObject(this,true);
         pickUpObject(objIndex);
         if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
+
+
+
+
+        //if(keyHandler.tpPressed) this.setWorldPosition(new Vec2(100,100));
 
         if(keyHandler.sprintPressed) super.sprint = true;
         else super.sprint = false;

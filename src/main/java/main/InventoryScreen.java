@@ -26,10 +26,10 @@ public class InventoryScreen extends Screen {
     @Override
     public void draw(Graphics2D g2) {
         g2.setColor(new Color(255, 255, 255, 150));
-        g2.fillRect( MenuX, MenuY, menuWidth + 20, optionHeight * (inventory.getItems().size() + 1));
+        g2.fillRect( MenuX, MenuY - 30, menuWidth + 20, optionHeight * (inventory.getItems().size() + 1));
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 16));
-        g2.drawString("Inventaire", MenuX, MenuY);
+        g2.drawString("Inventaire", MenuX, MenuY-10);
 
         List<SuperObject> items = inventory.getItems();
         for (int i = 0; i < items.size(); i++) {
