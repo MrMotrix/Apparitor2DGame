@@ -24,7 +24,7 @@ public class Player extends Character{
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
         super(
-                new Vec2(100,100),
+                new Vec2(300,300),
                 new Vec2(gamePanel.screenWidth/2 - (gamePanel.tileSize/2),gamePanel.screenHeight/2 - (gamePanel.tileSize/2)),
                 new Hitbox(
                         13,
