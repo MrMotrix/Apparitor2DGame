@@ -17,28 +17,25 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
-        this.tiles = new Tile[16]; // A remplacer plus tard par une list
+        this.tiles = new Tile[53]; // A remplacer plus tard par une list
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
         loadMap("map");
     }
 
     public void getTileImage() {
-        tiles[0] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","0"),true);
-        tiles[1] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","1"));
-        tiles[2] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","2"));
-        tiles[3] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","3"),true);
-        tiles[4] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","4"));
-        tiles[5] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","5"));
-        tiles[6] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","6"));
-        tiles[7] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","7"));
-        tiles[8] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","8"));
-        tiles[9] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world","9"));
+        for(int i = 0; i < tiles.length; i++) {
+            if (i == 0 || i == 52 || i == 5 || i== 6 || i == 7 || i == 8 || i == 9 || i == 10 || i == 11|| i == 12 || i == 14 || i == 15 || i == 17 || i == 19 || i == 20 || i == 21 || i == 21 || i== 22 || i == 23 ||i == 27 || i == 28 || i == 29 || i == 30 || i == 32 || i == 40 || i == 41 || i == 51 ){
+                tiles[i] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world", String.valueOf(i)), true);
+            }
+            else tiles[i] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world", String.valueOf(i)));
+
+        }
     }
 
     public void loadMap(String mapName) {
         try{
-            InputStream is = getClass().getClassLoader().getResourceAsStream("maps/university_map_modified.txt");
+            InputStream is = getClass().getClassLoader().getResourceAsStream("maps/mapFinal.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;
@@ -63,6 +60,7 @@ public class TileManager {
             br.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
+
         }
     }
 

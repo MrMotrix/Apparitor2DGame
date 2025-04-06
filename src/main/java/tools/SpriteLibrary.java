@@ -35,8 +35,8 @@ public class SpriteLibrary {
             addSprites(
                     "world",
                     SpriteJSONExtractor.getSprites(
-                            basePath+ "tiles/ground.json",
-                            basePath+ "tiles/ground.png"
+                            basePath+ "tiles/test.json",
+                            basePath+ "tiles/tilesetFinal.png"
                     )
             );
 

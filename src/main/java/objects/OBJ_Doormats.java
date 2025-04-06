@@ -28,7 +28,7 @@ public class OBJ_Doormats extends SuperObject {
                             64,
                             64,
                             HitboxState.DISABLED,
-                            HitboxType.DOOR,
+                            HitboxType.TRIGGER,
                             Color.BLUE,
                             Color.RED
                     ),

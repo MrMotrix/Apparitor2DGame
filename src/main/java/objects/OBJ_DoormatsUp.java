@@ -17,8 +17,7 @@ import java.awt.*;
 
 public class OBJ_DoormatsUp extends SuperObject {
 
-    private javax.swing.Timer presenceTimer;
-    private boolean playerIsOn = false;
+    private long playerTime = -2;
 
     public OBJ_DoormatsUp(Vec2 worldPosition, GamePanel gamePanel) {
         super(
@@ -30,7 +29,7 @@ public class OBJ_DoormatsUp extends SuperObject {
                         64,
                         64,
                         HitboxState.DISABLED,
-                        HitboxType.DOOR,
+                        HitboxType.TRIGGER,
                         Color.BLUE,
                         Color.RED
                 ),
@@ -55,6 +54,7 @@ public class OBJ_DoormatsUp extends SuperObject {
     }
 
     public void onPickUp() {
+
         if (playerTime == -2) {
             playerTime = System.currentTimeMillis();
             return;
