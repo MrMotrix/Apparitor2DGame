@@ -7,6 +7,7 @@ import temp.*;
 import tools.SpriteLibrary;
 
 import java.awt.*;
+import java.awt.geom.Area;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -75,17 +76,38 @@ public class Apparitor extends Character {
     public void draw(Graphics2D g2) {
         super.draw(g2);
 
-        Polygon detectionZonePolygon = detectionZone.getTransformedPolygon(screenPosition);
+        Vec2 screenWorldPosition = new Vec2(
+                gamePanel.player.worldPosition.getXInt() - gamePanel.player.screenPosition.getXInt(),
+                gamePanel.player.worldPosition.getYInt() - gamePanel.player.screenPosition.getYInt()
+        );
+        Polygon detectionZonePolygonWorld = detectionZone.getTransformedPolygon(worldPosition);
+        Polygon screenPoly = new Polygon();
+        screenPoly.addPoint(screenWorldPosition.getXInt(), screenWorldPosition.getYInt());
+        screenPoly.addPoint(screenWorldPosition.getXInt() + gamePanel.screenWidth,screenWorldPosition.getYInt());
+        screenPoly.addPoint(screenWorldPosition.getXInt() + gamePanel.screenWidth, screenWorldPosition.getYInt() + gamePanel.screenHeight);
+        screenPoly.addPoint(screenWorldPosition.getXInt(), screenWorldPosition.getYInt()+ gamePanel.screenHeight);
 
-        // Set the opacity and color for filling
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
-        g2.setColor(detectionZone.insideHitBoxColor);
-        g2.fill(detectionZonePolygon);  // Draw filled polygon
+        // Convert to Area for collision check
+        Area screenArea = new Area(screenPoly);
+        Area detectionZoneArea = new Area(detectionZonePolygonWorld);
 
-        // Reset opacity and set the color for the outline
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 100% opacity
-        g2.setColor(detectionZone.outsideHitBoxColor);
-        g2.draw(detectionZonePolygon);  // Draw polygon outline
+        // Check intersection
+        screenArea.intersect(detectionZoneArea);
+        if (!screenArea.isEmpty()) {// Collision detected
+
+            Polygon detectionZonePolygon = detectionZone.getTransformedPolygon(screenPosition);
+
+            // Set the opacity and color for filling
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% opacity
+            g2.setColor(detectionZone.insideHitBoxColor);
+            g2.fill(detectionZonePolygon);  // Draw filled polygon
+
+            // Reset opacity and set the color for the outline
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // 100% opacity
+            g2.setColor(detectionZone.outsideHitBoxColor);
+            g2.draw(detectionZonePolygon);  // Draw polygon outline
+        }
+
     }
 
     @Override
