@@ -8,6 +8,11 @@ public class Vec2 {
         this.y = y;
     }
 
+    public Vec2(Vec2 v) {
+        this.x = v.x;
+        this.y = v.y;
+    }
+
     public void set(double newX, double newY) {
         this.x = newX;
         this.y = newY;
