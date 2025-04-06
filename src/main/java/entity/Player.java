@@ -142,7 +142,7 @@ public class Player extends Character{
         int collisionCount = 0;
         if(gamePanel.cChecker.checkApparitorsCollision(this,true))
             collisionCount++;
-        if (gamePanel.cChecker.checkCamerasCollision(this,false))
+        if (gamePanel.cChecker.checkCamerasCollision(this,true))
             collisionCount++;
         if(collisionCount==0)
             hitbox.setType(HitboxType.NONE);
