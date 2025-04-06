@@ -104,8 +104,6 @@ public class Player extends Character{
                 inventory.addItem(pickedObject); // Ajout de l'objet à l'inventaire
                 gamePanel.obj[index] = null; // Suppression de l'objet du tableau
             }
-        }else{
-            hitbox.setType(HitboxType.NONE);
         }
     }
 
@@ -136,21 +134,27 @@ public class Player extends Character{
         else if (keyHandler.leftPressed) setMovementInfo(Direction.LEFT, "left", -1, 0);
         else if (keyHandler.rightPressed) setMovementInfo(Direction.RIGHT, "right", 1, 0);
         else handleIdleState();*/
+
         this.hitbox.setState(HitboxState.DISABLED);
         gamePanel.cChecker.checkTile(this);
+
+        // ATTENTION ICI LES DEUX FONCTIONS DOIVENT ETRE APPELLER PAS DE FACTORISATION AVEC UN ET DANS UN IF
+        int collisionCount = 0;
+        if(gamePanel.cChecker.checkApparitorsCollision(this,true))
+            collisionCount++;
+        if (gamePanel.cChecker.checkCamerasCollision(this,false))
+            collisionCount++;
+        if(collisionCount==0)
+            hitbox.setType(HitboxType.NONE);
+
+
         int objIndex = gamePanel.cChecker.checkObject(this,true);
         pickUpObject(objIndex);
         if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
-
         if(keyHandler.sprintPressed) super.sprint = true;
         else super.sprint = false;
 
         super.update();
-    }
-
-    @Override
-    public void draw(Graphics2D g2) {
-        super.draw(g2);
     }
 
     private void loadSprites(){

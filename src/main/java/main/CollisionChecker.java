@@ -1,5 +1,7 @@
 package main;
 import entity.Character;
+import math.Vec2;
+import temp.Direction;
 import temp.HitboxState;
 
 import java.awt.*;
@@ -140,11 +142,31 @@ public class CollisionChecker {
     public int checkObject(Character c, boolean player) {
         int index = 999; // Default value for no collision
 
+        Vec2 cNextWorldPosition = new Vec2(c.worldPosition);
+        if(c.hitbox.getState() == HitboxState.DISABLED) {
+
+            switch (c.direction) {
+                case UP:
+                    cNextWorldPosition.y -= c.speed;
+                    break;
+                case DOWN:
+                    cNextWorldPosition.y += c.speed;
+                    break;
+                case LEFT:
+                    cNextWorldPosition.x -= c.speed;
+                    break;
+                case RIGHT:
+                    cNextWorldPosition.x += c.speed;
+                    break;
+
+            }
+        }
+
         for (int i = 0; i < gp.obj.length; i++) {
             if (gp.obj[i] == null) continue;
 
             // Get polygons instead of bounds
-            Polygon charPoly = c.hitbox.getPolygonAt(c.worldPosition);
+            Polygon charPoly = c.hitbox.getPolygonAt(cNextWorldPosition);
             Polygon objPoly = gp.obj[i].hitbox.getPolygonAt(gp.obj[i].worldPosition);
 
             // Convert to Area for collision check
@@ -163,5 +185,113 @@ public class CollisionChecker {
             }
         }
         return index;
+    }
+
+    public boolean checkApparitorsCollision(Character c, boolean player) {
+        boolean collision = false;
+        Vec2 cNextWorldPosition = new Vec2(c.worldPosition);
+        if(c.hitbox.getState() == HitboxState.DISABLED) {
+            switch (c.direction) {
+                case UP:
+                    cNextWorldPosition.y -= c.speed;
+                    break;
+                case DOWN:
+                    cNextWorldPosition.y += c.speed;
+                    break;
+                case LEFT:
+                    cNextWorldPosition.x -= c.speed;
+                    break;
+                case RIGHT:
+                    cNextWorldPosition.x += c.speed;
+                    break;
+
+            }
+        }
+
+        for (int i = 0; i < gp.apparitors.length; i++) {
+            if (gp.apparitors[i] == null) continue;
+            // Get polygons instead of bounds
+            Polygon charPoly = c.hitbox.getPolygonAt(cNextWorldPosition);
+            Polygon apparitorPoly = gp.apparitors[i].hitbox.getPolygonAt(gp.apparitors[i].worldPosition);
+            Polygon apparitorDetectionZonePoly = gp.apparitors[i].detectionZone.getPolygonAt(gp.apparitors[i].worldPosition);
+
+            // Convert to Area for collision check
+            Area charArea = new Area(charPoly);
+            Area apparitorArea = new Area(apparitorPoly);
+            Area apparitorDetectionZoneArea = new Area(apparitorDetectionZonePoly);
+
+
+            // Check intersection
+            apparitorArea.intersect(charArea);
+            apparitorDetectionZoneArea.intersect(charArea);
+
+            if (!apparitorArea.isEmpty()) { // Collision detected
+                if (gp.apparitors[i].hitbox.getState() == HitboxState.ACTIVE) {
+                    c.hitbox.setState(HitboxState.ACTIVE);
+                    gp.apparitors[i].onCollision();
+                    collision = true;
+                }
+            }
+
+            if(!apparitorDetectionZoneArea.isEmpty()){
+                gp.apparitors[i].onCollision();
+                collision = true;
+            }
+        }
+        return collision;
+    }
+
+    public boolean checkCamerasCollision(Character c, boolean player) {
+        boolean collision = false;
+        Vec2 cNextWorldPosition = new Vec2(c.worldPosition);
+        if(c.hitbox.getState() == HitboxState.DISABLED) {
+            switch (c.direction) {
+                case UP:
+                    cNextWorldPosition.y -= c.speed;
+                    break;
+                case DOWN:
+                    cNextWorldPosition.y += c.speed;
+                    break;
+                case LEFT:
+                    cNextWorldPosition.x -= c.speed;
+                    break;
+                case RIGHT:
+                    cNextWorldPosition.x += c.speed;
+                    break;
+
+            }
+        }
+
+        for (int i = 0; i < gp.cameras.length; i++) {
+            if (gp.cameras[i] == null) continue;
+            // Get polygons instead of bounds
+            Polygon charPoly = c.hitbox.getPolygonAt(cNextWorldPosition);
+            Polygon cameraPoly = gp.cameras[i].hitbox.getPolygonAt(gp.cameras[i].worldPosition);
+            Polygon cameraDetectionZonePoly = gp.cameras[i].detectionZone.getPolygonAt(gp.cameras[i].worldPosition);
+
+            // Convert to Area for collision check
+            Area charArea = new Area(charPoly);
+            Area cameraArea = new Area(cameraPoly);
+            Area cameraDetectionZoneArea = new Area(cameraDetectionZonePoly);
+
+
+            // Check intersection
+            cameraArea.intersect(charArea);
+            cameraDetectionZoneArea.intersect(charArea);
+
+            if (!cameraArea.isEmpty()) { // Collision detected
+                if (gp.cameras[i].hitbox.getState() == HitboxState.ACTIVE) {
+                    c.hitbox.setState(HitboxState.ACTIVE);
+                    gp.cameras[i].onCollision();
+                    collision = true;
+                }
+            }
+
+            if(!cameraDetectionZoneArea.isEmpty()){
+                gp.cameras[i].onCollision();
+                collision = true;
+            }
+        }
+        return collision;
     }
 }
