@@ -265,7 +265,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
 
 
-        drawFog(g2);
+        //drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
 
         if (inventoryState == true && gameState == playState) {
