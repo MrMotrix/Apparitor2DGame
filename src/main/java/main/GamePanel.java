@@ -11,7 +11,6 @@ import entity.Player;
 import objects.OBJ_Camera;
 import objects.SuperObject;
 import tile.TileManager;
-import entity.Inventory;
 
 public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 32;
@@ -195,44 +194,46 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void drawFog(Graphics2D g2) {
         Graphics2D fogG = fogImage.createGraphics();
+
+        // Étape 1 : remplir tout l'écran de noir (le brouillard)
         fogG.setComposite(AlphaComposite.Src);
+        fogG.setColor(new Color(0, 0, 0, 255));
+        fogG.fillRect(0, 0, screenWidth, screenHeight);
 
-        int centerX = screenWidth / 2;
-        int centerY = screenHeight / 2;
-        float radius = Math.min(screenWidth, screenHeight) / 4.0f; // Rayon du spot lumineux
-
-        // Dégradé radial pour simuler l’effet du brouillard
-        Point2D center = new Point2D.Float(centerX, centerY);
-        float[] dist = {0.0f, 1.0f}; // Début à 0% d'opacité, Fin à 100% d'opacité
-        Color[] colors = {new Color(0, 0, 0, 0), new Color(0, 0, 0, 255)}; // Transparent → Noir
-
-        RadialGradientPaint gradient = new RadialGradientPaint(center, radius, dist, colors);
-        fogG.setPaint(gradient);
-        fogG.fillRect(0, 0, screenWidth, screenHeight); // Appliquer le gradient sur toute la surface
-
-        // Supprimer les zones visibles
+        // Étape 2 : enlever les zones visibles (polygones)
         Area visibleArea = new Area();
-
-        /*for (int i = 3; i < 100; i++) {
-            if (obj[i] != null && obj[i].hitbox != null) {
-                visibleArea.add(new Area(obj[i].hitbox.getPolygonAt(obj[i].screenPosition)));
-            }
-        }*/
-
-       /*for(int i = 0; i < cameras.length; i++) {
-            if(cameras[i] != null) {
-                visibleArea.add(new Area(cameras[i].detectionZone.getPolygonAt(cameras[i].screenPosition)));
-            }
-        }*/
-
-        for(int i = 0; i < apparitors.length; i++) {
-            if(apparitors[i] != null)
+        for (int i = 0; i < apparitors.length; i++) {
+            if (apparitors[i] != null)
                 visibleArea.add(new Area(apparitors[i].detectionZone.getPolygonAt(apparitors[i].screenPosition)));
         }
-
-        // Rendre ces zones transparentes
         fogG.setComposite(AlphaComposite.DstOut);
+        fogG.setPaint(Color.BLACK); // Nécessaire pour que fill(Area) fonctionne bien
         fogG.fill(visibleArea);
+
+        // Étape 3 : trouer autour des sources de lumière (gradients)
+        fogG.setComposite(AlphaComposite.DstOut);
+        float playerRadius = 150f;
+        float apparitorRadius = 50f;
+        float[] dist = {0.0f, 1.0f};
+        Color[] colors = {
+                new Color(0, 0, 0, 255), // centre = opaque
+                new Color(0, 0, 0, 0)     // bord = transparent
+        };
+
+        Point2D playerCenter = new Point2D.Float(player.screenPosition.getXInt()+tileSize/2, player.screenPosition.getYInt()+tileSize/2);
+        RadialGradientPaint playerGradient = new RadialGradientPaint(playerCenter, playerRadius, dist, colors);
+        fogG.setPaint(playerGradient);
+        fogG.fillRect((int) (playerCenter.getX() - playerRadius), (int) (playerCenter.getY() - playerRadius), (int) (2 * playerRadius), (int) (2 * playerRadius));
+
+        for (Apparitor apparitor : apparitors) {
+            if(apparitor != null) {
+                Point2D apparitorCenter = new Point2D.Float(apparitor.screenPosition.getXInt()+tileSize/2, apparitor.screenPosition.getYInt()+tileSize/2);
+                RadialGradientPaint apparitorGradient = new RadialGradientPaint(apparitorCenter, apparitorRadius, dist, colors);
+                fogG.setPaint(apparitorGradient);
+                fogG.fillRect((int) (apparitorCenter.getX() - apparitorRadius), (int) (apparitorCenter.getY() - apparitorRadius), (int) (2 * apparitorRadius), (int) (2 * apparitorRadius));
+            }
+        }
+
         fogG.dispose();
     }
 
