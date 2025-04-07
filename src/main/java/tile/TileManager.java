@@ -25,7 +25,7 @@ public class TileManager {
 
     public void getTileImage() {
         for(int i = 0; i < tiles.length; i++) {
-            if (i ==0 || i == 52 || i == 4 || i == 5 || i == 6 || i == 7 || i == 8 || i == 9 || i == 10  || i == 11 || i == 12 || i == 14 || i == 19  || i == 20 || i == 21 ){ // || i == 22 || i == 26 || i == 27 || i == 28 || i == 29 || i == 31 || i == 39 || i == 40 || i == 50) {
+            if (i ==0 || i == 52 || i == 4 || i == 5 || i == 6 || i == 7 || i == 8 || i == 9 || i == 10  || i == 11 || i == 12 || i == 14 || i == 17 || i == 19  || i == 20 || i == 21 || i == 39d){ // || i == 22 || i == 26 || i == 27 || i == 28 || i == 29 || i == 31 || i == 39 || i == 40 || i == 50) {
                 tiles[i] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world", String.valueOf(i)), true);
             }
             else tiles[i] = new Tile(SpriteLibrary.getInstance(basePath).getSprite("world", String.valueOf(i)));
