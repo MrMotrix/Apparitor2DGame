@@ -219,11 +219,11 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }*/
 
-       for(int i = 0; i < cameras.length; i++) {
+       /*for(int i = 0; i < cameras.length; i++) {
             if(cameras[i] != null) {
                 visibleArea.add(new Area(cameras[i].detectionZone.getPolygonAt(cameras[i].screenPosition)));
             }
-        }
+        }*/
 
         for(int i = 0; i < apparitors.length; i++) {
             if(apparitors[i] != null)
@@ -265,7 +265,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
 
 
-        //drawFog(g2);
+        drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
 
         if (inventoryState == true && gameState == playState) {

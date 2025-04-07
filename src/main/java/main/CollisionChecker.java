@@ -226,11 +226,9 @@ public class CollisionChecker {
             apparitorDetectionZoneArea.intersect(charArea);
 
             if (!apparitorArea.isEmpty()) { // Collision detected
-                if (gp.apparitors[i].hitbox.getState() == HitboxState.ACTIVE) {
-                    c.hitbox.setState(HitboxState.ACTIVE);
-                    gp.apparitors[i].onCollision();
-                    collision = true;
-                }
+                c.hitbox.setState(HitboxState.ACTIVE);
+                gp.apparitors[i].onCollision();
+                collision = true;
             }
 
             if(!apparitorDetectionZoneArea.isEmpty()){
@@ -280,11 +278,9 @@ public class CollisionChecker {
             cameraDetectionZoneArea.intersect(charArea);
 
             if (!cameraArea.isEmpty()) { // Collision detected
-                if (gp.cameras[i].hitbox.getState() == HitboxState.ACTIVE) {
-                    c.hitbox.setState(HitboxState.ACTIVE);
-                    gp.cameras[i].onCollision();
-                    collision = true;
-                }
+                c.hitbox.setState(HitboxState.ACTIVE);
+                gp.cameras[i].onCollision();
+                collision = true;
             }
 
             if(!cameraDetectionZoneArea.isEmpty()){
@@ -292,6 +288,47 @@ public class CollisionChecker {
                 collision = true;
             }
         }
+        return collision;
+    }
+
+    public boolean checkPlayerCollision(Character c){
+        boolean collision = false;
+        Vec2 cNextWorldPosition = new Vec2(c.worldPosition);
+        if(c.hitbox.getState() == HitboxState.DISABLED) {
+            switch (c.direction) {
+                case UP:
+                    cNextWorldPosition.y -= c.speed;
+                    break;
+                case DOWN:
+                    cNextWorldPosition.y += c.speed;
+                    break;
+                case LEFT:
+                    cNextWorldPosition.x -= c.speed;
+                    break;
+                case RIGHT:
+                    cNextWorldPosition.x += c.speed;
+                    break;
+
+            }
+        }
+
+        // Get polygons instead of bounds
+        Polygon charPoly = c.hitbox.getPolygonAt(cNextWorldPosition);
+        Polygon playerPoly = gp.player.hitbox.getPolygonAt(gp.player.worldPosition);
+
+        // Convert to Area for collision check
+        Area charArea = new Area(charPoly);
+        Area playerArea = new Area(playerPoly);
+
+
+        // Check intersection
+        playerArea.intersect(charArea);
+
+        if (!playerArea.isEmpty()) { // Collision detected
+            c.hitbox.setState(HitboxState.ACTIVE);
+            collision = true;
+        }
+
         return collision;
     }
 }

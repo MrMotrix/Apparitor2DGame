@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class VisionCone extends Hitbox{
 
-    private double angle;
+    public double angle;
     private double viewDistance;
-    private double angleOffset;
+    public double angleOffset;
     private double angleRotationPerFrame;
     private double width;
     private Vec2 worldPosition;

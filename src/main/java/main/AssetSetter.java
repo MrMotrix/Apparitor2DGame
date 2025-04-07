@@ -99,29 +99,30 @@ public class AssetSetter {
         );
 
 
-            for (int i = 8; i < 10; i++) {
-                gp.obj[i] = new OBJ_Camera(
-                        gp,
-                        new Vec2(
-                                getRandom(0, gp.worldWidth),
-                                getRandom(0, gp.worldHeight)
-                        ),
-                        8,
-                        128,
-                        0,
-                        0,
-                        0
-
-                );
-            }
-
-            gp.apparitors[0] = new Apparitor(
+        for (int i = 8; i < 25; i++) {
+            gp.cameras[i] = new OBJ_Camera(
                     gp,
-                    8,
+                    new Vec2(
+                            getRandom(0, gp.worldWidth),
+                            getRandom(0, gp.worldHeight)
+                    ),
+                    10,
                     128,
                     0,
                     0,
                     3
+
+            );
+        }
+
+            gp.apparitors[0] = new Apparitor(
+                    gp,
+                    new Vec2(320,380),
+                    2,
+                    64,
+                    0,
+                    1,
+                    2
 
             );
         }
