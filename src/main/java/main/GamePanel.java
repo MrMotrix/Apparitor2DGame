@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public Menu menu;
+    public Ui ui;
     public MouseHandler mouseH;
 
     public TitleScreen titleScreen;
@@ -69,6 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.titleScreen = new TitleScreen(this);
         this.aSetter = new AssetSetter(this);
         this.inventory = new InventoryScreen(this,player.getInventory());
+        this.ui = new Ui(this);
     }
 
     public void setupGame() {
@@ -268,6 +270,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
+
+        ui.drawPlayerLife(g2);
 
         if (inventoryState == true && gameState == playState) {
             inventory.draw(g2);

@@ -99,7 +99,7 @@ public class AssetSetter {
         );
 
 
-        for (int i = 8; i < 25; i++) {
+        /*for (int i = 8; i < 25; i++) {
             gp.cameras[i] = new OBJ_Camera(
                     gp,
                     new Vec2(
@@ -113,11 +113,11 @@ public class AssetSetter {
                     3
 
             );
-        }
+        }*/
 
             gp.apparitors[0] = new Apparitor(
                     gp,
-                    new Vec2(320,380),
+                    new Vec2(320,430),
                     2,
                     64,
                     0,

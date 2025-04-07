@@ -56,6 +56,14 @@ public class SpriteLibrary {
                     )
             );
 
+            addSprites(
+                    "ui",
+                    SpriteJSONExtractor.getSprites(
+                            basePath+"ui/hearth-sprite.json",
+                            basePath+"ui/hearth-sprite-sheet.png"
+                    )
+            );
+
         } catch (IOException e) {
             System.err.println("Error loading sprites: " + e.getMessage());
             e.printStackTrace();

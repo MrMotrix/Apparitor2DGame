@@ -18,7 +18,8 @@ public class Player extends Character{
     //public final int screenX;
     //public final int screenY;
     public int nbKey = 0;
-    public int healthPoints = 3;
+    public final int maxHealthPoints = 6;
+    public int healthPoints = 6;
     private Inventory inventory;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
