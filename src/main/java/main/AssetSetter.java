@@ -121,16 +121,17 @@ public class AssetSetter {
                         0,
                         0
 
-                );
-            }
+            );
+        }*/
 
             gp.apparitors[0] = new Apparitor(
                     gp,
-                    8,
-                    128,
+                    new Vec2(320,430),
+                    2,
+                    64,
                     0,
-                    0,
-                    3
+                    1,
+                    2
 
             );
         }

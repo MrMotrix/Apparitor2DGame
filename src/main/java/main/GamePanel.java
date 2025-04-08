@@ -11,24 +11,33 @@ import entity.Player;
 import objects.OBJ_Camera;
 import objects.SuperObject;
 import tile.TileManager;
-import entity.Inventory;
 
 public class GamePanel extends JPanel implements Runnable {
+    // Base tile sizes (before scaling)
     final int originalTileSize = 32;
     final int scale = 2;
     public final int tileSize = originalTileSize * scale;
+
+    // Screen settings (based on a reference resolution)
     public final int max_screenCol = 16;
     public final int max_screenRow = 12;
-    public final int screenWidth = tileSize * max_screenCol;
-    public final int screenHeight = tileSize * max_screenRow;
+    public final int referenceScreenWidth = tileSize * max_screenCol; // 1024
+    public final int referenceScreenHeight = tileSize * max_screenRow; // 768
 
+    // Actual screen dimensions (will be set to fullscreen resolution)
+    public int screenWidth;
+    public int screenHeight;
+    private double scaleX = 1.0; // Scaling factor for X-axis
+    private double scaleY = 1.0; // Scaling factor for Y-axis
+
+    // World settings
     public final int maxWorldCol = 64;
     public final int maxWorldRow = 30;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
     private final int FPS = 60;
-    private BufferedImage fogImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);;
+    private BufferedImage fogImage;
 
     private Thread gameThread;
     public KeyHandler keyH;
@@ -40,22 +49,33 @@ public class GamePanel extends JPanel implements Runnable {
     public OBJ_Camera cameras[] = new OBJ_Camera[100];
     public Apparitor apparitors[] = new Apparitor[100];
 
-
     public Menu menu;
+    public Ui ui;
     public MouseHandler mouseH;
 
     public TitleScreen titleScreen;
     public InventoryScreen inventory;
 
-    //game state
+    // Game state
     public int gameState = 2;
-    public int pauseState = 0; //pause state = menu state
+    public int pauseState = 0; // Pause state = menu state
     public int playState = 1;
     public int titleState = 2;
     public boolean inventoryState = false;
 
-
     public GamePanel() {
+        // Get the screen size from the default toolkit
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        screenWidth = screenSize.width;
+        screenHeight = screenSize.height;
+
+        // Calculate scaling factors to maintain aspect ratio
+        scaleX = (double) screenWidth / referenceScreenWidth;
+        scaleY = (double) screenHeight / referenceScreenHeight;
+
+        // Initialize fog image with actual screen dimensions
+        fogImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+
         this.keyH = new KeyHandler(this);
         this.player = new Player(this, this.keyH);
         this.setFocusable(true);
@@ -69,7 +89,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.addMouseListener(mouseH);
         this.titleScreen = new TitleScreen(this);
         this.aSetter = new AssetSetter(this);
-        this.inventory = new InventoryScreen(this,player.getInventory());
+        this.inventory = new InventoryScreen(this, player.getInventory());
+        this.ui = new Ui(this);
     }
 
     public void setupGame() {
@@ -81,54 +102,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameThread.start();
     }
 
-    /*public void run() {
-        double drawInterval = 1000000000 / FPS;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
-
-        while(gameThread != null) {
-            currentTime = System.nanoTime();
-            delta += (currentTime - lastTime) / drawInterval;
-            lastTime = currentTime;
-
-            if (delta >= 1) {
-                update();
-                repaint();
-                delta--;
-            }
-        }
-
-    }*/
-
-    /*public void run() {
-        double drawInterval = 1000000000 / FPS;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
-        while(gameThread !=null) {
-        currentTime = System.nanoTime();
-        delta += (currentTime - lastTime) / drawInterval;
-        lastTime = currentTime;
-
-        if (delta >= 1) {
-            update();
-            repaint();
-            delta--;
-        }
-
-        // Ajout d'une pause pour éviter de monopoliser le CPU
-        try {
-            Thread.sleep(1);  // Permet au CPU de respirer un peu
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-}*/
-
     public void run() {
-        final int FPS = 60;
-        final double drawInterval = 1_000_000_000.0 / FPS; // Intervalle en nanosecondes
+        final double drawInterval = 1_000_000_000.0 / FPS; // Interval in nanoseconds
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -145,49 +120,45 @@ public class GamePanel extends JPanel implements Runnable {
                 update();
                 repaint();
                 delta--;
-                frames++;  // Comptage des FPS réels
+                frames++;
             }
 
-            if (timer >= 1_000_000_000) { // Affiche le nombre de FPS toutes les secondes
-                //System.out.println("FPS: " + frames);
+            if (timer >= 1_000_000_000) {
+                // Optional: Print FPS for debugging
+                // System.out.println("FPS: " + frames);
                 frames = 0;
                 timer = 0;
             }
 
             try {
-                Thread.sleep(1);  // Laisser le CPU respirer
+                Thread.sleep(1); // Let the CPU breathe
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-
-
     public void update() {
-
-        if(gameState == playState) {
+        if (gameState == playState) {
             player.update();
-            for(int i = 0; i < obj.length; i++) {
-                if(obj[i] != null)
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null)
                     obj[i].update();
             }
 
-            for(int i = 0; i < apparitors.length; i++) {
-                if(apparitors[i] != null)
+            for (int i = 0; i < apparitors.length; i++) {
+                if (apparitors[i] != null)
                     apparitors[i].update();
             }
 
-            for(int i = 0; i < cameras.length; i++) {
-                if(cameras[i] != null)
+            for (int i = 0; i < cameras.length; i++) {
+                if (cameras[i] != null)
                     cameras[i].update();
             }
-        }
-        else if(gameState == pauseState) {
-           menu.checkClick(mouseH.getLastClick());
-           mouseH.resetLastClick();
-        }
-        else if(gameState == titleState) {
+        } else if (gameState == pauseState) {
+            menu.checkClick(mouseH.getLastClick());
+            mouseH.resetLastClick();
+        } else if (gameState == titleState) {
             titleScreen.checkClick(mouseH.getLastClick());
             mouseH.resetLastClick();
         }
@@ -195,94 +166,135 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void drawFog(Graphics2D g2) {
         Graphics2D fogG = fogImage.createGraphics();
+
+        // Fill the entire screen with black (fog)
         fogG.setComposite(AlphaComposite.Src);
+        fogG.setColor(new Color(0, 0, 0, 255));
+        fogG.fillRect(0, 0, screenWidth, screenHeight);
 
-        int centerX = screenWidth / 2;
-        int centerY = screenHeight / 2;
-        float radius = Math.min(screenWidth, screenHeight) / 4.0f; // Rayon du spot lumineux
-
-        // Dégradé radial pour simuler l’effet du brouillard
-        Point2D center = new Point2D.Float(centerX, centerY);
-        float[] dist = {0.0f, 1.0f}; // Début à 0% d'opacité, Fin à 100% d'opacité
-        Color[] colors = {new Color(0, 0, 0, 0), new Color(0, 0, 0, 255)}; // Transparent → Noir
-
-        RadialGradientPaint gradient = new RadialGradientPaint(center, radius, dist, colors);
-        fogG.setPaint(gradient);
-        fogG.fillRect(0, 0, screenWidth, screenHeight); // Appliquer le gradient sur toute la surface
-
-        // Supprimer les zones visibles
+        // Remove visible areas (polygons)
         Area visibleArea = new Area();
-
-        /*for (int i = 3; i < 100; i++) {
-            if (obj[i] != null && obj[i].hitbox != null) {
-                visibleArea.add(new Area(obj[i].hitbox.getPolygonAt(obj[i].screenPosition)));
-            }
-        }*/
-
-       for(int i = 0; i < cameras.length; i++) {
-            if(cameras[i] != null) {
-                visibleArea.add(new Area(cameras[i].detectionZone.getPolygonAt(cameras[i].screenPosition)));
+        for (int i = 0; i < apparitors.length; i++) {
+            if (apparitors[i] != null) {
+                // Scale the detection zone polygon to match fullscreen
+                Polygon scaledPolygon = scalePolygon(apparitors[i].detectionZone.getPolygonAt(apparitors[i].screenPosition));
+                visibleArea.add(new Area(scaledPolygon));
             }
         }
-
-        for(int i = 0; i < apparitors.length; i++) {
-            if(apparitors[i] != null)
-                visibleArea.add(new Area(apparitors[i].detectionZone.getPolygonAt(apparitors[i].screenPosition)));
-        }
-
-        // Rendre ces zones transparentes
         fogG.setComposite(AlphaComposite.DstOut);
+        fogG.setPaint(Color.BLACK);
         fogG.fill(visibleArea);
+
+        // Create holes around light sources (gradients)
+        fogG.setComposite(AlphaComposite.DstOut);
+        float playerRadius = 150f * (float) Math.min(scaleX, scaleY); // Scale radius
+        float apparitorRadius = 50f * (float) Math.min(scaleX, scaleY);
+        float[] dist = {0.0f, 1.0f};
+        Color[] colors = {
+                new Color(0, 0, 0, 255), // Center: opaque
+                new Color(0, 0, 0, 0)    // Edge: transparent
+        };
+
+        // Player light source
+        Point2D playerCenter = new Point2D.Float(
+                (player.screenPosition.getXInt() + tileSize / 2) * (float) scaleX,
+                (player.screenPosition.getYInt() + tileSize / 2) * (float) scaleY
+        );
+        RadialGradientPaint playerGradient = new RadialGradientPaint(playerCenter, playerRadius, dist, colors);
+        fogG.setPaint(playerGradient);
+        fogG.fillRect(
+                (int) (playerCenter.getX() - playerRadius),
+                (int) (playerCenter.getY() - playerRadius),
+                (int) (2 * playerRadius),
+                (int) (2 * playerRadius)
+        );
+
+        // Apparitor light sources
+        for (Apparitor apparitor : apparitors) {
+            if (apparitor != null) {
+                Point2D apparitorCenter = new Point2D.Float(
+                        (apparitor.screenPosition.getXInt() + tileSize / 2) * (float) scaleX,
+                        (apparitor.screenPosition.getYInt() + tileSize / 2) * (float) scaleY
+                );
+                RadialGradientPaint apparitorGradient = new RadialGradientPaint(apparitorCenter, apparitorRadius, dist, colors);
+                fogG.setPaint(apparitorGradient);
+                fogG.fillRect(
+                        (int) (apparitorCenter.getX() - apparitorRadius),
+                        (int) (apparitorCenter.getY() - apparitorRadius),
+                        (int) (2 * apparitorRadius),
+                        (int) (2 * apparitorRadius)
+                );
+            }
+        }
+
         fogG.dispose();
+    }
+
+    private Polygon scalePolygon(Polygon original) {
+        Polygon scaled = new Polygon();
+        for (int i = 0; i < original.npoints; i++) {
+            scaled.addPoint(
+                    (int) (original.xpoints[i] * scaleX),
+                    (int) (original.ypoints[i] * scaleY)
+            );
+        }
+        return scaled;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
 
-        /*// Enabling anti-aliasing for smoother edges
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        */
+        // Apply scaling to match fullscreen resolution
+        g2.scale(scaleX, scaleY);
 
+        // Draw game elements
         tileManager.draw(g2);
 
-        for(int i = 0; i < obj.length; i++) {
-            if(obj[i] != null)
+        for (int i = 0; i < obj.length; i++) {
+            if (obj[i] != null)
                 obj[i].draw(g2);
         }
 
-        for(int i = 0; i < cameras.length; i++) {
-            if(cameras[i] != null)
+        for (int i = 0; i < cameras.length; i++) {
+            if (cameras[i] != null)
                 cameras[i].draw(g2);
         }
 
-        for(int i = 0; i < apparitors.length; i++) {
-            if(apparitors[i] != null)
+        for (int i = 0; i < apparitors.length; i++) {
+            if (apparitors[i] != null)
                 apparitors[i].draw(g2);
         }
 
         player.draw(g2);
 
-
-        //drawFog(g2);
+        // Reset scale for fog and UI to draw at native resolution
+        g2.scale(1.0 / scaleX, 1.0 / scaleY);
+        drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
 
-        if (inventoryState == true && gameState == playState) {
+        ui.drawPlayerLife(g2);
+
+        if (inventoryState && gameState == playState) {
             inventory.draw(g2);
         }
 
-
         if (gameState == pauseState) {
             menu.draw(g2);
-        }
-
-        else if(gameState == titleState) {
+        } else if (gameState == titleState) {
             titleScreen.draw(g2);
         }
 
-
         g2.dispose();
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    // Getter methods for scaling factors (useful for other classes if needed)
+    public double getScaleX() {
+        return scaleX;
+    }
+
+    public double getScaleY() {
+        return scaleY;
     }
 }
