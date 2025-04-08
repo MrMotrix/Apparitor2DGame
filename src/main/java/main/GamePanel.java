@@ -91,7 +91,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.aSetter = new AssetSetter(this);
         this.inventory = new InventoryScreen(this, player.getInventory());
         this.ui = new Ui(this);
-        this.requestFocusInWindow();
     }
 
     public void setupGame() {
