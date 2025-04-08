@@ -3,6 +3,7 @@ package main;
 import entity.Apparitor;
 import math.Vec2;
 import objects.OBJ_Camera;
+import objects.OBJ_Door;
 import objects.OBJ_Doormats;
 import objects.OBJ_Key;
 
@@ -92,14 +93,22 @@ public class AssetSetter {
 
         gp.obj[6] = new OBJ_Doormats(
                 new Vec2(
-                        6 * gp.tileSize,
-                        6 * gp.tileSize
+                        12 * gp.tileSize,
+                        17 * gp.tileSize
+                ),
+                gp
+        );
+
+        gp.obj[7] = new OBJ_Door(
+                new Vec2(
+                        10 * gp.tileSize,
+                        16 * gp.tileSize
                 ),
                 gp
         );
 
 
-            for (int i = 8; i < 10; i++) {
+            for (int i = 9; i < 10; i++) {
                 gp.obj[i] = new OBJ_Camera(
                         gp,
                         new Vec2(

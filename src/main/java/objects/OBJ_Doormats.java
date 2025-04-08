@@ -33,10 +33,10 @@ public class OBJ_Doormats extends SuperObject {
                             Color.RED
                     ),
                     gamePanel,
-                    "key",
+                    "r",
                     true,
                     false,
-                    "key"
+                    "r"
             );
 
             hitbox.getBounds().addPoint(0,0);
