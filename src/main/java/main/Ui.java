@@ -25,11 +25,6 @@ public class Ui {
             g2.drawImage(SpriteLibrary.getInstance("").getSprite("ui","empty-hearth"),x,y,iconSize, iconSize, null);
             i++;
             x += iconSize;
-            if(i % 8 == 0)
-            {
-                x = gp.tileSize / 2;
-                y += iconSize;
-            }
         }
         //reset
         x = gp.tileSize/2;
@@ -46,12 +41,6 @@ public class Ui {
             }
             i++;
             x += iconSize;
-
-            if(i % 16 == 0)
-            {
-                x = gp.tileSize / 2;
-                y += iconSize;
-            }
         }
     }
 }

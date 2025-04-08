@@ -15,8 +15,8 @@ public class InventoryScreen extends Screen {
 
 
 
-    public int MenuX = 30;
-    public int MenuY = 30;
+    public int MenuX = gamePanel.screenWidth-30-menuWidth;
+    public int MenuY = gamePanel.tileSize;
 
     public InventoryScreen(GamePanel gamePanel, Inventory inventory) {
         super(gamePanel);
