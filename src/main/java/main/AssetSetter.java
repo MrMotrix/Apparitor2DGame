@@ -1,6 +1,7 @@
 package main;
 
 import entity.Apparitor;
+import entity.InvisibleWall;
 import math.Vec2;
 import objects.OBJ_Camera;
 import objects.OBJ_Doormats;
@@ -317,6 +318,17 @@ public class AssetSetter {
                         12 * gp.tileSize,
                         16 * gp.tileSize
                 )
+        );
+
+        gp.invisibleWall[0]= new InvisibleWall(
+                gp,
+                new Vec2(
+                        4*gp.tileSize,
+                        14*gp.tileSize
+                ),
+                36*gp.tileSize,
+                20,
+                true
         );
     }
 }

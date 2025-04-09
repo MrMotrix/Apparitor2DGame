@@ -112,6 +112,9 @@ public class Apparitor extends Character {
 
         gamePanel.cChecker.checkTile(this);
 
+        if(gamePanel.cChecker.checkInvisbleWallCollision(this))
+            this.hitbox.setState(HitboxState.ACTIVE);
+
         if(gamePanel.cChecker.checkPlayerCollision(this))
             onCollision();
 

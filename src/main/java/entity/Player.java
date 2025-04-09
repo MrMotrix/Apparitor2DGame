@@ -148,6 +148,9 @@ public class Player extends Character{
         if(collisionCount==0)
             hitbox.setType(HitboxType.NONE);
 
+        if(gamePanel.cChecker.checkInvisbleWallCollision(this))
+            this.hitbox.setState(HitboxState.ACTIVE);
+
         if(!gamePanel.cChecker.checkDoormatsCollision(this))
             onTeleportation = false;
 
