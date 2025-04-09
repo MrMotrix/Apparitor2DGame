@@ -218,7 +218,7 @@ public class AssetSetter {
                         10 * gp.tileSize
                 )
         );
-        gp.doormats[4] = new OBJ_Doormats(
+        gp.doormats[3] = new OBJ_Doormats(
                 gp,
                 new Vec2(
                         20 * gp.tileSize,
@@ -230,7 +230,7 @@ public class AssetSetter {
                 )
         );
 
-        gp.doormats[5] = new OBJ_Doormats(
+        gp.doormats[4] = new OBJ_Doormats(
                 gp,
                 new Vec2(
                         32 * gp.tileSize,
@@ -241,7 +241,7 @@ public class AssetSetter {
                         14 * gp.tileSize
                 )
         );
-        gp.doormats[6] = new OBJ_Doormats(
+        gp.doormats[5] = new OBJ_Doormats(
                 gp,
                 new Vec2(
                         32 * gp.tileSize,
@@ -252,7 +252,7 @@ public class AssetSetter {
                         11 * gp.tileSize
                 )
         );
-        gp.doormats[7] = new OBJ_Doormats(
+        gp.doormats[6] = new OBJ_Doormats(
                 gp,
                 new Vec2(
                         36 * gp.tileSize,
@@ -263,7 +263,7 @@ public class AssetSetter {
                         16 * gp.tileSize
                 )
         );
-        gp.doormats[8] = new OBJ_Doormats(
+        gp.doormats[7] = new OBJ_Doormats(
                 gp,
                 new Vec2(
                         36 * gp.tileSize,
@@ -318,10 +318,6 @@ public class AssetSetter {
                         16 * gp.tileSize
                 )
         );
-
-
-
-
     }
 }
 
