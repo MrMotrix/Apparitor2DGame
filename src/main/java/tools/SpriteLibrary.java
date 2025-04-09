@@ -54,6 +54,13 @@ public class SpriteLibrary {
                             basePath+"objects/key.png"
                     )
             );
+            addSprites(
+                    "world",
+                    SpriteJSONExtractor.getSprites(
+                            basePath+"perso/player-front-frame.json",
+                            basePath+"perso/player-front-frame-sheet.png"
+                    )
+            );
 
             addSprites(
                     "world",
