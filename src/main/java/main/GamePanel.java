@@ -9,8 +9,12 @@ import javax.swing.JPanel;
 import entity.Apparitor;
 import entity.Player;
 import objects.OBJ_Camera;
+import objects.OBJ_Doormats;
 import objects.SuperObject;
 import tile.TileManager;
+import ui.InventoryScreen;
+import ui.TitleScreen;
+import ui.Ui;
 
 public class GamePanel extends JPanel implements Runnable {
     // Base tile sizes (before scaling)
@@ -48,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject obj[] = new SuperObject[100];
     public OBJ_Camera cameras[] = new OBJ_Camera[100];
     public Apparitor apparitors[] = new Apparitor[100];
+    public OBJ_Doormats doormats[] = new OBJ_Doormats[6];
 
     public Menu menu;
     public Ui ui;
@@ -155,6 +160,12 @@ public class GamePanel extends JPanel implements Runnable {
                 if (cameras[i] != null)
                     cameras[i].update();
             }
+
+            for(int i = 0; i < doormats.length; i++) {
+                if(doormats[i] != null)
+                    doormats[i].update();
+            }
+
         } else if (gameState == pauseState) {
             menu.checkClick(mouseH.getLastClick());
             mouseH.resetLastClick();
@@ -259,6 +270,11 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < cameras.length; i++) {
             if (cameras[i] != null)
                 cameras[i].draw(g2);
+        }
+
+        for(int i = 0; i < doormats.length; i++) {
+            if(doormats[i] != null)
+                doormats[i].draw(g2);
         }
 
         for (int i = 0; i < apparitors.length; i++) {

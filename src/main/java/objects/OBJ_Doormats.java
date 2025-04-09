@@ -19,9 +19,9 @@ import java.util.List;
 public class OBJ_Doormats extends SuperObject {
 
     private long playerTime = -2;
-    public Vec2 tp;
+    private Vec2 worldPositionTeleportation;
 
-    public OBJ_Doormats(Vec2 worldPosition, GamePanel gamePanel, Vec2 tp) {
+    public OBJ_Doormats(GamePanel gamePanel,Vec2 worldPosition,Vec2 worldPositionTeleportation) {
         super(
                     worldPosition,
                     new Vec2(0,0),
@@ -36,8 +36,8 @@ public class OBJ_Doormats extends SuperObject {
                             Color.RED
                     ),
                     gamePanel,
-                    "Doormats",
-                    true,
+                    "key",
+                    false,
                     false,
                     "Doormats"
             );
@@ -46,26 +46,27 @@ public class OBJ_Doormats extends SuperObject {
             hitbox.getBounds().addPoint(gamePanel.tileSize,0);
             hitbox.getBounds().addPoint(gamePanel.tileSize,gamePanel.tileSize);
             hitbox.getBounds().addPoint(0,gamePanel.tileSize);
+
+            this.worldPositionTeleportation = worldPositionTeleportation;
+
             addSprite(
                     name,
                     new Sprite(
                             SpriteLibrary.getInstance("").getSprite("world",super.name)
                     )
             );
-            this.tp = tp;
         }
-
-
-    public void onPickUp(Vec2 tp) {
-        if (playerTime == -2) {
+    @Override
+    public void onPickUp() {
+        if (!gamePanel.player.onTeleportation) {
             playerTime = System.currentTimeMillis();
-            return;
         }
+
+        gamePanel.player.onTeleportation = true;
 
         long now = System.currentTimeMillis();
         if (now - playerTime >= 1000) {
-            gamePanel.player.setWorldPosition(tp);
-            playerTime = -2;
+            gamePanel.player.setWorldPosition(new Vec2(worldPositionTeleportation.x, worldPositionTeleportation.y));
         }
     }
 

@@ -1,7 +1,8 @@
-package main;
+package ui;
 
-import entity.Inventory;
+import main.GamePanel;
 import objects.SuperObject;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;

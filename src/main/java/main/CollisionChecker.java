@@ -331,4 +331,47 @@ public class CollisionChecker {
 
         return collision;
     }
+
+    public boolean checkDoormatsCollision(Character c){
+        boolean collision = false;
+        Vec2 cNextWorldPosition = new Vec2(c.worldPosition);
+        if(c.hitbox.getState() == HitboxState.DISABLED) {
+            switch (c.direction) {
+                case UP:
+                    cNextWorldPosition.y -= c.speed;
+                    break;
+                case DOWN:
+                    cNextWorldPosition.y += c.speed;
+                    break;
+                case LEFT:
+                    cNextWorldPosition.x -= c.speed;
+                    break;
+                case RIGHT:
+                    cNextWorldPosition.x += c.speed;
+                    break;
+
+            }
+        }
+
+        for (int i = 0; i < gp.doormats.length; i++) {
+            if (gp.doormats[i] == null) continue;
+            // Get polygons instead of bounds
+            Polygon charPoly = c.hitbox.getPolygonAt(cNextWorldPosition);
+            Polygon doormatsPoly = gp.doormats[i].hitbox.getPolygonAt(gp.doormats[i].worldPosition);
+
+            // Convert to Area for collision check
+            Area charArea = new Area(charPoly);
+            Area doormatsArea = new Area(doormatsPoly);
+
+
+            // Check intersection
+            doormatsArea.intersect(charArea);
+
+            if (!doormatsArea.isEmpty()) { // Collision detected
+                gp.doormats[i].onPickUp();
+                collision = true;
+            }
+        }
+        return collision;
+    }
 }
