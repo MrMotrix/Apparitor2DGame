@@ -218,17 +218,6 @@ public class AssetSetter {
                         10 * gp.tileSize
                 )
         );
-        gp.doormats[3] = new OBJ_Doormats(
-                gp,
-                new Vec2(
-                        6 * gp.tileSize,
-                        6 * gp.tileSize
-                ),
-                new Vec2(
-                        8 * gp.tileSize,
-                        6 * gp.tileSize
-                )
-        );
         gp.doormats[4] = new OBJ_Doormats(
                 gp,
                 new Vec2(
@@ -329,6 +318,7 @@ public class AssetSetter {
                         16 * gp.tileSize
                 )
         );
+
 
 
 
