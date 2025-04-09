@@ -22,6 +22,10 @@ public class Inventory {
         return false;
     }
 
+    public void clearItems() {
+        items.clear();
+    }
+
     public void removeItem(SuperObject item) {
         items.remove(item);
     }
