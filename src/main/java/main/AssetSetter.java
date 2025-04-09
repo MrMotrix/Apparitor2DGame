@@ -98,7 +98,92 @@ public class AssetSetter {
                     1,
                     2
 
-            );
+        );
+
+        gp.apparitors[1] = new Apparitor(
+                gp,
+                new Vec2(
+                        22 * gp.tileSize,
+                        5 * gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                1,
+                2
+
+        );
+
+        gp.apparitors[2] = new Apparitor(
+                gp,
+                new Vec2(
+                        33 * gp.tileSize,
+                        5 * gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                1,
+                2
+
+        );
+
+        gp.apparitors[3] = new Apparitor(
+                gp,
+                new Vec2(
+                        8 * gp.tileSize,
+                        26 * gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                1,
+                2
+
+        );
+
+        gp.apparitors[4] = new Apparitor(
+                gp,
+                new Vec2(
+                        22 * gp.tileSize,
+                        26 * gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                1,
+                2
+
+        );
+
+        gp.apparitors[5] = new Apparitor(
+                gp,
+                new Vec2(
+                        33 * gp.tileSize,
+                        26 * gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                1,
+                2
+
+        );
+        gp.apparitors[5] = new Apparitor(
+                gp,
+                new Vec2(
+                        20 * gp.tileSize,
+                        15 * gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                1,
+                2
+
+        );
+
+
 
             gp.doormats[0] = new OBJ_Doormats(
                     gp,
@@ -244,7 +329,7 @@ public class AssetSetter {
                         16 * gp.tileSize
                 )
         );
-        
+
 
 
     }
