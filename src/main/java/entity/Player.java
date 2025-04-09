@@ -20,6 +20,7 @@ public class Player extends Character{
     public int nbKey = 0;
     public final int maxHealthPoints = 6;
     public int healthPoints = 6;
+    public boolean onTeleportation = false;
     private Inventory inventory;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -147,10 +148,14 @@ public class Player extends Character{
         if(collisionCount==0)
             hitbox.setType(HitboxType.NONE);
 
+        if(!gamePanel.cChecker.checkDoormatsCollision(this))
+            onTeleportation = false;
 
         int objIndex = gamePanel.cChecker.checkObject(this,true);
         pickUpObject(objIndex);
+
         if(this.hitbox.getState() == HitboxState.ACTIVE) velocity.set(0, 0);
+
         if(keyHandler.sprintPressed) super.sprint = true;
         else super.sprint = false;
 

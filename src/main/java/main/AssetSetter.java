@@ -25,23 +25,23 @@ public class AssetSetter {
         gp.obj[0] = new OBJ_Key(
                 gp,
                 new Vec2(
-                        10 * gp.tileSize,
-                        10 * gp.tileSize
+                        9 * gp.tileSize,
+                        5 * gp.tileSize
                 )
         );
 
         gp.obj[1] = new OBJ_Key(
                 gp,
                 new Vec2(
-                        16 * gp.tileSize,
-                        16 * gp.tileSize
+                        9 * gp.tileSize,
+                        5 * gp.tileSize
                 )
         );
 
         gp.obj[2] = new OBJ_Key(
                 gp,
                 new Vec2(
-                        5 * gp.tileSize,
+                        9 * gp.tileSize,
                         5 * gp.tileSize
                 )
         );
@@ -89,32 +89,6 @@ public class AssetSetter {
                 0
 
         );
-
-        gp.obj[6] = new OBJ_Doormats(
-                new Vec2(
-                        6 * gp.tileSize,
-                        6 * gp.tileSize
-                ),
-                gp
-        );
-
-
-        /*for (int i = 8; i < 25; i++) {
-            gp.cameras[i] = new OBJ_Camera(
-                    gp,
-                    new Vec2(
-                            getRandom(0, gp.worldWidth),
-                            getRandom(0, gp.worldHeight)
-                    ),
-                    10,
-                    128,
-                    0,
-                    0,
-                    3
-
-            );
-        }*/
-
             gp.apparitors[0] = new Apparitor(
                     gp,
                     new Vec2(320,430),
@@ -125,6 +99,18 @@ public class AssetSetter {
                     2
 
             );
-        }
+
+            gp.doormats[0] = new OBJ_Doormats(
+                    gp,
+                    new Vec2(
+                            6 * gp.tileSize,
+                            6 * gp.tileSize
+                    ),
+                    new Vec2(
+                            8 * gp.tileSize,
+                            6 * gp.tileSize
+                    )
+            );
     }
+}
 
