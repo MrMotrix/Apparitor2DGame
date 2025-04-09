@@ -36,10 +36,10 @@ public class OBJ_Doormats extends SuperObject {
                             Color.RED
                     ),
                     gamePanel,
-                    "key",
+                    "doormats",
                     false,
                     false,
-                    "Doormats"
+                    "doormats"
             );
 
             hitbox.getBounds().addPoint(0,0);
@@ -52,7 +52,7 @@ public class OBJ_Doormats extends SuperObject {
             addSprite(
                     name,
                     new Sprite(
-                            SpriteLibrary.getInstance("").getSprite("world",super.name)
+                            SpriteLibrary.getInstance("").getSprite("world","Doormats-0")
                     )
             );
         }
