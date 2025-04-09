@@ -31,6 +31,7 @@ public class Character extends VisualEntity {
         this.sprint = false;
     }
 
+
     public Character(Vec2 worldPosition, Vec2 screenPosition, Hitbox hitbox,String dialogue, GamePanel gamePanel, String currentSpriteKey,boolean drawHitbox, int speed, boolean isStatic) {
         super(worldPosition,screenPosition ,hitbox,gamePanel,currentSpriteKey,drawHitbox);
         this.speed = speed;
