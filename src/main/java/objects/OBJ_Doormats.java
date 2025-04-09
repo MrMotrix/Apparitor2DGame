@@ -49,11 +49,19 @@ public class OBJ_Doormats extends SuperObject {
 
             this.worldPositionTeleportation = worldPositionTeleportation;
 
+        Sprite doormatSprite = new Sprite(
+                List.of(
+                        SpriteLibrary.getInstance("").getSprite("world","Doormats-0"),
+                        SpriteLibrary.getInstance("").getSprite("world","Doormats-1"),
+                        SpriteLibrary.getInstance("").getSprite("world","Doormats-2"),
+                        SpriteLibrary.getInstance("").getSprite("world","Doormats-3")
+                ),
+                20
+        );
+
             addSprite(
                     name,
-                    new Sprite(
-                            SpriteLibrary.getInstance("").getSprite("world","Doormats-0")
-                    )
+                   doormatSprite
             );
         }
     @Override
