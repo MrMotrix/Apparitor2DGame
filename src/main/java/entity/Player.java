@@ -22,6 +22,7 @@ public class Player extends Character{
     public final int maxHealthPoints = 6;
     public int healthPoints = 6;
     public boolean onTeleportation = false;
+    public boolean insideClass = false;
     private Inventory inventory;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -40,7 +41,7 @@ public class Player extends Character{
                 ),
                 gamePanel,
                 "idle-right",
-                true,
+                false,
                 6,
                 false
         );

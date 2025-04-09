@@ -50,8 +50,8 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker;
     public AssetSetter aSetter;
     public Player player;
-    public SuperObject obj[] = new SuperObject[100];
-    public OBJ_Camera cameras[] = new OBJ_Camera[100];
+    public SuperObject obj[] = new SuperObject[7];
+    public OBJ_Camera cameras[] = new OBJ_Camera[16];
     public Apparitor apparitors[] = new Apparitor[7];
     public OBJ_Doormats doormats[] = new OBJ_Doormats[12];
     public InvisibleWall invisibleWall[] = new InvisibleWall[1];
@@ -292,7 +292,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
 
         g2.scale(1.0 / scaleX, 1.0 / scaleY);
-        //drawFog(g2);
+        drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
 
         ui.drawPlayerLife(g2);
