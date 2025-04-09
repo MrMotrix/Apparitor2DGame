@@ -33,6 +33,13 @@ public class SpriteLibrary {
                     )
             );
             addSprites(
+                    "characters",
+                    SpriteJSONExtractor.getSprites(
+                            basePath + "perso/Apparitor.json",
+                            basePath + "perso/Apparitor.png"
+                    )
+            );
+            addSprites(
                     "world",
                     SpriteJSONExtractor.getSprites(
                             basePath+ "tiles/test.json",

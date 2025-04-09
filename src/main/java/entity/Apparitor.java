@@ -229,46 +229,38 @@ public class Apparitor extends Character {
         String basePath = Paths.get("src/main/resources").toAbsolutePath().toString() + "/";
         Sprite frontSprite = new Sprite(
                 java.util.List.of(
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-down-frame-0"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-down-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-down-frame-2"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-down-frame-3"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-down-frame-4"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-down-frame-5")
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-front-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-front-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-front-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-front-frame-3")
                 ),
                 10
         );
 
         Sprite backSprite = new Sprite(
                 java.util.List.of(
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-up-frame-0"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-up-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-up-frame-2"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-up-frame-3"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-up-frame-4"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-up-frame-5")
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-back-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-back-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-back-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-back-frame-3")
                 ),
                 10
         );
         Sprite leftSprite = new Sprite(
                 java.util.List.of(
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-left-frame-0"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-left-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-left-frame-2"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-left-frame-3"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-left-frame-4"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-left-frame-5")
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-left-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-left-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-left-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-left-frame-3")
                 ),
                 10
         );
         Sprite rightSprite = new Sprite(
                 java.util.List.of(
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-right-frame-0"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-right-frame-1"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-right-frame-2"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-right-frame-3"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-right-frame-4"),
-                        SpriteLibrary.getInstance(basePath).getSprite("characters", "player-right-frame-5")
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-right-frame-0"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-right-frame-1"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-right-frame-2"),
+                        SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-right-frame-3")
                 ),
                 10
         );
@@ -279,28 +271,28 @@ public class Apparitor extends Character {
         addSprite("right", rightSprite);
         addSprite("idle-up", new Sprite(
                         java.util.List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters", "player-up-frame-0")
+                                SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-back-frame-0")
                         ),
                         10
                 )
         );
         addSprite("idle-down", new Sprite(
                         java.util.List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters", "player-down-frame-0")
+                                SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-front-frame-0")
                         ),
                         10
                 )
         );
         addSprite("idle-left", new Sprite(
                         java.util.List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters", "player-left-frame-5")
+                                SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-left-frame-2")
                         ),
                         10
                 )
         );
         addSprite("idle-right", new Sprite(
                         java.util.List.of(
-                                SpriteLibrary.getInstance(basePath).getSprite("characters", "player-right-frame-5")
+                                SpriteLibrary.getInstance(basePath).getSprite("characters", "apparitor-right-frame-0")
                         ),
                         10
                 )
