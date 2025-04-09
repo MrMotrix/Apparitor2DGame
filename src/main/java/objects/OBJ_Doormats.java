@@ -36,7 +36,7 @@ public class OBJ_Doormats extends SuperObject {
                             Color.RED
                     ),
                     gamePanel,
-                    "key",
+                    "Doormats",
                     false,
                     false,
                     "Doormats"
