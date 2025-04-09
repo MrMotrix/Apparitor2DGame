@@ -103,14 +103,150 @@ public class AssetSetter {
             gp.doormats[0] = new OBJ_Doormats(
                     gp,
                     new Vec2(
-                            6 * gp.tileSize,
-                            6 * gp.tileSize
+                            8 * gp.tileSize,
+                            11 * gp.tileSize
                     ),
                     new Vec2(
                             8 * gp.tileSize,
-                            6 * gp.tileSize
+                            14 * gp.tileSize
                     )
             );
+        gp.doormats[1] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        20 * gp.tileSize,
+                        11 * gp.tileSize
+                ),
+                new Vec2(
+                        20 * gp.tileSize,
+                        14 * gp.tileSize
+                )
+        );
+        gp.doormats[2] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        8 * gp.tileSize,
+                        15 * gp.tileSize
+                ),
+                new Vec2(
+                        8 * gp.tileSize,
+                        10 * gp.tileSize
+                )
+        );
+        gp.doormats[3] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        6 * gp.tileSize,
+                        6 * gp.tileSize
+                ),
+                new Vec2(
+                        8 * gp.tileSize,
+                        6 * gp.tileSize
+                )
+        );
+        gp.doormats[4] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        20 * gp.tileSize,
+                        15 * gp.tileSize
+                ),
+                new Vec2(
+                        20 * gp.tileSize,
+                        10 * gp.tileSize
+                )
+        );
+
+        gp.doormats[5] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        32 * gp.tileSize,
+                        11 * gp.tileSize
+                ),
+                new Vec2(
+                        32 * gp.tileSize,
+                        14 * gp.tileSize
+                )
+        );
+        gp.doormats[6] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        32 * gp.tileSize,
+                        15 * gp.tileSize
+                ),
+                new Vec2(
+                        31 * gp.tileSize,
+                        11 * gp.tileSize
+                )
+        );
+        gp.doormats[7] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        36 * gp.tileSize,
+                        20 * gp.tileSize
+                ),
+                new Vec2(
+                        36 * gp.tileSize,
+                        16 * gp.tileSize
+                )
+        );
+        gp.doormats[8] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        36 * gp.tileSize,
+                        17 * gp.tileSize
+                ),
+                new Vec2(
+                        36 * gp.tileSize,
+                        21 * gp.tileSize
+                )
+        );
+        gp.doormats[8] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        18 * gp.tileSize,
+                        17 * gp.tileSize
+                ),
+                new Vec2(
+                        18 * gp.tileSize,
+                        21 * gp.tileSize
+                )
+        );
+        gp.doormats[9] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        18 * gp.tileSize,
+                        20 * gp.tileSize
+                ),
+                new Vec2(
+                        18 * gp.tileSize,
+                        16 * gp.tileSize
+                )
+        );
+        gp.doormats[10] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        12 * gp.tileSize,
+                        17 * gp.tileSize
+                ),
+                new Vec2(
+                        12 * gp.tileSize,
+                        21 * gp.tileSize
+                )
+        );
+        gp.doormats[11] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        12 * gp.tileSize,
+                        20 * gp.tileSize
+                ),
+                new Vec2(
+                        12 * gp.tileSize,
+                        16 * gp.tileSize
+                )
+        );
+        
+
+
     }
 }
 

@@ -66,6 +66,7 @@ public class OBJ_Doormats extends SuperObject {
         }
     @Override
     public void onPickUp() {
+
         if (!gamePanel.player.onTeleportation) {
             playerTime = System.currentTimeMillis();
         }

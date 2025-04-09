@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject obj[] = new SuperObject[100];
     public OBJ_Camera cameras[] = new OBJ_Camera[100];
     public Apparitor apparitors[] = new Apparitor[100];
-    public OBJ_Doormats doormats[] = new OBJ_Doormats[6];
+    public OBJ_Doormats doormats[] = new OBJ_Doormats[12];
 
     public Menu menu;
     public Ui ui;
