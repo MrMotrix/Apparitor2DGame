@@ -1,5 +1,6 @@
-package main;
+package ui;
 
+import main.GamePanel;
 import tools.SpriteLibrary;
 
 import java.awt.*;

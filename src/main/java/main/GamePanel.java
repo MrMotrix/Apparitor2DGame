@@ -12,6 +12,9 @@ import objects.OBJ_Camera;
 import objects.OBJ_Doormats;
 import objects.SuperObject;
 import tile.TileManager;
+import ui.InventoryScreen;
+import ui.TitleScreen;
+import ui.Ui;
 
 public class GamePanel extends JPanel implements Runnable {
     // Base tile sizes (before scaling)

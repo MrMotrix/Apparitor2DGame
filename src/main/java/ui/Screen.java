@@ -1,7 +1,7 @@
-package main;
+package ui;
 
-import java.awt.Color;
-import java.awt.Font;
+import main.GamePanel;
+
 import java.awt.Graphics2D;
 import java.awt.Point;
 

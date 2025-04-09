@@ -1,4 +1,4 @@
-package entity;
+package ui;
 
 import objects.SuperObject;
 import java.util.ArrayList;

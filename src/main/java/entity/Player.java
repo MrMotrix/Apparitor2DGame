@@ -8,10 +8,10 @@ import temp.*;
 import sprite.Sprite;
 
 import java.awt.*;
-import java.awt.event.HierarchyBoundsAdapter;
 import java.nio.file.Paths;
 import java.util.List;
 import objects.SuperObject;
+import ui.Inventory;
 
 public class Player extends Character{
     private KeyHandler keyHandler;
