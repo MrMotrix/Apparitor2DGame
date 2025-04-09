@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import entity.Apparitor;
+import entity.InvisibleWall;
 import entity.Player;
 import objects.OBJ_Camera;
 import objects.OBJ_Doormats;
@@ -51,8 +52,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player;
     public SuperObject obj[] = new SuperObject[100];
     public OBJ_Camera cameras[] = new OBJ_Camera[100];
-    public Apparitor apparitors[] = new Apparitor[100];
+    public Apparitor apparitors[] = new Apparitor[7];
     public OBJ_Doormats doormats[] = new OBJ_Doormats[12];
+    public InvisibleWall invisibleWall[] = new InvisibleWall[1];
 
     public Menu menu;
     public Ui ui;
@@ -277,6 +279,11 @@ public class GamePanel extends JPanel implements Runnable {
                 doormats[i].draw(g2);
         }
 
+        for(int i = 0; i < invisibleWall.length; i++) {
+            if (invisibleWall[i] != null)
+                invisibleWall[i].draw(g2);
+        }
+
         for (int i = 0; i < apparitors.length; i++) {
             if (apparitors[i] != null)
                 apparitors[i].draw(g2);
@@ -286,7 +293,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Reset scale for fog and UI to draw at native resolution
         g2.scale(1.0 / scaleX, 1.0 / scaleY);
-        //drawFog(g2);
+        drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
 
         ui.drawPlayerLife(g2);

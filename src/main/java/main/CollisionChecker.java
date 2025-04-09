@@ -374,4 +374,46 @@ public class CollisionChecker {
         }
         return collision;
     }
+
+    public boolean checkInvisbleWallCollision(Character c){
+        boolean collision = false;
+        Vec2 cNextWorldPosition = new Vec2(c.worldPosition);
+        if(c.hitbox.getState() == HitboxState.DISABLED) {
+            switch (c.direction) {
+                case UP:
+                    cNextWorldPosition.y -= c.speed;
+                    break;
+                case DOWN:
+                    cNextWorldPosition.y += c.speed;
+                    break;
+                case LEFT:
+                    cNextWorldPosition.x -= c.speed;
+                    break;
+                case RIGHT:
+                    cNextWorldPosition.x += c.speed;
+                    break;
+
+            }
+        }
+
+        for (int i = 0; i < gp.invisibleWall.length; i++) {
+            if (gp.invisibleWall[i] == null) continue;
+            // Get polygons instead of bounds
+            Polygon charPoly = c.hitbox.getPolygonAt(cNextWorldPosition);
+            Polygon invisibleWallPoly = gp.invisibleWall[i].hitbox.getPolygonAt(gp.invisibleWall[i].worldPosition);
+
+            // Convert to Area for collision check
+            Area charArea = new Area(charPoly);
+            Area invisibleWallArea = new Area(invisibleWallPoly);
+
+
+            // Check intersection
+            invisibleWallArea.intersect(charArea);
+
+            if (!invisibleWallArea.isEmpty()) { // Collision detected
+                collision = true;
+            }
+        }
+        return collision;
+    }
 }

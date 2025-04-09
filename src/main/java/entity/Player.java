@@ -25,7 +25,7 @@ public class Player extends Character{
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         super(
-                new Vec2(320,320),
+                new Vec2(2*gamePanel.tileSize,15*gamePanel.tileSize),
                 new Vec2((gamePanel.screenWidth/2 - (gamePanel.tileSize/2))/gamePanel.getScaleX(),(gamePanel.screenHeight/2 - (gamePanel.tileSize/2))/gamePanel.getScaleY()),
                 new Hitbox(
                         13,
@@ -38,7 +38,7 @@ public class Player extends Character{
                         Color.YELLOW
                 ),
                 gamePanel,
-                "idle-down",
+                "idle-right",
                 true,
                 6,
                 false
@@ -46,7 +46,7 @@ public class Player extends Character{
 
         this.inventory = new Inventory(10);
         this.keyHandler = keyHandler;
-        super.direction = Direction.DOWN;
+        super.direction = Direction.RIGHT;
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY);
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY);
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY + hitbox.height);
@@ -147,6 +147,9 @@ public class Player extends Character{
             collisionCount++;
         if(collisionCount==0)
             hitbox.setType(HitboxType.NONE);
+
+        if(gamePanel.cChecker.checkInvisbleWallCollision(this))
+            this.hitbox.setState(HitboxState.ACTIVE);
 
         if(!gamePanel.cChecker.checkDoormatsCollision(this))
             onTeleportation = false;
