@@ -48,13 +48,7 @@ public class OBJ_Doormats extends SuperObject {
             hitbox.getBounds().addPoint(0,gamePanel.tileSize);
 
             this.worldPositionTeleportation = worldPositionTeleportation;
-
-            addSprite(
-                    name,
-                    new Sprite(
-                            SpriteLibrary.getInstance("").getSprite("world",super.name)
-                    )
-            );
+            loadSprites();
         }
     @Override
     public void onPickUp() {
