@@ -18,9 +18,11 @@ public class Player extends Character{
     //public final int screenX;
     //public final int screenY;
     public int nbKey = 0;
+    private final Vec2 defaultWorldPosition;
     public final int maxHealthPoints = 6;
     public int healthPoints = 6;
     public boolean onTeleportation = false;
+    public boolean insideClass = false;
     private Inventory inventory;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -39,11 +41,11 @@ public class Player extends Character{
                 ),
                 gamePanel,
                 "idle-right",
-                true,
+                false,
                 6,
                 false
         );
-
+        this.defaultWorldPosition = new Vec2(2*gamePanel.tileSize,15*gamePanel.tileSize);
         this.inventory = new Inventory(10);
         this.keyHandler = keyHandler;
         super.direction = Direction.RIGHT;
@@ -52,6 +54,14 @@ public class Player extends Character{
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX + hitbox.width, hitbox.defaultBoundsY + hitbox.height);
         super.hitbox.getBounds().addPoint(hitbox.defaultBoundsX, hitbox.defaultBoundsY + hitbox.height);
         loadSprites();
+    }
+
+    public void toDefaultPosition() {
+        this.worldPosition = new Vec2(defaultWorldPosition);;
+    }
+
+    public void resetLife(){
+        this.healthPoints = maxHealthPoints;
     }
 
     public Inventory getInventory() {
@@ -162,6 +172,9 @@ public class Player extends Character{
         if(keyHandler.sprintPressed) super.sprint = true;
         else super.sprint = false;
 
+        if(healthPoints <=0){
+            gamePanel.gameState = gamePanel.gameOverState;
+        }
         super.update();
     }
 

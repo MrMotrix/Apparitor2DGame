@@ -22,6 +22,10 @@ public class Inventory {
         return false;
     }
 
+    public void clearItems() {
+        items.clear();
+    }
+
     public String getItemsNames() {
             if (!items.isEmpty()) {
                 return items.getLast().getName();

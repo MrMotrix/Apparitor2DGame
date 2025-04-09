@@ -40,7 +40,7 @@ public class Apparitor extends Character {
                 ),
                 gamePanel,
                 "idle-down",
-                true,
+                false,
                 6,
                 false
         );

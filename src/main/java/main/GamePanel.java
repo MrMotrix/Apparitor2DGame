@@ -50,8 +50,8 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker;
     public AssetSetter aSetter;
     public Player player;
-    public SuperObject obj[] = new SuperObject[100];
-    public OBJ_Camera cameras[] = new OBJ_Camera[100];
+    public SuperObject obj[] = new SuperObject[7];
+    public OBJ_Camera cameras[] = new OBJ_Camera[16];
     public Apparitor apparitors[] = new Apparitor[7];
     public OBJ_Doormats doormats[] = new OBJ_Doormats[12];
     public InvisibleWall invisibleWall[] = new InvisibleWall[1];
@@ -68,19 +68,21 @@ public class GamePanel extends JPanel implements Runnable {
     public int pauseState = 0; // Pause state = menu state
     public int playState = 1;
     public int titleState = 2;
+    public int gameOverState = 6;
     public boolean inventoryState = false;
 
+    private boolean isGameOverTriggered = false;
+    private long gameOverTimer = 0;
+    private final int gameOverDelay = 2000; // 2 seconds
+
     public GamePanel() {
-        // Get the screen size from the default toolkit
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenWidth = screenSize.width;
         screenHeight = screenSize.height;
 
-        // Calculate scaling factors to maintain aspect ratio
         scaleX = (double) screenWidth / referenceScreenWidth;
         scaleY = (double) screenHeight / referenceScreenHeight;
 
-        // Initialize fog image with actual screen dimensions
         fogImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 
         this.keyH = new KeyHandler(this);
@@ -109,8 +111,17 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameThread.start();
     }
 
+    public void restart() {
+        player.toDefaultPosition();
+        player.resetLife();
+        player.getInventory().clearItems();
+        setupGame();
+        gameState = playState;
+        isGameOverTriggered = false;
+    }
+
     public void run() {
-        final double drawInterval = 1_000_000_000.0 / FPS; // Interval in nanoseconds
+        final double drawInterval = 1_000_000_000.0 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -131,14 +142,12 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= 1_000_000_000) {
-                // Optional: Print FPS for debugging
-                // System.out.println("FPS: " + frames);
                 frames = 0;
                 timer = 0;
             }
 
             try {
-                Thread.sleep(1); // Let the CPU breathe
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -149,31 +158,33 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == playState) {
             player.update();
             for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null)
-                    obj[i].update();
+                if (obj[i] != null) obj[i].update();
             }
-
             for (int i = 0; i < apparitors.length; i++) {
-                if (apparitors[i] != null)
-                    apparitors[i].update();
+                if (apparitors[i] != null) apparitors[i].update();
             }
-
             for (int i = 0; i < cameras.length; i++) {
-                if (cameras[i] != null)
-                    cameras[i].update();
+                if (cameras[i] != null) cameras[i].update();
             }
-
-            for(int i = 0; i < doormats.length; i++) {
-                if(doormats[i] != null)
-                    doormats[i].update();
+            for (int i = 0; i < doormats.length; i++) {
+                if (doormats[i] != null) doormats[i].update();
             }
-
         } else if (gameState == pauseState) {
             menu.checkClick(mouseH.getLastClick());
             mouseH.resetLastClick();
         } else if (gameState == titleState) {
             titleScreen.checkClick(mouseH.getLastClick());
             mouseH.resetLastClick();
+        } else if (gameState == gameOverState) {
+            if (!isGameOverTriggered) {
+                isGameOverTriggered = true;
+                gameOverTimer = System.currentTimeMillis();
+            } else {
+                long elapsed = System.currentTimeMillis() - gameOverTimer;
+                if (elapsed >= gameOverDelay) {
+                    restart();
+                }
+            }
         }
     }
 
@@ -258,42 +269,30 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        // Apply scaling to match fullscreen resolution
         g2.scale(scaleX, scaleY);
 
-        // Draw game elements
         tileManager.draw(g2);
 
         for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null)
-                obj[i].draw(g2);
+            if (obj[i] != null) obj[i].draw(g2);
         }
-
         for (int i = 0; i < cameras.length; i++) {
-            if (cameras[i] != null)
-                cameras[i].draw(g2);
+            if (cameras[i] != null) cameras[i].draw(g2);
         }
-
-        for(int i = 0; i < doormats.length; i++) {
-            if(doormats[i] != null)
-                doormats[i].draw(g2);
+        for (int i = 0; i < doormats.length; i++) {
+            if (doormats[i] != null) doormats[i].draw(g2);
         }
-
-        for(int i = 0; i < invisibleWall.length; i++) {
-            if (invisibleWall[i] != null)
-                invisibleWall[i].draw(g2);
+        for (int i = 0; i < invisibleWall.length; i++) {
+            if (invisibleWall[i] != null) invisibleWall[i].draw(g2);
         }
-
         for (int i = 0; i < apparitors.length; i++) {
-            if (apparitors[i] != null)
-                apparitors[i].draw(g2);
+            if (apparitors[i] != null) apparitors[i].draw(g2);
         }
 
         player.draw(g2);
 
-        // Reset scale for fog and UI to draw at native resolution
         g2.scale(1.0 / scaleX, 1.0 / scaleY);
-        //drawFog(g2);
+        drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
 
         ui.drawPlayerLife(g2);
@@ -308,11 +307,22 @@ public class GamePanel extends JPanel implements Runnable {
             titleScreen.draw(g2);
         }
 
+        if (gameState == gameOverState) {
+            g2.setColor(new Color(0, 0, 0, 150));
+            g2.fillRect(0, 0, screenWidth, screenHeight);
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Arial", Font.BOLD, 64));
+            String msg = "GAME OVER";
+            FontMetrics fm = g2.getFontMetrics();
+            int x = (screenWidth - fm.stringWidth(msg)) / 2;
+            int y = screenHeight / 2;
+            g2.drawString(msg, x, y);
+        }
+
         g2.dispose();
         Toolkit.getDefaultToolkit().sync();
     }
 
-    // Getter methods for scaling factors (useful for other classes if needed)
     public double getScaleX() {
         return scaleX;
     }

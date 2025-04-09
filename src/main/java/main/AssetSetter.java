@@ -47,68 +47,35 @@ public class AssetSetter {
         gp.obj[2] = new OBJ_Key(
                 gp,
                 new Vec2(
-                        9 * gp.tileSize,
-                        5 * gp.tileSize
+                        20 * gp.tileSize,
+                        28 * gp.tileSize
+                )
+        );
+
+        gp.obj[3] = new OBJ_Key(
+                gp,
+                new Vec2(
+                        29 * gp.tileSize,
+                        24 * gp.tileSize
                 )
         );
 
         gp.obj[4] = new OBJ_Key(
                 gp,
                 new Vec2(
-                        20 * gp.tileSize,
-                        28 * gp.tileSize
+                        26 * gp.tileSize,
+                        5 * gp.tileSize
                 )
         );
-        gp.obj[7] = new OBJ_Key(
-                gp,
-                new Vec2(
-                        20 * gp.tileSize,
-                        28 * gp.tileSize
-                )
-        );
+
         gp.obj[5] = new OBJ_Key(
-                gp,
-                new Vec2(
-                        29 * gp.tileSize,
-                        24 * gp.tileSize
-                )
-        );
-        gp.obj[6] = new OBJ_Key(
-                gp,
-                new Vec2(
-                        29 * gp.tileSize,
-                        24 * gp.tileSize
-                )
-        );
-        gp.obj[8] = new OBJ_Key(
-                gp,
-                new Vec2(
-                        26 * gp.tileSize,
-                        5 * gp.tileSize
-                )
-        );
-        gp.obj[9] = new OBJ_Key(
-                gp,
-                new Vec2(
-                        26 * gp.tileSize,
-                        5 * gp.tileSize
-                )
-        );
-        gp.obj[10] = new OBJ_Key(
-                gp,
-                new Vec2(
-                        6 * gp.tileSize,
-                        28 * gp.tileSize
-                )
-        );
-        gp.obj[11] = new OBJ_Key(
                 gp,
                 new Vec2(
                         6 * gp.tileSize,
                         28* gp.tileSize
                 )
         );
-        gp.obj[3] = new OBJ_FinalItem(
+        gp.obj[6] = new OBJ_FinalItem(
                 gp,
                 new Vec2(
                         29 * gp.tileSize,
