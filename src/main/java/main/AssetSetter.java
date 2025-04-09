@@ -22,7 +22,11 @@ public class AssetSetter {
         return (int) (Math.random() * (max - min +1) + min);
     }
 
+
     public void setObjects() {
+
+        ///  OBJECTS
+
         gp.obj[0] = new OBJ_Key(
                 gp,
                 new Vec2(
@@ -49,16 +53,58 @@ public class AssetSetter {
 
         //CAMERA
 
+        gp.cameras[0] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        12 * gp.tileSize,
+                        14 * gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                180,
+                2
+
+        );
+
+        gp.cameras[1] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        15 * gp.tileSize,
+                        17 * gp.tileSize
+                ),
+                2,
+                64,
+                180,
+                180,
+                2
+
+        );
+
+        gp.cameras[2] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        18 * gp.tileSize,
+                        14 * gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                180,
+                2
+
+        );
+
         gp.cameras[3] = new OBJ_Camera(
                 gp,
                 new Vec2(
-                        10 * gp.tileSize,
-                        5 * gp.tileSize
+                        22 * gp.tileSize,
+                        14 * gp.tileSize
                 ),
-                6,
-                128,
+                2,
+                2,
+                90,
                 0,
-                180,
                 0
 
         );
@@ -66,13 +112,13 @@ public class AssetSetter {
         gp.cameras[4] = new OBJ_Camera(
                 gp,
                 new Vec2(
-                        16 * gp.tileSize,
-                        5 * gp.tileSize
+                        24 * gp.tileSize,
+                        17 * gp.tileSize
                 ),
-                9,
-                90,
-                90,
-                90,
+                2,
+                2,
+                270,
+                0,
                 0
 
         );
@@ -80,24 +126,170 @@ public class AssetSetter {
         gp.cameras[5] = new OBJ_Camera(
                 gp,
                 new Vec2(
-                        10 * gp.tileSize,
-                        20 * gp.tileSize
+                        26 * gp.tileSize,
+                        14 * gp.tileSize
                 ),
                 2,
-                1,
-                0,
+                32,
+                45,
+                90,
+                2
+
+        );
+
+
+        gp.cameras[6] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        30 * gp.tileSize,
+                        14 * gp.tileSize
+                ),
+                2,
+                2,
+                90,
                 0,
                 0
 
         );
-            gp.apparitors[0] = new Apparitor(
-                    gp,
-                    new Vec2(320,430),
-                    2,
-                    64,
-                    0,
-                    1,
-                    2
+
+        gp.cameras[7] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        28 * gp.tileSize,
+                        17 * gp.tileSize
+                ),
+                2,
+                2,
+                270,
+                0,
+                0
+
+        );
+
+        gp.cameras[8] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        36 * gp.tileSize,
+                        14 * gp.tileSize
+                ),
+                3,
+                64,
+                135,
+                0,
+                0
+
+        );
+
+        gp.cameras[9] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        40 * gp.tileSize,
+                        14 * gp.tileSize
+                ),
+                1,
+                2,
+                0,
+                180,
+                3
+
+        );
+
+        gp.cameras[10] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        22 * gp.tileSize,
+                        7 * gp.tileSize
+                ),
+                3,
+                32,
+                0,
+                0,
+                3
+
+        );
+
+        gp.cameras[11] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        10 * gp.tileSize,
+                        6 * gp.tileSize
+                ),
+                3,
+                32,
+                0,
+                0,
+                3
+
+        );
+
+        gp.cameras[12] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        34 * gp.tileSize,
+                        6 * gp.tileSize
+                ),
+                3,
+                32,
+                0,
+                0,
+                3
+
+        );
+
+        gp.cameras[13] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        22 * gp.tileSize,
+                        25 * gp.tileSize
+                ),
+                3,
+                32,
+                0,
+                0,
+                3
+
+        );
+
+        gp.cameras[14] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        10 * gp.tileSize,
+                        25 * gp.tileSize
+                ),
+                3,
+                32,
+                0,
+                0,
+                3
+
+        );
+
+        gp.cameras[15] = new OBJ_Camera(
+                gp,
+                new Vec2(
+                        34 * gp.tileSize,
+                        25 * gp.tileSize
+                ),
+                3,
+                32,
+                0,
+                0,
+                3
+
+        );
+        /// APPARITORS
+
+        gp.apparitors[0] = new Apparitor(
+                gp,
+                new Vec2(
+                        7*gp.tileSize,
+                        6*gp.tileSize
+                ),
+                2,
+                64,
+                0,
+                1,
+                2
 
         );
 
@@ -112,7 +304,6 @@ public class AssetSetter {
                 0,
                 1,
                 2
-
         );
 
         gp.apparitors[2] = new Apparitor(
@@ -184,19 +375,19 @@ public class AssetSetter {
 
         );
 
+        /// DOORMATS
 
-
-            gp.doormats[0] = new OBJ_Doormats(
-                    gp,
-                    new Vec2(
-                            8 * gp.tileSize,
-                            11 * gp.tileSize
-                    ),
-                    new Vec2(
-                            8 * gp.tileSize,
-                            14 * gp.tileSize
-                    )
-            );
+        gp.doormats[0] = new OBJ_Doormats(
+                gp,
+                new Vec2(
+                        8 * gp.tileSize,
+                        11 * gp.tileSize
+                ),
+                new Vec2(
+                        8 * gp.tileSize,
+                        14 * gp.tileSize
+                )
+        );
         gp.doormats[1] = new OBJ_Doormats(
                 gp,
                 new Vec2(
@@ -320,6 +511,8 @@ public class AssetSetter {
                 )
         );
 
+        ///  INVISIBLE WALLS
+
         gp.invisibleWall[0]= new InvisibleWall(
                 gp,
                 new Vec2(
@@ -328,7 +521,7 @@ public class AssetSetter {
                 ),
                 36*gp.tileSize,
                 20,
-                true
+                false
         );
     }
 }

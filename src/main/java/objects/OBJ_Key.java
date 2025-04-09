@@ -28,7 +28,7 @@ public class OBJ_Key extends SuperObject{
                 ),
                 gamePanel,
                 "key",
-                true,
+                false,
                 true,
                 "key"
         );
