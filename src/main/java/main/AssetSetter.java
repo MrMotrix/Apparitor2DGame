@@ -93,22 +93,69 @@ public class AssetSetter {
 
         gp.obj[6] = new OBJ_Doormats(
                 new Vec2(
+                        8 * gp.tileSize,
+                        11 * gp.tileSize
+                ),
+                gp,
+                new Vec2(18*gp.tileSize, 15 * gp.tileSize)
+        );
+
+        gp.obj[8] = new OBJ_Doormats(
+                new Vec2(
                         12 * gp.tileSize,
                         17 * gp.tileSize
                 ),
-                gp
+                gp,
+                new Vec2(18*gp.tileSize, 15 * gp.tileSize)
+        );
+
+        gp.obj[9] = new OBJ_Doormats(
+                new Vec2(
+                        18 * gp.tileSize,
+                        17 * gp.tileSize
+                ),
+                gp,
+                new Vec2(18*gp.tileSize, 15 * gp.tileSize)
+        );
+
+        gp.obj[10] = new OBJ_Doormats(
+                new Vec2(
+                        36 * gp.tileSize,
+                        17 * gp.tileSize
+                ),
+                gp,
+                new Vec2(36*gp.tileSize, 15 * gp.tileSize)
+        );
+
+        gp.obj[11] = new OBJ_Doormats(
+                new Vec2(
+                        20 * gp.tileSize,
+                        11 * gp.tileSize
+                ),
+                gp,
+                new Vec2(20*gp.tileSize, 9 * gp.tileSize)
+        );
+
+        gp.obj[12] = new OBJ_Doormats(
+                new Vec2(
+                        32 * gp.tileSize,
+                        11 * gp.tileSize
+                ),
+                gp,
+                new Vec2(32*gp.tileSize, 9 * gp.tileSize)
         );
 
         gp.obj[7] = new OBJ_Door(
                 new Vec2(
-                        10 * gp.tileSize,
-                        16 * gp.tileSize
+                        12 * gp.tileSize,
+                        19.5 * gp.tileSize
                 ),
                 gp
         );
 
+            for(int i = )
 
-            for (int i = 9; i < 10; i++) {
+            for (int i = 14; i < 10; i++) {
                 gp.obj[i] = new OBJ_Camera(
                         gp,
                         new Vec2(
@@ -122,7 +169,7 @@ public class AssetSetter {
                         0
 
             );
-        }*/
+        }
 
             gp.apparitors[0] = new Apparitor(
                     gp,

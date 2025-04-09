@@ -270,7 +270,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Reset scale for fog and UI to draw at native resolution
         g2.scale(1.0 / scaleX, 1.0 / scaleY);
-        drawFog(g2);
+        //drawFog(g2);
         g2.drawImage(fogImage, 0, 0, null);
 
         ui.drawPlayerLife(g2);
