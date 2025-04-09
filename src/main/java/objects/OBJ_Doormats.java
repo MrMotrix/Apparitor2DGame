@@ -74,8 +74,9 @@ public class OBJ_Doormats extends SuperObject {
         gamePanel.player.onTeleportation = true;
 
         long now = System.currentTimeMillis();
-        if (now - playerTime >= 1000) {
+        if (now - playerTime >= 1000 && gamePanel.player.getInventory().getItemsNames() == "key") {
             gamePanel.player.setWorldPosition(new Vec2(worldPositionTeleportation.x, worldPositionTeleportation.y));
+            gamePanel.player.getInventory().removeLastItem();
         }
     }
 

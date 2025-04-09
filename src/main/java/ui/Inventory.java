@@ -22,8 +22,20 @@ public class Inventory {
         return false;
     }
 
+    public String getItemsNames() {
+            if (!items.isEmpty()) {
+                return items.getLast().getName();
+            }
+            return null;
+        }
+
     public void removeItem(SuperObject item) {
         items.remove(item);
+    }
+    public void removeLastItem() {
+        if (!items.isEmpty()) {
+            items.remove(items.size() - 1);
+        }
     }
 
     public List<SuperObject> getItems() {
