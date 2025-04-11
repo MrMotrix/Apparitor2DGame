@@ -48,6 +48,7 @@ public class OBJ_FinalItem extends SuperObject{
 
     @Override
     public void onPickUp(){
+        gamePanel.gameState = gamePanel.endState;
         System.out.println("GG C'EST LA FIN DU JEU");
     }
 

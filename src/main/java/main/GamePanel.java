@@ -69,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int playState = 1;
     public int titleState = 2;
     public int gameOverState = 6;
+    public int endState = 7;
     public boolean inventoryState = false;
 
     private boolean isGameOverTriggered = false;
@@ -313,6 +314,18 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setColor(Color.WHITE);
             g2.setFont(new Font("Arial", Font.BOLD, 64));
             String msg = "GAME OVER";
+            FontMetrics fm = g2.getFontMetrics();
+            int x = (screenWidth - fm.stringWidth(msg)) / 2;
+            int y = screenHeight / 2;
+            g2.drawString(msg, x, y);
+        }
+
+        if (gameState == endState) {
+            g2.setColor(new Color(0, 0, 0, 150));
+            g2.fillRect(0, 0, screenWidth, screenHeight);
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Arial", Font.BOLD, 64));
+            String msg = "BRAVO !";
             FontMetrics fm = g2.getFontMetrics();
             int x = (screenWidth - fm.stringWidth(msg)) / 2;
             int y = screenHeight / 2;
